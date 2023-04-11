@@ -16,11 +16,12 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class Agendamento {
-    int id;
-    Date data;
-    String objetivo;
-    Unidade unidade;
-    Status status;
-    List<Servico> servicos = new ArrayList<>();
-    Veiculo veiculo;
+    private int id;
+    private Date data;
+    private String objetivo;
+    private Unidade unidade;
+    private Status status;
+    private List<Servico> servicos = new ArrayList<>();
+    private Veiculo veiculo;
+    private int id_veiculo;
 }

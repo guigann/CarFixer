@@ -10,7 +10,7 @@ CREATE TABLE usuario (
     email VARCHAR(100) NOT NULL,
     telefone VARCHAR(20) NOT NULL,
     senha VARCHAR(32) NOT NULL,
-    permission TINYINT(1) NOT NULL, #0- Cliente; 2- Funcionário/Admin;
+    permission TINYINT(1) NOT NULL, #0- Cliente; 1- Funcionário; 2- Admin;
     PRIMARY KEY (id_usuario)
 );
 

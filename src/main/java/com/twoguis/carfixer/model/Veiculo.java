@@ -15,10 +15,11 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class Veiculo {
-    int id;
-    String placa;
-    String descricao;
-    boolean tipo;    
-    List<Agendamento> agendamentos = new ArrayList<>();
-    Usuario usuario;
+    private int id;
+    private String placa;
+    private String descricao;
+    private boolean tipo;
+    private List<Agendamento> agendamentos = new ArrayList<>();
+    private Usuario usuario;
+    private int id_usuario;
 }

@@ -1,4 +1,5 @@
 package com.twoguis.carfixer.model;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,8 +12,9 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class Item_Servico {
-    int id;
-    String descricao;
-    double valor;
-    Servico servico;
+    private int id;
+    private String descricao;
+    private double valor;
+    private Servico servico;
+    private int id_servico;
 }

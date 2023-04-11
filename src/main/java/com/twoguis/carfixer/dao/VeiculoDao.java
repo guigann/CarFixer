@@ -15,7 +15,7 @@ import com.twoguis.carfixer.model.Veiculo;
 public interface VeiculoDao {
 
         @GetGeneratedKeys
-        @SqlUpdate("insert into veiculo (placa, descricao, tipo, id_usuario) values (:placa, :descricao, :tipo, :usuario.getId())")
+        @SqlUpdate("insert into veiculo (placa, descricao, tipo, id_usuario) values (:placa, :descricao, :tipo, :id_usuario)")
         int insert(@BindBean Veiculo veiculo);
 
         @SqlQuery("select * " +

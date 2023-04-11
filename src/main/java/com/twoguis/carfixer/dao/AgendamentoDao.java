@@ -15,7 +15,7 @@ import com.twoguis.carfixer.model.Agendamento;
 public interface AgendamentoDao {
 
         @GetGeneratedKeys
-        @SqlUpdate("insert into agendamento (data, objetivo, status, id_veiculo) values (:data, :objetivo, :status, :veiculo.getId())")
+        @SqlUpdate("insert into agendamento (data, objetivo, unidade, status, id_veiculo) values (:data, :objetivo, :unidade, :status, :veiculo.getId())")
         int insert(@BindBean Agendamento agendamento);
 
         @SqlQuery("select * " +
@@ -34,7 +34,7 @@ public interface AgendamentoDao {
                         " order by objetivo;")
         List<Agendamento> getAllByObjetivo(@Bind("objetivo") String objetivo);
 
-        @SqlUpdate("update agendamento " + " set data = :data, " + "objetivo = :objetivo," + "status = :status,"
+        @SqlUpdate("update agendamento " + " set data = :data, " + "objetivo = :objetivo," +"unidade = :unidade," + "status = :status,"
                         + "id_veiculo = :veiculo.getId()," + " where id = :id;")
         int update(@BindBean Agendamento agendamento);
 

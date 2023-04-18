@@ -35,7 +35,7 @@ public interface VeiculoDao {
         List<Veiculo> getAllByDescricao(@Bind("descricao") String descricao);
 
         @SqlUpdate("update veiculo " + " set placa = :placa, " + "descricao = :descricao," + "tipo = :tipo,"
-                        + "id_usuario = :usuario.getId()," + " where id = :id;")
+                        + "id_usuario = :id_usuario," + " where id = :id;")
         int update(@BindBean Veiculo veiculo);
 
         @SqlUpdate("delete " +

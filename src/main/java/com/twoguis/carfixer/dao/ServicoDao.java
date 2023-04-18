@@ -35,7 +35,7 @@ public interface ServicoDao {
         List<Servico> getAllByObjetivo(@Bind("observacao") String observacao);
 
         @SqlUpdate("update servico " + " set dataPrevEntrega = :dataPrevEntrega, " + "observacao = :observacao"
-                        + "id_agendamento = :agendamento.getId()," + " where id = :id;")
+                        + "id_agendamento = :id_agendamento," + " where id = :id;")
         int update(@BindBean Servico servico);
 
         @SqlUpdate("delete " +

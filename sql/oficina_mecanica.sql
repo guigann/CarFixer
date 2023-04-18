@@ -30,7 +30,7 @@ CREATE TABLE agendamento (
     objetivo INT NOT NULL, #0- Revisão; 1- Conseto;
     unidade ENUM ('Timoteo, Coronel_Fabriciano, Ipatinga'),
     #unidade VARCHAR(2000) NOT NULL,    
-    status	ENUM('Pendente, Aprovado, Reprovado, Em_Andamento, Concluido, Encerrado') DEFAULT 'Pendente',
+    status	ENUM('Pendente', 'Aprovado', 'Reprovado', 'Em_Andamento', 'Concluido', 'Encerrado') DEFAULT 'Pendente',
     #status TINYINT(1) NOT NULL, #0- Pendente; 1- Aprovado; 2- Reprovado; 3- Em andamento; 4- Concluído, 5- Encerrado;
     id_veiculo INT NOT NULL,
     PRIMARY KEY (id_agendamento),
@@ -56,4 +56,4 @@ CREATE TABLE item_servico(
 );
 
 #INSERTS
-INSERT INTO usuario (nome, cpf, email, telefone, senha, perm) VALUES("Gustavo", "050.189.540-00", "gustavo@gmail.com", "11111111111", "123", 0);	
+INSERT INTO usuario (nome, cpf, email, telefone, senha, permission) VALUES("Gustavo", "050.189.540-00", "gustavo@gmail.com", "11111111111", "123", 0);	

@@ -24,27 +24,24 @@ CREATE TABLE veiculo (
     CONSTRAINT FK_usuario_id_usuario FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
 );
 
-CREATE TABLE agendamento (
-    id_agendamento INT NOT NULL AUTO_INCREMENT,
-    data DATE NOT NULL,
-    #objetivo INT NOT NULL, #0- Revisão; 1- Conseto;
-    unidade ENUM ('Timoteo, Coronel_Fabriciano, Ipatinga'),
-    #unidade VARCHAR(2000) NOT NULL,    
-    status	ENUM('Pendente', 'Aprovado', 'Reprovado', 'Em_Andamento', 'Concluido', 'Encerrado') DEFAULT 'Pendente',
-    #status TINYINT(1) NOT NULL, #0- Pendente; 1- Aprovado; 2- Reprovado; 3- Em andamento; 4- Concluído, 5- Encerrado;
-    id_veiculo INT NOT NULL,
-    id_tipo_servico INT NOT NULL,
-    PRIMARY KEY (id_agendamento),
-    CONSTRAINT FK_veiculo_id_veiculo FOREIGN KEY (id_veiculo) REFERENCES veiculo(id_veiculo)
-    CONSTRAINT FK_tipo_servico_id_tipo_servico FOREIGN KEY (id_tipo_servico) REFERENCES tipo_servico(id_tipo_servico)
-);
-
 CREATE TABLE tipo_servico(
 	id_tipo_servico INT NOT NULL AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL,
     imagem VARCHAR(2000) NOT NULL,
     descricao VARCHAR(5000),
     PRIMARY KEY (id_tipo_servico)
+);
+
+CREATE TABLE agendamento (
+    id_agendamento INT NOT NULL AUTO_INCREMENT,
+    data DATE NOT NULL,
+    unidade ENUM ('Timoteo, Coronel_Fabriciano, Ipatinga'),
+    status	ENUM('Pendente', 'Aprovado', 'Reprovado', 'Em_Andamento', 'Concluido', 'Encerrado') DEFAULT 'Pendente',
+    id_veiculo INT NOT NULL,
+    id_tipo_servico INT NOT NULL,
+    PRIMARY KEY (id_agendamento),
+    CONSTRAINT FK_veiculo_id_veiculo FOREIGN KEY (id_veiculo) REFERENCES veiculo(id_veiculo),
+    CONSTRAINT FK_tipo_servico_id_tipo_servico FOREIGN KEY (id_tipo_servico) REFERENCES tipo_servico(id_tipo_servico)
 );
 
 CREATE TABLE servico(

@@ -51,7 +51,9 @@ CREATE TABLE servico(
     mecanico INT NOT NULL, #id_usuario
     PRIMARY KEY (id_servico),
 	FOREIGN KEY (id_agendamento) REFERENCES agendamento(id_agendamento),
-    CONSTRAINT FK_usuario_id_usuario FOREIGN KEY (mecanico) REFERENCES usuario(id_usuario)
+
+    CONSTRAINT FK_usuario_id_usuario FOREIGN KEY (mecanico) REFERENCES usuario(id_usuario),
+
 );
 
 CREATE TABLE item_servico(

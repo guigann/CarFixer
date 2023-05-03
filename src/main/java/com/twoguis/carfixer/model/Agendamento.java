@@ -18,10 +18,10 @@ import lombok.ToString;
 public class Agendamento {
     private int id;
     private Date data;
-    private String objetivo;
-    private Unidade unidade;
+    private int tipo_servico;
     private Status status;
-    private List<Servico> servicos = new ArrayList<>();
-    private Veiculo veiculo;
     private int id_veiculo;
+
+    
+    private List<Servico> servicos = new ArrayList<>();
 }

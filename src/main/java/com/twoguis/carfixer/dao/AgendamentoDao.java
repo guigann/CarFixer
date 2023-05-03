@@ -1,5 +1,6 @@
 package com.twoguis.carfixer.dao;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
@@ -15,7 +16,7 @@ import com.twoguis.carfixer.model.Agendamento;
 public interface AgendamentoDao {
 
         @GetGeneratedKeys
-        @SqlUpdate("insert into agendamento (data, objetivo, unidade, status, id_veiculo) values (:data, :objetivo, :unidade, :status, :id_veiculo)")
+        @SqlUpdate("insert into agendamento (data, tipo_servico, status, id_veiculo) values (:data, :tipo_servico, :status, :id_veiculo)")
         int insert(@BindBean Agendamento agendamento);
 
         @SqlQuery("select * " +
@@ -25,16 +26,16 @@ public interface AgendamentoDao {
 
         @SqlQuery("select * " +
                         " from agendamento " +
-                        " order by objetivo;")
+                        " order by tipo_servico;")
         List<Agendamento> getAll();
 
         @SqlQuery("select * " +
                         " from agendamento " +
-                        " where objetivo like :objetivo " +
-                        " order by objetivo;")
-        List<Agendamento> getAllByObjetivo(@Bind("objetivo") String objetivo);
+                        " where data like :data " +
+                        " order by data;")
+        List<Agendamento> getAllByData(@Bind("data") Date data);
 
-        @SqlUpdate("update agendamento " + " set data = :data, " + "objetivo = :objetivo," +"unidade = :unidade," + "status = :status,"
+        @SqlUpdate("update agendamento " + " set data = :data, " + "tipo_servico = :tipo_servico," + "status = :status,"
                         + "id_veiculo = :id_veiculo," + " where id = :id;")
         int update(@BindBean Agendamento agendamento);
 

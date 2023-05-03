@@ -15,7 +15,7 @@ import com.twoguis.carfixer.model.Veiculo;
 public interface VeiculoDao {
 
         @GetGeneratedKeys
-        @SqlUpdate("insert into veiculo (placa, descricao, tipo, id_usuario) values (:placa, :descricao, :tipo, :id_usuario)")
+        @SqlUpdate("insert into veiculo (placa, modelo, tipo, id_usuario) values (:placa, :modelo, :tipo, :id_usuario)")
         int insert(@BindBean Veiculo veiculo);
 
         @SqlQuery("select * " +
@@ -25,16 +25,16 @@ public interface VeiculoDao {
 
         @SqlQuery("select * " +
                         " from veiculo " +
-                        " order by descricao;")
+                        " order by modelo;")
         List<Veiculo> getAll();
 
         @SqlQuery("select * " +
                         " from veiculo " +
-                        " where descricao like :descricao " +
-                        " order by descricao;")
-        List<Veiculo> getAllByDescricao(@Bind("descricao") String descricao);
+                        " where modelo like :modelo " +
+                        " order by modelo;")
+        List<Veiculo> getAllBymodelo(@Bind("modelo") String modelo);
 
-        @SqlUpdate("update veiculo " + " set placa = :placa, " + "descricao = :descricao," + "tipo = :tipo,"
+        @SqlUpdate("update veiculo " + " set placa = :placa, " + "modelo = :modelo," + "tipo = :tipo,"
                         + "id_usuario = :id_usuario," + " where id = :id;")
         int update(@BindBean Veiculo veiculo);
 

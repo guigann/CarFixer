@@ -17,9 +17,9 @@ import lombok.ToString;
 public class Veiculo {
     private int id;
     private String placa;
-    private String descricao;
-    private boolean tipo;
-    private List<Agendamento> agendamentos = new ArrayList<>();
-    private Usuario usuario;
+    private String modelo;
+    private Tipo tipo;
     private int id_usuario;
+
+    private List<Agendamento> agendamentos = new ArrayList<>(); 
 }

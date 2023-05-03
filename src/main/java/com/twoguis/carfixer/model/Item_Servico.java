@@ -15,6 +15,5 @@ public class Item_Servico {
     private int id;
     private String descricao;
     private double valor;
-    private Servico servico;
     private int id_servico;
 }

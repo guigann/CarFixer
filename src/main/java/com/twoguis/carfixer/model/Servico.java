@@ -19,7 +19,8 @@ public class Servico {
     private int id;
     private Date dataPrevEntrega;
     private String observacao;
-    private List<Item_Servico> item_servicos = new ArrayList<>();
-    private Agendamento agendamento;
     private int id_agendamento;
+    private int mecanico;
+
+    private List<Item_Servico> item_servicos = new ArrayList<>();
 }

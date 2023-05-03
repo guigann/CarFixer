@@ -48,12 +48,10 @@ CREATE TABLE servico(
     dataPrevEntrega DATE NOT NULL,
     observacao VARCHAR(2000),
     id_agendamento INT NOT NULL,
-    id_usuario INT NOT NULL, #mecanico
+    mecanico INT NOT NULL, #id_usuario
     PRIMARY KEY (id_servico),
 	FOREIGN KEY (id_agendamento) REFERENCES agendamento(id_agendamento),
-
-    CONSTRAINT FK_usuario_id_usuario FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario),
-
+    CONSTRAINT FK_usuario_id_usuario FOREIGN KEY (mecanico) REFERENCES usuario(id_usuario)
 );
 
 CREATE TABLE item_servico(

@@ -17,8 +17,8 @@ public class Tipo_ServicoService {
     }
     
     public Tipo_Servico inserir (Tipo_Servico tipo_servico){
-        int idTipo_Servico = servicoDao.insert(tipo_servico);
-        tipo_servico.setId(idTipo_Servico);
+        int id_tipo_Servico = servicoDao.insert(tipo_servico);
+        tipo_servico.setId_tipo_servico(id_tipo_Servico);
         return tipo_servico;
     }
     

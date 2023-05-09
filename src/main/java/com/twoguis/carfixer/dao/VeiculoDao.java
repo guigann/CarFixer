@@ -20,8 +20,8 @@ public interface VeiculoDao {
 
         @SqlQuery("select * " +
                         " from veiculo " +
-                        " where id = :id;")
-        Veiculo get(@Bind("id") int id);
+                        " where id_veiculo = :id_veiculo;")
+        Veiculo get(@Bind("id_veiculo") int id_veiculo);
 
         @SqlQuery("select * " +
                         " from veiculo " +
@@ -34,13 +34,13 @@ public interface VeiculoDao {
                         " order by modelo;")
         List<Veiculo> getAllBymodelo(@Bind("modelo") String modelo);
 
-        @SqlUpdate("update veiculo " + " set placa = :placa, " + "modelo = :modelo," + "tipo = :tipo,"
-                        + "id_usuario = :id_usuario," + " where id = :id;")
+        @SqlUpdate("update veiculo" + " set placa = :placa, " + "modelo = :modelo," + "tipo = :tipo,"
+                        + "id_usuario = :id_usuario" + " where id_veiculo = :id_veiculo;")
         int update(@BindBean Veiculo veiculo);
 
         @SqlUpdate("delete " +
                         " from veiculo " +
-                        " where id = :id;")
-        int delete(@Bind("id") int id);
+                        " where id_veiculo = :id_veiculo;")
+        int delete(@Bind("id_veiculo") int id_veiculo);
 
 }

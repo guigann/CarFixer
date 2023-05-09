@@ -1,0 +1,49 @@
+#GET
+GET http://localhost:8087/api/v1/usuario/
+Content-Type: application/json
+###
+
+#POST
+POST http://localhost:8087/api/v1/usuario
+Content-Type: application/json
+
+{
+    "nome":"Guilherme",
+    "cpf":"111.111.111-11",
+    "email":"gui@gmail.com",
+    "telefone":"2222222222",
+    "senha":"123",
+    "permission":false,
+    "veiculos":[]
+}
+###
+
+#PUT
+PUT http://localhost:8087/api/v1/usuario
+Content-Type: application/json
+
+{
+    "id_usuario":2,
+    "nome":"Guilherme",
+    "cpf":"111.111.111-12",
+    "email":"gui@gmail.com",
+    "telefone":"2222222222",
+    "senha":"123",
+    "permission":false,
+    "veiculos":[]
+}
+###
+
+#PATCH
+PATCH http://localhost:8087/api/v1/usuario
+Content-Type: application/json
+
+{
+    "id_usuario":2,
+    "nome":"Guilherme Campos"
+}
+###
+
+#DELETE
+DELETE http://localhost:8087/api/v1/usuario/1
+Content-Type: application/json

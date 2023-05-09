@@ -12,7 +12,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class Item_Servico {
-    private int id;
+    private int id_item_servico;
     private String descricao;
     private double valor;
     private int id_servico;

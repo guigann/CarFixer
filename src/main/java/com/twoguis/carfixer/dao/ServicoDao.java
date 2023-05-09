@@ -20,8 +20,8 @@ public interface ServicoDao {
 
         @SqlQuery("select * " +
                         " from servico " +
-                        " where id = :id;")
-        Servico get(@Bind("id") int id);
+                        " where id_servico = :id_servico;")
+        Servico get(@Bind("id_servico") int id_servico);
 
         @SqlQuery("select * " +
                         " from servico " +
@@ -34,13 +34,13 @@ public interface ServicoDao {
                         " order by observacao;")
         List<Servico> getAllByObjetivo(@Bind("observacao") String observacao);
 
-        @SqlUpdate("update servico " + " set dataPrevEntrega = :dataPrevEntrega, " + "observacao = :observacao"
-                        + "id_agendamento = :id_agendamento," + "mecanico = :mecanico" + " where id = :id;")
+        @SqlUpdate("update servico" + " set dataPrevEntrega = :dataPrevEntrega, " + "observacao = :observacao,"
+                        + "id_agendamento = :id_agendamento," + "mecanico = :mecanico" + " where id_servico = :id_servico;")
         int update(@BindBean Servico servico);
 
         @SqlUpdate("delete " +
                         " from servico " +
-                        " where id = :id;")
-        int delete(@Bind("id") int id);
+                        " where id_servico = :id_servico;")
+        int delete(@Bind("id_servico") int id_servico);
 
 }

@@ -10,7 +10,7 @@ Content-Type: application/json
 {
     "dataPrevEntrega":"2023-05-30",
     "observacao":"Loren Ypson",
-    "id_agendamento":4,
+    "id_agendamento":2,
     "mecanico":2
 }
 ###

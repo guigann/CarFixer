@@ -17,8 +17,8 @@ public class VeiculoService {
     }
     
     public Veiculo inserir (Veiculo veiculo){
-        int idVeiculo = veiculoDao.insert(veiculo);
-        veiculo.setId(idVeiculo);
+        int id_veiculo = veiculoDao.insert(veiculo);
+        veiculo.setId_veiculo(id_veiculo);
         return veiculo;
     }
     

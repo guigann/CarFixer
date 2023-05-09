@@ -17,8 +17,8 @@ public class Item_ServicoService {
     }
     
     public Item_Servico inserir (Item_Servico item_servico){
-        int idItem_Servico = item_servicoDao.insert(item_servico);
-        item_servico.setId(idItem_Servico);
+        int id_item_Servico = item_servicoDao.insert(item_servico);
+        item_servico.setId_item_servico(id_item_Servico);
         return item_servico;
     }
     

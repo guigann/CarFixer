@@ -17,8 +17,8 @@ public class UsuarioService {
     }
     
     public Usuario inserir (Usuario usuario){
-        int idUsuario = usuarioDao.insert(usuario);
-        usuario.setId(idUsuario);
+        int id_usuario = usuarioDao.insert(usuario);
+        usuario.setId_usuario(id_usuario);
         return usuario;
     }
     

@@ -18,8 +18,8 @@ public class AgendamentoService {
     }
     
     public Agendamento inserir (Agendamento agendamento){
-        int idAgendamento = agendamentoDao.insert(agendamento);
-        agendamento.setId(idAgendamento);
+        int id_agendamento = agendamentoDao.insert(agendamento);
+        agendamento.setId_agendamento(id_agendamento);
         return agendamento;
     }
     

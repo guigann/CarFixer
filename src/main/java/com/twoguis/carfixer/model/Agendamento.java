@@ -16,9 +16,9 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class Agendamento {
-    private int id;
+    private int id_agendamento;
     private Date data;
-    private int tipo_servico;
+    private int id_tipo_servico;
     private Status status;
     private int id_veiculo;
 

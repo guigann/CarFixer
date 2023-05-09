@@ -16,17 +16,17 @@ import com.twoguis.carfixer.model.Agendamento;
 public interface AgendamentoDao {
 
         @GetGeneratedKeys
-        @SqlUpdate("insert into agendamento (data, tipo_servico, status, id_veiculo) values (:data, :tipo_servico, :status, :id_veiculo)")
+        @SqlUpdate("insert into agendamento (data, id_tipo_servico, status, id_veiculo) values (:data, :id_tipo_servico, :status, :id_veiculo)")
         int insert(@BindBean Agendamento agendamento);
 
         @SqlQuery("select * " +
                         " from agendamento " +
-                        " where id = :id;")
-        Agendamento get(@Bind("id") int id);
+                        " where id_agendamento = :id_agendamento;")
+        Agendamento get(@Bind("id_agendamento") int id_agendamento);
 
         @SqlQuery("select * " +
                         " from agendamento " +
-                        " order by tipo_servico;")
+                        " order by id_tipo_servico;")
         List<Agendamento> getAll();
 
         @SqlQuery("select * " +
@@ -35,13 +35,13 @@ public interface AgendamentoDao {
                         " order by data;")
         List<Agendamento> getAllByData(@Bind("data") Date data);
 
-        @SqlUpdate("update agendamento " + " set data = :data, " + "tipo_servico = :tipo_servico," + "status = :status,"
-                        + "id_veiculo = :id_veiculo," + " where id = :id;")
+        @SqlUpdate("update agendamento " + " set data = :data, " + "id_tipo_servico = :id_tipo_servico," + "status = :status,"
+                        + "id_veiculo = :id_veiculo" + " where id_agendamento = :id_agendamento;")
         int update(@BindBean Agendamento agendamento);
 
         @SqlUpdate("delete " +
                         " from agendamento " +
-                        " where id = :id;")
-        int delete(@Bind("id") int id);
+                        " where id_agendamento = :id_agendamento;")
+        int delete(@Bind("id_agendamento") int id_agendamento);
 
 }

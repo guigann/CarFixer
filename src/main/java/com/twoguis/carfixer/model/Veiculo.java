@@ -15,7 +15,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class Veiculo {
-    private int id;
+    private int id_veiculo;
     private String placa;
     private String modelo;
     private Tipo tipo;

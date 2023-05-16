@@ -1,0 +1,96 @@
+<!-- <ion-header>
+  <ion-toolbar color="translucid">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>CarFixer</ion-title>
+
+    <ion-item (click)="presentPopover($event)" color="translucid">
+      <ion-icon slot="icon-only" name="person-circle-outline"></ion-icon>
+    </ion-item>
+
+   =
+  </ion-toolbar>
+</ion-header>-->
+<ion-content> 
+
+  
+  <ion-list>
+    <ion-avatar slot="end" (click)="presentPopover($event)">
+      <img size="small" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+    </ion-avatar>
+    <ion-label>Item Avatar</ion-label>
+
+    <ion-popover #popover [isOpen]="isOpen" (didDismiss)="isOpen = false">
+      <ng-template>
+        <ion-content class="ion-padding">Hello World!</ion-content>
+      </ng-template>
+    </ion-popover>
+
+
+    <ion-icon name="person-circle-outline"></ion-icon>
+
+
+
+    <ion-text class="ion-text-center">
+      <h1><b>CarFixer App</b></h1>
+    </ion-text>
+
+
+    <ion-grid [fixed]="true">
+      <ion-row>
+
+        <ion-col size="6" size-md="4" size-lg="2" *ngFor="let page of appPagesClientes" [routerLink]="[page.url]">
+
+          <ion-card>
+            <img src="page.image" />
+            <ion-card-header>
+              <ion-card-title>{{ page.title}}</ion-card-title>
+            </ion-card-header>
+          </ion-card>
+
+        </ion-col>
+
+        <ion-col *ngFor="let page of appPagesVeiculos" [routerLink]="[page.url]">
+
+          <ion-card>
+            <img src="page.image" />
+            <ion-card-header>
+              <ion-card-title>{{ page.title}}</ion-card-title>
+            </ion-card-header>
+          </ion-card>
+
+        </ion-col>
+
+      </ion-row>
+
+      <ion-row>
+
+        <ion-col size="6" size-md="4" size-lg="2" *ngFor="let page of appPagesAgendamentos" [routerLink]="[page.url]">
+
+          <ion-card>
+            <img src="page.image" />
+            <ion-card-header>
+              <ion-card-title>{{ page.title}}</ion-card-title>
+            </ion-card-header>
+          </ion-card>
+
+        </ion-col>
+
+        <ion-col *ngFor="let page of appPagesServicos" [routerLink]="[page.url]">
+
+          <ion-card>
+            <img src="page.image" />
+            <ion-card-header>
+              <ion-card-title>{{ page.title}}</ion-card-title>
+            </ion-card-header>
+          </ion-card>
+
+        </ion-col>
+
+      </ion-row>
+
+
+    </ion-grid>
+  </ion-list>
+</ion-content>

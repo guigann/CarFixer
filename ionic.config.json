@@ -1,0 +1,7 @@
+{
+  "name": "CarFixer",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

@@ -1,0 +1,27 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-text class="ion-text-center"><h1>Login</h1></ion-text>
+
+  <form [formGroup]="formGroup" (ngSubmit)="bt_login()">
+    <ion-item>
+      <ion-label position="stacked">CPF</ion-label>
+      <ion-input type="text" formControlName="cpf"></ion-input>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label position="stacked">Password</ion-label>
+      <ion-input type="password" formControlName="password"></ion-input>
+    </ion-item>
+
+    <div id="buttons">
+      <ion-button type="submit" size="large" shape="round" expand="block" color="primary" [disabled]="!formGroup.valid">Login</ion-button>
+    </div>
+
+  </form>
+
+</ion-content>

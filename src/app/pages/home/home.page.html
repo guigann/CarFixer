@@ -1,96 +1,51 @@
-<!-- <ion-header>
-  <ion-toolbar color="translucid">
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
+<ion-header [translucent]="true">
+  <ion-toolbar>
     <ion-title>CarFixer</ion-title>
 
-    <ion-item (click)="presentPopover($event)" color="translucid">
-      <ion-icon slot="icon-only" name="person-circle-outline"></ion-icon>
-    </ion-item>
-
-   =
-  </ion-toolbar>
-</ion-header>-->
-<ion-content> 
-
-  
-  <ion-list>
-    <ion-avatar slot="end" (click)="presentPopover($event)">
-      <img size="small" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
-    </ion-avatar>
-    <ion-label>Item Avatar</ion-label>
-
-    <ion-popover #popover [isOpen]="isOpen" (didDismiss)="isOpen = false">
+    <ion-button slot="end" fill="outline" id="click-trigger"><ion-icon slot="start" name="person-circle"></ion-icon>Jose</ion-button>
+    <ion-popover trigger="click-trigger" triggerAction="click">
       <ng-template>
-        <ion-content class="ion-padding">Hello World!</ion-content>
+        <ion-content class="ion-padding">Perfil</ion-content>
+        <ion-content class="ion-padding" routerLink="/login">Logout</ion-content>
       </ng-template>
     </ion-popover>
+  </ion-toolbar>
+</ion-header>
 
+<ion-content [fullscreen]="true">
+  <ion-text class="ion-text-center"><h1>CarFixer App</h1></ion-text>
 
-    <ion-icon name="person-circle-outline"></ion-icon>
+  <ion-grid>
+    <ion-row>
+      <ion-col><ion-card routerLink="/">
+          <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
+          <ion-card-header>
+            <ion-card-title class="ion-text-center">Clientes</ion-card-title>
+          </ion-card-header>
+        </ion-card></ion-col>
 
+      <ion-col><ion-card routerLink="/">
+          <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
+          <ion-card-header>
+            <ion-card-title class="ion-text-center">Veículos</ion-card-title>
+          </ion-card-header>
+        </ion-card></ion-col>
+    </ion-row>
 
+    <ion-row>
+      <ion-col><ion-card routerLink="/">
+          <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
+          <ion-card-header>
+            <ion-card-title class="ion-text-center">Agendamentos</ion-card-title>
+          </ion-card-header>
+        </ion-card></ion-col>
 
-    <ion-text class="ion-text-center">
-      <h1><b>CarFixer App</b></h1>
-    </ion-text>
-
-
-    <ion-grid [fixed]="true">
-      <ion-row>
-
-        <ion-col size="6" size-md="4" size-lg="2" *ngFor="let page of appPagesClientes" [routerLink]="[page.url]">
-
-          <ion-card>
-            <img src="page.image" />
-            <ion-card-header>
-              <ion-card-title>{{ page.title}}</ion-card-title>
-            </ion-card-header>
-          </ion-card>
-
-        </ion-col>
-
-        <ion-col *ngFor="let page of appPagesVeiculos" [routerLink]="[page.url]">
-
-          <ion-card>
-            <img src="page.image" />
-            <ion-card-header>
-              <ion-card-title>{{ page.title}}</ion-card-title>
-            </ion-card-header>
-          </ion-card>
-
-        </ion-col>
-
-      </ion-row>
-
-      <ion-row>
-
-        <ion-col size="6" size-md="4" size-lg="2" *ngFor="let page of appPagesAgendamentos" [routerLink]="[page.url]">
-
-          <ion-card>
-            <img src="page.image" />
-            <ion-card-header>
-              <ion-card-title>{{ page.title}}</ion-card-title>
-            </ion-card-header>
-          </ion-card>
-
-        </ion-col>
-
-        <ion-col *ngFor="let page of appPagesServicos" [routerLink]="[page.url]">
-
-          <ion-card>
-            <img src="page.image" />
-            <ion-card-header>
-              <ion-card-title>{{ page.title}}</ion-card-title>
-            </ion-card-header>
-          </ion-card>
-
-        </ion-col>
-
-      </ion-row>
-
-
-    </ion-grid>
-  </ion-list>
+      <ion-col><ion-card routerLink="/">
+          <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
+          <ion-card-header>
+            <ion-card-title class="ion-text-center">Serviços</ion-card-title>
+          </ion-card-header>
+        </ion-card></ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

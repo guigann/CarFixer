@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-home',
@@ -6,30 +6,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
-  @ViewChild('popover') popover:any;
 
-  isOpen = false;
-  public appPagesClientes =
-    [{ title: 'Clientes', url: '/clientes', image: '' }]
-    ;
-
-  public appPagesVeiculos =
-    [{ title: 'Veículos', url: '/veiculos', image: '' }];
-
-  public appPagesAgendamentos =
-    [{ title: 'Agendamentos', url: '/agendamentos', image: '' }];
-
-  public appPagesServicos =
-    [{ title: 'Serviços', url: '/servicos', image: '' }];
+  constructor() { }
 
   ngOnInit() {
-  }
-
-  
-
-  presentPopover(e: Event) {
-    this.popover.event = e;
-    this.isOpen = true;
   }
 
 }

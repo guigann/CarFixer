@@ -15,6 +15,19 @@ const routes: Routes = [
     path: 'home',
     loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
   },
+  {
+    path: 'veiculo',
+    loadChildren: () => import('./pages/veiculo/veiculo.module').then( m => m.VeiculoPageModule)
+  },
+  {
+    path: 'add-veiculo',
+    loadChildren: () => import('./pages/add-veiculo/add-veiculo.module').then( m => m.AddVeiculoPageModule)
+  },
+  {
+    path: 'add-veiculo/:id',
+    loadChildren: () => import('./pages/add-veiculo/add-veiculo.module').then( m => m.AddVeiculoPageModule)
+  },
+
 
 ];
 

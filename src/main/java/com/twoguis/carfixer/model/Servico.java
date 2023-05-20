@@ -1,9 +1,6 @@
 package com.twoguis.carfixer.model;
 
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,6 +18,4 @@ public class Servico {
     private String observacao;
     private int id_agendamento;
     private int mecanico;
-
-    private List<Item_Servico> item_servicos = new ArrayList<>();
 }

@@ -24,8 +24,7 @@ Content-Type: application/json
     "placa":"ABC-123",
     "modelo":"Honda HRV",
     "tipo":"Carro",
-    "id_usuario":2,
-    "agendamentos":[]
+    "id_usuario":2
 }
 ###
 

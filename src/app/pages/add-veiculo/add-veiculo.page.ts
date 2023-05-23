@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Veiculo } from '../veiculo/veiculo.page';
 import { VeiculoService } from 'src/app/services/veiculo.service';
+import { UserService } from 'src/app/services/user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NavController, ToastController } from '@ionic/angular';
+import { User } from 'src/app/model/user';
 
 @Component({
   selector: 'app-add-veiculo',
@@ -13,7 +15,9 @@ import { NavController, ToastController } from '@ionic/angular';
 export class AddVeiculoPage implements OnInit {
   veiculo: Veiculo;
   veiculoService: VeiculoService;
+  userService: UserService;
   formGroup: FormGroup;
+  clientes: User[];
 
   constructor(private activatedRoute: ActivatedRoute, private toastController: ToastController, private navController: NavController, private formBuilder: FormBuilder) {
 
@@ -46,6 +50,9 @@ export class AddVeiculoPage implements OnInit {
       this.formGroup.get('tipo')?.setValue(this.veiculo.tipo);
       this.formGroup.get('user')?.setValue(this.veiculo.user_id);
     }
+
+    this.userService = new UserService();
+    this.clientes = this.userService.getClientes();
   }
 
   ngOnInit() {

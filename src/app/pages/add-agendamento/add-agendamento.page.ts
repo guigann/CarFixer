@@ -4,6 +4,10 @@ import { AgendamentoService } from 'src/app/services/agendamento.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NavController, ToastController } from '@ionic/angular';
+import { VeiculoService } from 'src/app/services/veiculo.service';
+import { Veiculo } from 'src/app/model/veiculo';
+import { Tipo_ServicoService } from 'src/app/services/tipo_servico.service';
+import { Tipo_Servico } from 'src/app/model/tipo_servico';
 
 @Component({
   selector: 'app-add-agendamento',
@@ -13,7 +17,11 @@ import { NavController, ToastController } from '@ionic/angular';
 export class AddAgendamentoPage implements OnInit {
   agendamento: Agendamento;
   agendamentoService: AgendamentoService;
+  veiculoService: VeiculoService;
+  tipo_servicoService: Tipo_ServicoService;
   formGroup: FormGroup;
+  veiculos: Veiculo[];
+  tipo_servicos: Tipo_Servico[];
 
   constructor(private activatedRoute: ActivatedRoute, private toastController: ToastController, private navController: NavController, private formBuilder: FormBuilder) {
 
@@ -46,6 +54,11 @@ export class AddAgendamentoPage implements OnInit {
       this.formGroup.get('veiculo')?.setValue(this.agendamento.veiculo_id);
       this.formGroup.get('tipo_servico')?.setValue(this.agendamento.tipo_servico_id);
     }
+
+    this.veiculoService = new VeiculoService();
+    this.veiculos = this.veiculoService.getAll();
+    this.tipo_servicoService = new Tipo_ServicoService();
+    this.tipo_servicos = this.tipo_servicoService.getAll();
   }
 
   ngOnInit() {
@@ -58,9 +71,9 @@ export class AddAgendamentoPage implements OnInit {
     this.agendamento.tipo_servico_id = this.formGroup.value.tipo_servico_id;
 
 
-      this.agendamentoService.save(this.agendamento);
-      this.exibirMensagem('Registro salvo com sucesso!!!');
-      this.navController.navigateBack('/agendamento');
+    this.agendamentoService.save(this.agendamento);
+    this.exibirMensagem('Registro salvo com sucesso!!!');
+    this.navController.navigateBack('/agendamento');
   }
 
   async exibirMensagem(texto: string) {

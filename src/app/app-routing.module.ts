@@ -24,6 +24,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/add-agendamento/add-agendamento.module').then( m => m.AddAgendamentoPageModule)
   },
   {
+    path: 'add-agendamento/:id',
+    loadChildren: () => import('./pages/add-agendamento/add-agendamento.module').then( m => m.AddAgendamentoPageModule)
+  },
+  {
     path: 'veiculo',
     loadChildren: () => import('./pages/veiculo/veiculo.module').then( m => m.VeiculoPageModule)
   },

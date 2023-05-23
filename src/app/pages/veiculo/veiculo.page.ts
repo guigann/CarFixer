@@ -50,4 +50,3 @@ export class VeiculoPage implements OnInit {
 }
 
 export { Veiculo };
-

@@ -6,31 +6,33 @@ import { User } from '../model/user';
 })
 export class UserService {
 
-  constructor() { 
+  constructor() {
 
     // criar logins para poder testar
     let users = [
       {
-        id: 1, 
-        name: "jose", 
-        cpf: "456", 
-        phone: "123456", 
-        email:"teste@teste", 
-        password: "123"
+        id: 1,
+        name: "jose",
+        cpf: "456",
+        phone: "123456",
+        email: "teste@teste",
+        password: "123",
+        permission: 0 
       },
       {
-        id: 2, 
-        name: "Davi", 
-        cpf: "789", 
-        phone: "123456", 
-        email:"teste@teste", 
-        password: "123"
+        id: 2,
+        name: "Davi",
+        cpf: "789",
+        phone: "123456",
+        email: "teste@teste",
+        password: "123",
+        permission: 0
       }];
     localStorage.setItem('users', JSON.stringify(users));
 
   }
 
-  private _getUsers(): User[]{
+  private _getUsers(): User[] {
     return JSON.parse(localStorage.getItem('users') || '[]');
   }
 
@@ -51,12 +53,26 @@ export class UserService {
     localStorage.setItem('userLogged', JSON.stringify(user));
   }
 
-  logoutUser(){
+  logoutUser() {
     localStorage.removeItem('userLogged');
   }
 
-  getLoggedUser(): User{
+  getLoggedUser(): User {
     let user: User = JSON.parse(localStorage.getItem('userLogged') || '{}');
     return user;
+  }
+
+  getClientes(): User[] {
+
+    let user: User[] = JSON.parse(localStorage.getItem('users') || '[]');
+    let users: User[] = [];
+
+    user.forEach(u => {
+      if (u.permission === 0) {
+        users.push(u);
+      }
+    });
+
+    return users;
   }
 }

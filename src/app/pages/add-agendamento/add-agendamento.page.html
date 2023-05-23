@@ -1,0 +1,103 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-title>CarFixer</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defautHref="/agendamento"></ion-back-button>
+    </ion-buttons>
+
+    <ion-button slot="end" fill="outline" id="click-trigger"><ion-icon slot="start" name="person-circle"></ion-icon>Jose</ion-button>
+    <ion-popover trigger="click-trigger" triggerAction="click">
+      <ng-template>
+        <ion-content class="ion-padding">Perfil</ion-content>
+        <ion-content class="ion-padding" routerLink="/login">Logout</ion-content>
+      </ng-template>
+    </ion-popover>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-text class="ion-text-center">
+    <h1>Cadastrar Agendamento</h1>
+  </ion-text>
+
+
+  <ion-grid>
+    <form [formGroup]="formGroup" (ngSubmit)="salvar()">
+
+      <ion-row>
+        <ion-col>
+
+          <ion-item>
+            <ion-label position="stacked">Data</ion-label>
+            <ion-input type="date" formControlName="data" [(ngModel)]="agendamento.data"></ion-input>
+          </ion-item>
+
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+
+          <ion-item>
+            <ion-label position="stacked">Status</ion-label>
+            <ion-select aria-label="Tipo" placeholder="Status do agendamento" formControlName="status"
+              [(ngModel)]="agendamento.status">
+              <ion-select-option value="Pendente">Pendente</ion-select-option>
+              <ion-select-option value="Aprovado">Aprovado</ion-select-option>
+              <ion-select-option value="Reprovado">Reprovado</ion-select-option>
+              <ion-select-option value="Em Andamento">Em Andamento</ion-select-option>
+              <ion-select-option value="Concluido">Concluído</ion-select-option>
+              <ion-select-option value="Encerrado">Encerrado</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+        </ion-col>
+
+        <ion-col>
+
+          <ion-item>
+            <ion-label position="stacked">Tipo de serviço</ion-label>
+            <ion-select aria-label="Tipo" placeholder="Tipo de Serviço" formControlName="tipo_servico"
+              [(ngModel)]="agendamento.tipo_servico_id">
+              <ion-item-sliding *ngFor="let tipo_servico of tipo_servicos">
+                <ion-select-option value="tipo_servico.id">{{tipo_servico.nome}}</ion-select-option>
+              </ion-item-sliding>
+              //for each tipo_servico;
+            </ion-select>
+          </ion-item>
+
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+
+          <ion-item>
+            <ion-label position="stacked">Veículo</ion-label>
+            <ion-select aria-label="Veículo" placeholder="Veículo agendado" formControlName="veiculo"
+              [(ngModel)]="agendamento.veiculo_id">
+              <ion-item-sliding *ngFor="let veiculo of veiculos">
+                <ion-select-option value="veiculo.id">{{veiculo.modelo}} - {{veiculo.placa}}</ion-select-option>
+              </ion-item-sliding>
+              //for each veículo: modelo + placa;
+            </ion-select>
+          </ion-item>
+
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+
+          <ion-button type="submit" expand="block" color="primary" [disabled]="!formGroup.valid">Cadastrar</ion-button>
+
+        </ion-col>
+      </ion-row>
+
+    </form>
+
+  </ion-grid>
+
+
+
+</ion-content>

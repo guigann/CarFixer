@@ -16,7 +16,8 @@ export class UserService {
         cpf: "456", 
         phone: "123456", 
         email:"teste@teste", 
-        password: "123"
+        password: "123",
+        permission: true
       },
       {
         id: 2, 
@@ -24,22 +25,78 @@ export class UserService {
         cpf: "789", 
         phone: "123456", 
         email:"teste@teste", 
-        password: "123"
+        password: "123",
+        permission: true
       }];
     localStorage.setItem('users', JSON.stringify(users));
 
   }
 
-  private _getUsers(): User[]{
+  getAll(): User[]{
     return JSON.parse(localStorage.getItem('users') || '[]');
+  }
+
+  getAllCliente(): User[]{
+    return this.getAll().filter((element: User) => element.permission === false); 
+  }
+
+  save(user: User): boolean{
+    let users = this.getAll();
+  
+    if(user.id === 0){
+      if(this.isEmailValid(user.email) && this.isCpfValid(user.cpf)){
+        user.id = (new Date().getTime() / 1000) * Math.random();
+        users.push(user);
+      } else {
+        return false
+      }
+    } else{
+      let posicao = users.findIndex((elemento: User) => elemento.id == user.id);
+      users.splice(posicao, 1, user);
+    }
+
+    localStorage.setItem('users', JSON.stringify(users));
+    return true;
+  }
+
+  delete(id: number){
+    let userList = this.getAll();
+    userList = userList.filter((elemento: User) => elemento.id !== id);
+    localStorage.setItem('users', JSON.stringify(userList));
+  }
+
+  getById(id: number){
+    let userList = this.getAll();
+
+    return userList.find((elemento: User) => elemento.id == id);
+  }
+
+  isEmailValid(email: string): boolean{
+    let isValid: boolean = true;
+
+    this.getAll().forEach((u: User) => {
+      if (u.email === email) isValid = false;
+    });
+
+    return isValid;
+  }
+
+  isCpfValid(cpf: string): boolean{
+    let isValid: boolean = true;
+
+    this.getAll().forEach((u: User) => {
+      if (u.cpf === cpf) isValid = false;
+    });
+
+    return isValid;
   }
 
 
   checkUserLogin(cpf: string, password: string): User | null {
     let user: User | null = null;
 
-    this._getUsers().forEach((u: User) => {
-      if (u.cpf === cpf && u.password === password) {
+    this.getAll().forEach((u: User) => {
+      if (u.cpf === cpf && u.password === password && u.permission === true) {
         user = u;
       }
     });
@@ -59,4 +116,5 @@ export class UserService {
     let user: User = JSON.parse(localStorage.getItem('userLogged') || '{}');
     return user;
   }
+
 }

@@ -1,0 +1,40 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defautHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>CarFixer</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-text class="ion-text-center"><h1>{{ titlePage }}</h1></ion-text>
+
+  <form [formGroup]="formGroup" (ngSubmit)="bt_save()">
+    <ion-item>
+      <ion-label position="stacked">Name</ion-label>
+      <ion-input type="text" formControlName="name"></ion-input>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label position="stacked">CPF</ion-label>
+      <ion-input type="text" formControlName="cpf"></ion-input>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label position="stacked">Phone</ion-label>
+      <ion-input type="password" formControlName="phone"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Password</ion-label>
+      <ion-input type="password" formControlName="password"></ion-input>
+    </ion-item>
+
+    <div id="buttons">
+      <ion-button type="submit" size="large" shape="round" expand="block" color="primary" [disabled]="!formGroup.valid">Save</ion-button>
+    </div>
+
+  </form>
+
+</ion-content>

@@ -5,6 +5,7 @@ export class User {
     phone: string;
     email: string;
     password: string;
+    permission: boolean;
 
     constructor(){
         this.id = 0;
@@ -13,5 +14,6 @@ export class User {
         this.email = "";
         this.phone = "";
         this.password = "";
+        this.permission = false;
     }
 }

@@ -35,6 +35,12 @@ public interface AgendamentoDao {
                         " order by data;")
         List<Agendamento> getAllByData(@Bind("data") Date data);
 
+        @SqlQuery("select * " +
+                        " from agendamento " +
+                        " where id_veiculo = :id_veiculo " +
+                        " order by id_veiculo;")
+        List<Agendamento> getAllByVeiculo(@Bind("id_veiculo") int id_veiculo);
+
         @SqlUpdate("update agendamento " + " set data = :data, " + "id_tipo_servico = :id_tipo_servico," + "status = :status,"
                         + "id_veiculo = :id_veiculo" + " where id_agendamento = :id_agendamento;")
         int update(@BindBean Agendamento agendamento);

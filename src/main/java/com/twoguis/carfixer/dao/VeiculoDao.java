@@ -34,6 +34,12 @@ public interface VeiculoDao {
                         " order by modelo;")
         List<Veiculo> getAllBymodelo(@Bind("modelo") String modelo);
 
+        @SqlQuery("select * " +
+                        " from veiculo " +
+                        " where id_usuario = :id_usuario " +
+                        " order by id_usuario;")
+        List<Veiculo> getAllByUsuario(@Bind("id_usuario") int id_usuario);
+
         @SqlUpdate("update veiculo" + " set placa = :placa, " + "modelo = :modelo," + "tipo = :tipo,"
                         + "id_usuario = :id_usuario" + " where id_veiculo = :id_veiculo;")
         int update(@BindBean Veiculo veiculo);

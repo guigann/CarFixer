@@ -34,6 +34,12 @@ public interface Item_ServicoDao {
                         " order by valor;")
         List<Item_Servico> getAllByObjetivo(@Bind("valor") String valor);
 
+        @SqlQuery("select * " +
+                        " from item_servico " +
+                        " where id_servico like :id_servico " +
+                        " order by id_servico;")
+        List<Item_Servico> getAllByServico(@Bind("id_servico") int id_servico);
+
         @SqlUpdate("update item_servico " + " set descricao = :descricao, " + "valor = :valor,"
                         + "id_servico = :id_servico" + " where id_item_servico = :id_item_servico;")
         int update(@BindBean Item_Servico item_servico);

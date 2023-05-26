@@ -6,15 +6,19 @@ import org.jdbi.v3.core.Jdbi;
 import org.springframework.stereotype.Service;
 
 import com.twoguis.carfixer.dao.AgendamentoDao;
+import com.twoguis.carfixer.dao.ServicoDao;
 import com.twoguis.carfixer.model.Agendamento;
+import com.twoguis.carfixer.model.Servico;
 
 @Service
 public class AgendamentoService {
     
     private final AgendamentoDao agendamentoDao;
+    private final ServicoDao servicoDao;
     
     public AgendamentoService(Jdbi jdbi){
         this.agendamentoDao = jdbi.onDemand(AgendamentoDao.class);
+        this.servicoDao = jdbi.onDemand(ServicoDao.class);
     }
     
     public Agendamento inserir (Agendamento agendamento){
@@ -24,7 +28,14 @@ public class AgendamentoService {
     }
     
     public List<Agendamento> consultarTodos(){
-        return agendamentoDao.getAll();
+        List<Agendamento> agendamentos = agendamentoDao.getAll();
+
+        for (Agendamento agendamento : agendamentos) {
+            List<Servico> servicos = servicoDao.getAllByAgendamento(agendamento.getId_agendamento());
+            agendamento.setServicos(servicos);
+        }
+
+        return agendamentos;
     }
 
     public Agendamento consultarPorId(int id){

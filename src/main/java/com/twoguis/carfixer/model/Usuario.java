@@ -1,5 +1,7 @@
 package com.twoguis.carfixer.model;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,4 +21,5 @@ public class Usuario {
     private String telefone;
     private String senha;
     private boolean permission;
+    private List<Veiculo> veiculos;
 }

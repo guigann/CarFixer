@@ -1,6 +1,8 @@
 package com.twoguis.carfixer.model;
 
 import java.sql.Date;
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,4 +20,5 @@ public class Agendamento {
     private int id_tipo_servico;
     private Status status;
     private int id_veiculo;
+    private List<Servico> servicos;
 }

@@ -15,7 +15,7 @@ import com.twoguis.carfixer.model.Servico;
 public interface ServicoDao {
 
         @GetGeneratedKeys
-        @SqlUpdate("insert into servico (dataPrevEntrega, observacao, id_agendamento, mecanico) values (:dataPrevEntrega, :observacao, :id_agendamento, :mecanico)")
+        @SqlUpdate("insert into servico (nome, descricao) values (:nome, :descricao)")
         int insert(@BindBean Servico servico);
 
         @SqlQuery("select * " +
@@ -25,23 +25,11 @@ public interface ServicoDao {
 
         @SqlQuery("select * " +
                         " from servico " +
-                        " order by observacao;")
+                        " order by descricao;")
         List<Servico> getAll();
 
-        @SqlQuery("select * " +
-                        " from servico " +
-                        " where observacao like :observacao " +
-                        " order by observacao;")
-        List<Servico> getAllByObjetivo(@Bind("observacao") String observacao);
-
-        @SqlQuery("select * " +
-                        " from servico " +
-                        " where id_agendamento like :id_agendamento " +
-                        " order by id_agendamento;")
-        List<Servico> getAllByAgendamento(@Bind("id_agendamento") int id_agendamento);
-
-        @SqlUpdate("update servico" + " set dataPrevEntrega = :dataPrevEntrega, " + "observacao = :observacao,"
-                        + "id_agendamento = :id_agendamento," + "mecanico = :mecanico" + " where id_servico = :id_servico;")
+        @SqlUpdate("update servico" + " set nome = :nome, " + "descricao = :descricao"
+                        + " where id_servico = :id_servico;")
         int update(@BindBean Servico servico);
 
         @SqlUpdate("delete " +

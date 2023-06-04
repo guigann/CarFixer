@@ -10,7 +10,7 @@ CREATE TABLE usuario (
     email VARCHAR(100) NOT NULL,
     telefone VARCHAR(20) NOT NULL,
     senha VARCHAR(32) NOT NULL,
-    permission TINYINT(1) NOT NULL, #0- Cliente; 1- Funcionário; 2- Admin;
+    permission ENUM('Cliente','Funcionario','Admin') DEFAULT 'Cliente' NOT NULL,
     PRIMARY KEY (id_usuario)
 );
 
@@ -18,50 +18,57 @@ CREATE TABLE veiculo (
     id_veiculo INT NOT NULL AUTO_INCREMENT,
     placa CHAR(7) NOT NULL UNIQUE,
     modelo VARCHAR(200) NOT NULL,
-    tipo ENUM ('Carro', 'Moto'),
-    id_usuario INT NOT NULL,
+    tipo ENUM ('Carro', 'Moto') NOT NULL,
+    id_cliente INT NOT NULL,
     PRIMARY KEY (id_veiculo),
-    CONSTRAINT FK_usuario_id_usuario FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
+    CONSTRAINT FK_id_cliente FOREIGN KEY (id_cliente) REFERENCES usuario(id_usuario)
 );
 
-CREATE TABLE tipo_servico(
-	id_tipo_servico INT NOT NULL AUTO_INCREMENT,
-    nome VARCHAR(100) NOT NULL,
-    imagem VARCHAR(2000) NOT NULL,
-    descricao VARCHAR(5000),
-    PRIMARY KEY (id_tipo_servico)
+CREATE TABLE horario (
+    id_horario INT NOT NULL AUTO_INCREMENT,
+    status ENUM('Livre','Ocupado') DEFAULT 'Livre' NOT NULL,
+    data datetime NOT NULL,
+	PRIMARY KEY (id_horario)
 );
 
-CREATE TABLE agendamento (
-    id_agendamento INT NOT NULL AUTO_INCREMENT,
-    data DATE NOT NULL,
-    status	ENUM('Pendente', 'Aprovado', 'Reprovado', 'Em_Andamento', 'Concluido', 'Encerrado') DEFAULT 'Pendente',
+CREATE TABLE agenda (
+    id_agenda INT NOT NULL AUTO_INCREMENT,
+    id_horario INT NOT NULL,
     id_veiculo INT NOT NULL,
-    id_tipo_servico INT NOT NULL,
-    PRIMARY KEY (id_agendamento),
-    CONSTRAINT FK_veiculo_id_veiculo FOREIGN KEY (id_veiculo) REFERENCES veiculo(id_veiculo),
-    CONSTRAINT FK_tipo_servico_id_tipo_servico FOREIGN KEY (id_tipo_servico) REFERENCES tipo_servico(id_tipo_servico)
+    status	ENUM('Pendente', 'Aprovado', 'Reprovado', 'Em_Andamento', 'Concluido', 'Cancelado') DEFAULT 'Pendente' NOT NULL,
+    dt_previsao DATE,
+    dt_fim DATE,
+    observacao VARCHAR(5000),
+    PRIMARY KEY (id_agenda),
+	CONSTRAINT FK_id_horario FOREIGN KEY (id_horario) REFERENCES horario(id_horario),
+    CONSTRAINT FK_id_veiculo FOREIGN KEY (id_veiculo) REFERENCES veiculo(id_veiculo)
 );
 
-CREATE TABLE servico(
-	id_servico INT NOT NULL AUTO_INCREMENT,
-    dataPrevEntrega DATE NOT NULL,
-    observacao VARCHAR(2000),
-    id_agendamento INT NOT NULL,
-	mecanico INT NOT NULL, #id_usuario
-    PRIMARY KEY (id_servico),
-	CONSTRAINT FK_agendamento_id_agendamento FOREIGN KEY (id_agendamento) REFERENCES agendamento(id_agendamento),
-    CONSTRAINT FK_usuario_mecanico FOREIGN KEY (mecanico) REFERENCES usuario(id_usuario)
+CREATE TABLE produto (
+    id_produto INT NOT NULL AUTO_INCREMENT,
+    id_agenda INT NOT NULL,
+	descricao VARCHAR(5000),
+	PRIMARY KEY (id_produto),
+	CONSTRAINT FK_id_agenda FOREIGN KEY (id_agenda) REFERENCES agenda(id_agenda)
 );
 
-CREATE TABLE item_servico(
-	id_item_servico INT NOT NULL AUTO_INCREMENT,
-    descricao VARCHAR(2000), 	
-	valor DOUBLE,
-    id_servico INT NOT NULL,
-	PRIMARY KEY (id_item_servico),
-    CONSTRAINT FK_servico_id_servico FOREIGN KEY (id_servico) REFERENCES servico(id_servico)	
+CREATE TABLE servico (
+    id_servico INT NOT NULL AUTO_INCREMENT,
+    nome VARCHAR(200) NOT NULL,
+	descricao VARCHAR(5000),
+	PRIMARY KEY (id_servico)
+);
+
+
+CREATE TABLE servico_agenda (
+	id_servico INT NOT NULL,
+    id_agenda INT NOT NULL,
+	observacao VARCHAR(5000),
+	CONSTRAINT FK_id_servico_a FOREIGN KEY (id_servico) REFERENCES servico(id_servico),
+	CONSTRAINT FK_id_agenda_a FOREIGN KEY (id_agenda) REFERENCES agenda(id_agenda),
+    
+    PRIMARY KEY (id_servico, id_agenda)
 );
 
 #INSERTS
-INSERT INTO usuario (nome, cpf, email, telefone, senha, permission) VALUES("Gustavo", "050.189.540-00", "gustavo@gmail.com", "11111111111", "123", 0);	
+INSERT INTO usuario (nome, cpf, email, telefone, senha, permission) VALUES("Gustavo", "050.189.540-00", "gustavo@gmail.com", "11111111111", "123", "Cliente");

@@ -1,0 +1,39 @@
+#GET
+GET http://localhost:8087/api/v1/horario/
+Content-Type: application/json
+###
+
+#POST
+POST http://localhost:8087/api/v1/horario
+Content-Type: application/json
+
+{
+    "status":"Livre",
+    "data":"2023-08-12"
+}
+###
+
+#PUT
+PUT http://localhost:8087/api/v1/horario
+Content-Type: application/json
+
+{
+    "id_horario":1,
+    "status":"Ocupado",
+    "data":"2023-08-12"
+}
+###
+
+#PATCH
+PATCH http://localhost:8087/api/v1/horario
+Content-Type: application/json
+
+{
+    "id_horario":2,
+    "status":"Ocupado"
+}
+###
+
+#DELETE
+DELETE http://localhost:8087/api/v1/horario/1
+Content-Type: application/json

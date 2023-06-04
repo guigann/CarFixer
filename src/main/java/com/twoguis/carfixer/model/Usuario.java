@@ -20,6 +20,6 @@ public class Usuario {
     private String email;
     private String telefone;
     private String senha;
-    private boolean permission;
+    private Permission permission;
     private List<Veiculo> veiculos;
 }

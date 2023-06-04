@@ -13,7 +13,7 @@ Content-Type: application/json
     "email":"gui@gmail.com",
     "telefone":"2222222222",
     "senha":"123",
-    "permission":false
+    "permission":"Cliente"
 }
 ###
 
@@ -28,7 +28,7 @@ Content-Type: application/json
     "email":"gui@gmail.com",
     "telefone":"2222222222",
     "senha":"123",
-    "permission":false
+    "permission":"Cliente"
 }
 ###
 

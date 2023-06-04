@@ -1,7 +1,6 @@
 package com.twoguis.carfixer.model;
 
-import java.sql.Date;
-import java.util.List;
+// import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,9 +15,7 @@ import lombok.ToString;
 @ToString
 public class Servico {
     private int id_servico;
-    private Date dataPrevEntrega;
-    private String observacao;
-    private int id_agendamento;
-    private int mecanico;
-    private List<Item_Servico> item_servicos;
+    private String nome;
+    private String descricao;
+    // private List<Agenda> agendas;
 }

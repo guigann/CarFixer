@@ -11,9 +11,8 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Tipo_Servico {
-    private int id_tipo_servico;
-    private String nome;
-    private String imagem;
-    private String descricao;
+public class Produto {
+    private int id_produto;
+    private int id_agenda;
+    private String descricao;    
 }

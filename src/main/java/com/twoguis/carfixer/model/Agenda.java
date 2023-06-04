@@ -14,11 +14,14 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Agendamento {
-    private int id_agendamento;
-    private Date data;
-    private int id_tipo_servico;
-    private Status status;
+public class Agenda {
+    private int id_agenda;
+    private int id_horario;
     private int id_veiculo;
-    private List<Servico> servicos;
+    private Status status;
+    private Date dt_previsao;
+    private Date dt_fim;
+    private String observacao;
+    private List<Produto> produtos;
+    // private List<Servico> servicos;
 }

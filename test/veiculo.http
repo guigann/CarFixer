@@ -8,10 +8,10 @@ POST http://localhost:8087/api/v1/veiculo
 Content-Type: application/json
 
 {
-    "placa":"ABC-123",
+    "placa":"ABC-122",
     "modelo":"Honda Civic",
-    "tipo":"Carro",
-    "id_usuario":2
+    "tipo":"Carro", 
+    "id_cliente":2
 }
 ###
 
@@ -24,7 +24,7 @@ Content-Type: application/json
     "placa":"ABC-123",
     "modelo":"Honda HRV",
     "tipo":"Carro",
-    "id_usuario":2
+    "id_cliente":2
 }
 ###
 

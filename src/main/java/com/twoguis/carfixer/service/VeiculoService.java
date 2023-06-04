@@ -4,20 +4,20 @@ import java.util.List;
 import org.jdbi.v3.core.Jdbi;
 import org.springframework.stereotype.Service;
 
-import com.twoguis.carfixer.dao.AgendamentoDao;
+import com.twoguis.carfixer.dao.AgendaDao;
 import com.twoguis.carfixer.dao.VeiculoDao;
-import com.twoguis.carfixer.model.Agendamento;
+import com.twoguis.carfixer.model.Agenda;
 import com.twoguis.carfixer.model.Veiculo;
 
 @Service
 public class VeiculoService {
     
     private final VeiculoDao veiculoDao;
-    private final AgendamentoDao agendamentoDao;
+    private final AgendaDao agendaDao;
     
     public VeiculoService(Jdbi jdbi){
         this.veiculoDao = jdbi.onDemand(VeiculoDao.class);
-        this.agendamentoDao = jdbi.onDemand(AgendamentoDao.class);
+        this.agendaDao = jdbi.onDemand(AgendaDao.class);
     }
     
     public Veiculo inserir (Veiculo veiculo){
@@ -30,8 +30,8 @@ public class VeiculoService {
         List<Veiculo> veiculos = veiculoDao.getAll();
 
         for (Veiculo veiculo : veiculos) {
-            List<Agendamento> agendamentos = agendamentoDao.getAllByVeiculo(veiculo.getId_veiculo());
-            veiculo.setAgendamentos(agendamentos);
+            List<Agenda> agendas = agendaDao.getAllByVeiculo(veiculo.getId_veiculo());
+            veiculo.setAgendas(agendas);
         }
 
         return veiculos;

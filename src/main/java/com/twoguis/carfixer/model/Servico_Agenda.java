@@ -1,7 +1,5 @@
 package com.twoguis.carfixer.model;
 
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,11 +11,8 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Veiculo {
-    private int id_veiculo;
-    private String placa;
-    private String modelo;
-    private Tipo tipo;
-    private int id_cliente;
-    private List<Agenda> agendas;
+public class Servico_Agenda {
+    private int id_servico;
+    private int id_agenda;
+    private String observacao;
 }

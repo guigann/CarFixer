@@ -1,5 +1,9 @@
 package com.twoguis.carfixer.model;
 
+
+
+import java.sql.Timestamp;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,9 +15,8 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Item_Servico {
-    private int id_item_servico;
-    private String descricao;
-    private double valor;
-    private int id_servico;
+public class Horario {  
+    private int id_horario;
+    private Status_Horario status;
+    private Timestamp data;
 }

@@ -8,10 +8,8 @@ POST http://localhost:8087/api/v1/servico
 Content-Type: application/json
 
 {
-    "dataPrevEntrega":"2023-05-30",
-    "observacao":"Loren Ypson",
-    "id_agendamento":2,
-    "mecanico":2
+    "nome":"Pintura",
+    "descricao":"Loren Ypson"
 }
 ###
 
@@ -21,10 +19,8 @@ Content-Type: application/json
 
 {
     "id_servico":1,
-    "dataPrevEntrega":"2023-05-30",
-    "observacao":"Loren Ypson",
-    "id_agendamento":4,
-    "mecanico":2
+    "nome":"Pintura",
+    "descricao":"Loren Ypson"
 }
 ###
 
@@ -33,11 +29,11 @@ PATCH http://localhost:8087/api/v1/servico
 Content-Type: application/json
 
 {
-    "id_servico":4,
-    "status":"Aprovado"
+    "id_servico":1,
+    "descricao":"Loren Ypson Loren Ypson"
 }
 ###
 
 #DELETE
-DELETE http://localhost:8087/api/v1/servico/5
+DELETE http://localhost:8087/api/v1/servico/1
 Content-Type: application/json

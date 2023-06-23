@@ -16,7 +16,7 @@ import com.twoguis.carfixer.service.Servico_AgendaService;
 
 
 @RestController
-@RequestMapping("/api/v1/servico_agenda")
+@RequestMapping("/api/v1/servico/{id_servico}/agenda")
 public class Servico_AgendaController {
     private final Servico_AgendaService servico_agendaService;
     
@@ -31,10 +31,8 @@ public class Servico_AgendaController {
     }
     
     @GetMapping("/{id_agenda}")
-    public Agenda consultar(
-            @PathVariable("id_servico") int id_servico,
-            @PathVariable("id_agenda") int id_agenda
-    ){
+    public Agenda consultar(@PathVariable("id_servico") int id_servico,
+                            @PathVariable("id_agenda") int id_agenda){
         Agenda agenda = servico_agendaService.get(id_servico, id_agenda);
         return agenda;
     }

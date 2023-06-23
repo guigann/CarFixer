@@ -8,7 +8,7 @@ POST http://localhost:8087/api/v1/produto
 Content-Type: application/json
 
 {
-    "id_agenda":4,
+    "id_agenda":1,
     "descricao":"Pneu"
     
 }

@@ -9,7 +9,7 @@ Content-Type: application/json
 
 {
     "id_horario":1,
-    "id_veiculo":2,
+    "id_veiculo":1,
     "status":"Pendente",
     "dt_previsao":"2023-05-19",
     "dt_fim":"2023-05-19",

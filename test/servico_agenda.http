@@ -9,7 +9,7 @@ Content-Type: application/json
 
 {
     "id_servico":1,
-    "id_agenda":4,
+    "id_agenda":2,
     "observacao":""
 }
 ###

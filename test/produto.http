@@ -8,7 +8,7 @@ POST http://localhost:8087/api/v1/produto
 Content-Type: application/json
 
 {
-    "id_agenda":1,
+    "id_agenda":2,
     "descricao":"Pneu"
     
 }
@@ -36,5 +36,5 @@ Content-Type: application/json
 ###
 
 #DELETE
-DELETE http://localhost:8087/api/v1/produto/1  
+DELETE http://localhost:8087/api/v1/produto/4  
 Content-Type: application/json

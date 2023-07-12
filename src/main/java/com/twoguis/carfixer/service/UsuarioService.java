@@ -30,15 +30,18 @@ public class UsuarioService {
         List<Usuario> usuarios = usuarioDao.getAll();
 
         for (Usuario usuario : usuarios) {
-            List<Veiculo> veiculos = veiculoDao.getAllByUsuario(usuario.getId_usuario());
-            usuario.setVeiculos(veiculos);
+            usuario = listarVeiculos(usuario);
         }
 
         return usuarios;
     }
 
     public Usuario consultarPorId(int id) {
-        return usuarioDao.get(id);
+        Usuario usuario = usuarioDao.get(id);
+
+        usuario = listarVeiculos(usuario);
+
+        return usuario;
     }
 
     public void alterar(Usuario usuario) {
@@ -49,4 +52,10 @@ public class UsuarioService {
         usuarioDao.delete(id);
     }
 
+    public Usuario listarVeiculos(Usuario usuario) {
+        List<Veiculo> veiculos = veiculoDao.getAllByUsuario(usuario.getId_usuario());
+        usuario.setVeiculos(veiculos);
+
+        return usuario;
+    }
 }

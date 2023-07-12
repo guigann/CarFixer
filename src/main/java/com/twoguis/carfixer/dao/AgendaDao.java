@@ -40,7 +40,7 @@ public interface AgendaDao {
                         " order by id_servico;")
         List<Agenda> getAllByServico(@Bind("id_servico") int id_servico);
 
-        @SqlUpdate("update agenda " + " set id_horario = :id_horario, " + "id_veiculo = :id_veiculo,"
+        @SqlUpdate("update agenda" + " set id_horario = :id_horario, " + "id_veiculo = :id_veiculo,"
                         + "status = :status,"
                         + "dt_previsao = :dt_previsao," + "dt_fim = :dt_fim," + "observacao = :observacao"
                         + " where id_agenda = :id_agenda;")

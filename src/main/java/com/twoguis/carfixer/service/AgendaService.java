@@ -12,42 +12,51 @@ import com.twoguis.carfixer.model.Produto;
 
 @Service
 public class AgendaService {
-    
+
     private final AgendaDao agendaDao;
     private final ProdutoDao produtoDao;
-    
-    public AgendaService(Jdbi jdbi){
+
+    public AgendaService(Jdbi jdbi) {
         this.agendaDao = jdbi.onDemand(AgendaDao.class);
         this.produtoDao = jdbi.onDemand(ProdutoDao.class);
     }
-    
-    public Agenda inserir (Agenda agenda){
+
+    public Agenda inserir(Agenda agenda) {
         int id_agenda = agendaDao.insert(agenda);
         agenda.setId_agenda(id_agenda);
         return agenda;
     }
-    
-    public List<Agenda> consultarTodos(){
+
+    public List<Agenda> consultarTodos() {
         List<Agenda> agendas = agendaDao.getAll();
 
         for (Agenda agenda : agendas) {
-            List<Produto> produtos = produtoDao.getAllByAgenda(agenda.getId_agenda());
-            agenda.setProdutos(produtos);
+            agenda = listarProdutos(agenda);
         }
 
         return agendas;
     }
 
-    public Agenda consultarPorId(int id){
-        return agendaDao.get(id);
+    public Agenda consultarPorId(int id) {
+        Agenda agenda = agendaDao.get(id);
+        agenda = listarProdutos(agenda);
+
+        return agenda;
     }
-    
-    public void alterar(Agenda agenda){
+
+    public void alterar(Agenda agenda) {
         agendaDao.update(agenda);
     }
-    
-    public void excluir(int id){
+
+    public void excluir(int id) {
         agendaDao.delete(id);
     }
-    
+
+    public Agenda listarProdutos(Agenda agenda) {
+        List<Produto> produtos = produtoDao.getAllByAgenda(agenda.getId_agenda());
+        agenda.setProdutos(produtos);
+
+        return agenda;
+    }
+
 }

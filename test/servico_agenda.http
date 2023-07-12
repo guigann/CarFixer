@@ -9,23 +9,23 @@ Content-Type: application/json
 
 {
     "id_servico":1,
-    "id_agenda":2,
+    "id_agenda":1,
     "observacao":""
 }
 ###
 
-#PUT
+#PUT / NOT SUPORTED
 PUT http://localhost:8087/api/v1/servico/1/agenda
 Content-Type: application/json
 
 {
     "id_servico":1,
-    "id_agenda":2,
+    "id_agenda":1,
     "observacao":"a"
 }
 ###
 
-#PATCH
+#PATCH / NOT SUPORTED
 PATCH http://localhost:8087/api/v1/servico/1/agenda
 Content-Type: application/json
 
@@ -35,5 +35,5 @@ Content-Type: application/json
 ###
 
 #DELETE
-DELETE http://localhost:8087/api/v1/servico/1/agenda
+DELETE http://localhost:8087/api/v1/servico/1/agenda/2
 Content-Type: application/json

@@ -12,6 +12,7 @@ import com.twoguis.carfixer.model.Agenda;
 import com.twoguis.carfixer.model.Servico_Agenda;
 
 @RegisterBeanMapper(Servico_Agenda.class)
+@RegisterBeanMapper(Agenda.class)
 public interface Servico_AgendaDao {
 
                 
@@ -19,14 +20,14 @@ public interface Servico_AgendaDao {
     void insert(@BindBean Servico_Agenda servico_agenda);
     
     
-    @SqlQuery("select * " +
+    @SqlQuery("select a.* " +
             " from agenda a, servico_agenda sa " +
             " where sa.id_agenda = a.id_agenda " +
             "   and sa.id_servico = :id_servico " +
             "   and sa.id_agenda = :id_agenda;")
     Agenda get(@Bind("id_servico") int id_servico, @Bind("id_agenda") int id_agenda);
 
-    @SqlQuery("select * " +
+    @SqlQuery("select a.* " +
             " from agenda a, servico_agenda sa " +
             " where sa.id_agenda = a.id_agenda " +
             "   and sa.id_servico = :id_servico;")
@@ -34,13 +35,13 @@ public interface Servico_AgendaDao {
     
     @SqlUpdate("delete " +
             " from servico_agenda " +
-            " where sa.id_servico = :id_servico " +
-            "   and sa.id_agenda = :id_agenda;")
+            " where id_servico = :id_servico " +
+            "   and id_agenda = :id_agenda;")
     int delete(@Bind("id_servico") int id_servico, @Bind("id_agenda") int id_agenda);
     
     @SqlUpdate("delete " +
             " from servico_agenda " +
-            " where sa.id_servico = :id_servico;")
+            " where id_servico = :id_servico;")
     int deleteAllByServico(@Bind("id_servico") int id_servico);
 
 }

@@ -9,35 +9,43 @@ import com.twoguis.carfixer.model.Agenda;
 import com.twoguis.carfixer.model.Servico_Agenda;
 
 @Service
-public class Servico_AgendaService {
-    
+public class Servico_AgendaService extends AgendaService {
+
     private final Servico_AgendaDao servico_agendaDao;
-    
-    public Servico_AgendaService(Jdbi jdbi){
+
+    public Servico_AgendaService(Jdbi jdbi) {
+        super(jdbi);
         this.servico_agendaDao = jdbi.onDemand(Servico_AgendaDao.class);
     }
-    
-    public Servico_Agenda inserir (Servico_Agenda servico_agenda){
+
+    public Servico_Agenda inserir(Servico_Agenda servico_agenda) {
         servico_agendaDao.insert(servico_agenda);
         return servico_agenda;
     }
-    
-    public List<Agenda> getByServico(int id_servico){
+
+    public List<Agenda> getByServico(int id_servico) {
         List<Agenda> agendaList = servico_agendaDao.getAllByServico(id_servico);
+
+        for (Agenda agenda : agendaList) {
+            agenda = this.listarProdutos(agenda);
+        }
+
         return agendaList;
     }
-    
-    public Agenda get(int id_servico, int id_agenda){
+
+    public Agenda get(int id_servico, int id_agenda) {
         Agenda agenda = servico_agendaDao.get(id_servico, id_agenda);
+        agenda = this.listarProdutos(agenda);
+
         return agenda;
     }
-    
-    public void delete(int id_servico, int id_agenda){
+
+    public void delete(int id_servico, int id_agenda) {
         servico_agendaDao.delete(id_servico, id_agenda);
     }
-    
-    public void deleteAllByServico(int id_servico){
+
+    public void deleteAllByServico(int id_servico) {
         servico_agendaDao.deleteAllByServico(id_servico);
     }
-    
+
 }

@@ -30,9 +30,8 @@ public interface VeiculoDao {
 
         @SqlQuery("select * " +
                         " from veiculo " +
-                        " where modelo like :modelo " +
-                        " order by modelo;")
-        List<Veiculo> getAllBymodelo(@Bind("modelo") String modelo);
+                        " where placa like :placa;")
+        Veiculo getByPlaca(@Bind("placa") String placa);
 
         @SqlQuery("select * " +
                         " from veiculo " +

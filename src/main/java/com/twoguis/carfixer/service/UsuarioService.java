@@ -44,6 +44,14 @@ public class UsuarioService {
         return usuario;
     }
 
+    public Usuario getByCpf(String cpf){
+       return usuarioDao.getByCpf(cpf);
+    }
+
+    public Usuario getByEmail(String email){
+       return usuarioDao.getByEmail(email);
+    }
+
     public void alterar(Usuario usuario) {
         usuarioDao.update(usuario);
     }
@@ -58,4 +66,6 @@ public class UsuarioService {
 
         return usuario;
     }
+
+    
 }

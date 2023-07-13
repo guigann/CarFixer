@@ -17,5 +17,4 @@ public class Servico {
     private int id_servico;
     private String nome;
     private String descricao;
-    // private List<Agenda> agendas;
 }

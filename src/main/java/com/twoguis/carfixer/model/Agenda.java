@@ -23,5 +23,4 @@ public class Agenda {
     private Date dt_fim;
     private String observacao;
     private List<Produto> produtos;
-    // private List<Servico> servicos;
 }

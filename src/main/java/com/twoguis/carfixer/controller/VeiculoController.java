@@ -57,4 +57,14 @@ public class VeiculoController {
         veiculoService.excluir(id);
         return veiculo;
     }
+
+    @GetMapping("/placa/{placa}/exists")
+    public int placaExists(@PathVariable("placa") String placa) {
+        Veiculo veiculo = veiculoService.getByPlaca(placa);
+        
+        if (veiculo != null && veiculo.getPlaca().equals(placa)){
+            return 200;
+        } else
+            return 404;
+    }
 }

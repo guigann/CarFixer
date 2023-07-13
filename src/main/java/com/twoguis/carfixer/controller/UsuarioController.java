@@ -14,47 +14,66 @@ import org.springframework.web.bind.annotation.RestController;
 import com.twoguis.carfixer.model.Usuario;
 import com.twoguis.carfixer.service.UsuarioService;
 
-
 @RestController
 @RequestMapping("/api/v1/usuario")
 public class UsuarioController {
     private final UsuarioService usuarioService;
-    
-    public UsuarioController(UsuarioService usuarioService){
+
+    public UsuarioController(UsuarioService usuarioService) {
         this.usuarioService = usuarioService;
     }
-    
-    @GetMapping({"/", ""})
-    public List<Usuario> consultarTodos(){
+
+    @GetMapping({ "/", "" })
+    public List<Usuario> consultarTodos() {
         List<Usuario> usuarioList = usuarioService.consultarTodos();
         return usuarioList;
     }
-    
+
     @GetMapping("/{id}")
-    public Usuario consultarUsuario(@PathVariable("id") int id){
+    public Usuario consultarUsuario(@PathVariable("id") int id) {
         Usuario ret = usuarioService.consultarPorId(id);
         return ret;
     }
-    
-    @PostMapping({"", "/"})
-    public Usuario inserir(@RequestBody Usuario usuario){
+
+    @PostMapping({ "", "/" })
+    public Usuario inserir(@RequestBody Usuario usuario) {
         Usuario ret = usuarioService.inserir(usuario);
         return ret;
     }
-    
-    @PutMapping({"", "/"})
-    public Usuario alterar(@RequestBody Usuario usuario){
+
+    @PutMapping({ "", "/" })
+    public Usuario alterar(@RequestBody Usuario usuario) {
         usuarioService.alterar(usuario);
         return usuario;
     }
-    
+
     @DeleteMapping("/{id}")
-    public Usuario excluir(@PathVariable("id") int id){
+    public Usuario excluir(@PathVariable("id") int id) {
         Usuario usuario = usuarioService.consultarPorId(id);
-        if (usuario == null){
+        if (usuario == null) {
             throw new RuntimeException("Nao existe usuario com este id para ser excluido....");
         }
         usuarioService.excluir(id);
         return usuario;
+    }
+
+    @GetMapping("/cpf/{cpf}/exists")
+    public int cpfExists(@PathVariable("cpf") String cpf) {
+        Usuario usuario = usuarioService.getByCpf(cpf);
+
+        if (usuario != null && usuario.getCpf().equals(cpf)) {
+            return 200;
+        } else
+            return 404;
+    }
+
+    @GetMapping("/email/{email}/exists")
+    public int emailExists(@PathVariable("email") String email) {
+    Usuario usuario = usuarioService.getByEmail(email);
+
+    if (usuario != null && usuario.getEmail().equals(email)) {
+    return 200;
+    } else
+    return 404;
     }
 }

@@ -44,6 +44,10 @@ public class VeiculoService {
         return veiculo;
     }
 
+    public Veiculo getByPlaca(String placa){
+       return veiculoDao.getByPlaca(placa);
+    }
+
     public void alterar(Veiculo veiculo) {
         veiculoDao.update(veiculo);
     }

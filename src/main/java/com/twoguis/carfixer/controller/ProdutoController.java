@@ -25,36 +25,36 @@ public class ProdutoController {
     }
     
     @GetMapping({"/", ""})
-    public List<Produto> consultarTodos(){
-        List<Produto> produtoList = produtoService.consultarTodos();
+    public List<Produto> get(){
+        List<Produto> produtoList = produtoService.get();
         return produtoList;
     }
     
     @GetMapping("/{id}")
     public Produto consultarProduto(@PathVariable("id") int id){
-        Produto ret = produtoService.consultarPorId(id);
+        Produto ret = produtoService.getById(id);
         return ret;
     }
     
     @PostMapping({"", "/"})
-    public Produto inserir(@RequestBody Produto produto){
-        Produto ret = produtoService.inserir(produto);
+    public Produto insert(@RequestBody Produto produto){
+        Produto ret = produtoService.insert(produto);
         return ret;
     }
     
     @PutMapping({"", "/"})
-    public Produto alterar(@RequestBody Produto produto){
-        produtoService.alterar(produto);
+    public Produto update(@RequestBody Produto produto){
+        produtoService.update(produto);
         return produto;
     }
     
     @DeleteMapping("/{id}")
-    public Produto excluir(@PathVariable("id") int id){
-        Produto produto = produtoService.consultarPorId(id);
+    public Produto delete(@PathVariable("id") int id){
+        Produto produto = produtoService.getById(id);
         if (produto == null){
             throw new RuntimeException("Nao existe produto com este id para ser excluido....");
         }
-        produtoService.excluir(id);
+        produtoService.delete(id);
         return produto;
     }
 }

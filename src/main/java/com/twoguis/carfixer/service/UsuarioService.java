@@ -20,52 +20,51 @@ public class UsuarioService {
         this.veiculoDao = jdbi.onDemand(VeiculoDao.class);
     }
 
-    public Usuario inserir(Usuario usuario) {
+    public Usuario insert(Usuario usuario) {
         int id_usuario = usuarioDao.insert(usuario);
         usuario.setId_usuario(id_usuario);
         return usuario;
     }
 
-    public List<Usuario> consultarTodos() {
-        List<Usuario> usuarios = usuarioDao.getAll();
+    public List<Usuario> get() {
+        List<Usuario> usuarios = usuarioDao.get();
 
         for (Usuario usuario : usuarios) {
-            usuario = listarVeiculos(usuario);
+            usuario = getVeiculos(usuario);
         }
 
         return usuarios;
     }
 
-    public Usuario consultarPorId(int id) {
-        Usuario usuario = usuarioDao.get(id);
+    public Usuario getById(int id) {
+        Usuario usuario = usuarioDao.getById(id);
 
-        usuario = listarVeiculos(usuario);
+        usuario = getVeiculos(usuario);
 
         return usuario;
     }
 
-    public Usuario getByCpf(String cpf){
-       return usuarioDao.getByCpf(cpf);
+    public Usuario getByCpf(String cpf) {
+        return usuarioDao.getByCpf(cpf);
     }
 
-    public Usuario getByEmail(String email){
-       return usuarioDao.getByEmail(email);
+    public Usuario getByEmail(String email) {
+        return usuarioDao.getByEmail(email);
     }
 
-    public void alterar(Usuario usuario) {
+    public void update(Usuario usuario) {
         usuarioDao.update(usuario);
     }
 
-    public void excluir(int id) {
+    public void delete(int id) {
         usuarioDao.delete(id);
     }
 
-    public Usuario listarVeiculos(Usuario usuario) {
-        List<Veiculo> veiculos = veiculoDao.getAllByUsuario(usuario.getId_usuario());
+    public Usuario getVeiculos(Usuario usuario) {
+        List<Veiculo> veiculos = veiculoDao.getByUsuario(usuario.getId_usuario());
         usuario.setVeiculos(veiculos);
 
         return usuario;
     }
 
-    
 }

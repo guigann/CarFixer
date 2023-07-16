@@ -20,25 +20,25 @@ public interface AgendaDao {
 
         @SqlQuery("select * " +
                         " from agenda " +
-                        " where id_agenda = :id_agenda;")
-        Agenda get(@Bind("id_agenda") int id_agenda);
+                        " order by id_veiculo;")
+        List<Agenda> get();
 
         @SqlQuery("select * " +
                         " from agenda " +
-                        " order by id_veiculo;")
-        List<Agenda> getAll();
+                        " where id_agenda = :id_agenda;")
+        Agenda getById(@Bind("id_agenda") int id_agenda);
 
         @SqlQuery("select * " +
                         " from agenda " +
                         " where id_veiculo = :id_veiculo " +
                         " order by id_veiculo;")
-        List<Agenda> getAllByVeiculo(@Bind("id_veiculo") int id_veiculo);
+        List<Agenda> getByVeiculo(@Bind("id_veiculo") int id_veiculo);
 
         @SqlQuery("select * " +
                         " from agenda " +
                         " where id_servico = :id_servico " +
                         " order by id_servico;")
-        List<Agenda> getAllByServico(@Bind("id_servico") int id_servico);
+        List<Agenda> getByServico(@Bind("id_servico") int id_servico);
 
         @SqlUpdate("update agenda" + " set id_horario = :id_horario, " + "id_veiculo = :id_veiculo,"
                         + "status = :status,"

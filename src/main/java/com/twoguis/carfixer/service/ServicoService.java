@@ -20,32 +20,32 @@ public class ServicoService {
         // this.agendaDao = jdbi.onDemand(AgendaDao.class);
     }
     
-    public Servico inserir (Servico servico){
+    public Servico insert (Servico servico){
         int id_servico = servicoDao.insert(servico);
         servico.setId_servico(id_servico);
         return servico;
     }
     
-    public List<Servico> consultarTodos(){
-        List<Servico> servicos = servicoDao.getAll();
+    public List<Servico> get(){
+        List<Servico> servicos = servicoDao.get();
 
         // for (Servico servico : servicos) {
-        //     List<Agenda> agendas = agendaDao.getAllByServico(servico.getId_servico());
+        //     List<Agenda> agendas = agendaDao.getByServico(servico.getId_servico());
         //     servico.setAgendas(agendas);
         // }
 
         return servicos;
     }
 
-    public Servico consultarPorId(int id){
-        return servicoDao.get(id);
+    public Servico getById(int id){
+        return servicoDao.getById(id);
     }
     
-    public void alterar(Servico servico){
+    public void update(Servico servico){
         servicoDao.update(servico);
     }
     
-    public void excluir(int id){
+    public void delete(int id){
         servicoDao.delete(id);
     }
     

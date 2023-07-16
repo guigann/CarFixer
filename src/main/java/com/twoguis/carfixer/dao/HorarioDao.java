@@ -20,19 +20,19 @@ public interface HorarioDao {
 
         @SqlQuery("select * " +
                         " from horario " +
-                        " where id_horario = :id_horario;")
-        Horario get(@Bind("id_horario") int id_horario);
+                        " order by data;")
+        List<Horario> get();
 
         @SqlQuery("select * " +
                         " from horario " +
-                        " order by data;")
-        List<Horario> getAll();
+                        " where id_horario = :id_horario;")
+        Horario getById(@Bind("id_horario") int id_horario);
 
         @SqlQuery("select * " +
                         " from horario " +
                         " where status like :status " +
                         " order by status;")
-        List<Horario> getAllByNome(@Bind("status") String status);
+        List<Horario> getByNome(@Bind("status") String status);
 
         @SqlUpdate("update horario " + " set status = :status, " + "data = :data" + " where id_horario = :id_horario;")
         int update(@BindBean Horario horario);

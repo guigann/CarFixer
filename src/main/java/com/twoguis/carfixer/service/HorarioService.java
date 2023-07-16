@@ -16,25 +16,25 @@ public class HorarioService {
         this.horarioDao = jdbi.onDemand(HorarioDao.class);
     }
 
-    public Horario inserir(Horario veiculo) {
+    public Horario insert(Horario veiculo) {
         int id_horario = horarioDao.insert(veiculo);
         veiculo.setId_horario(id_horario);
         return veiculo;
     }
 
-    public List<Horario> consultarTodos() {
-        return horarioDao.getAll();
+    public List<Horario> get() {
+        return horarioDao.get();
     }
 
-    public Horario consultarPorId(int id) {
-        return horarioDao.get(id);
+    public Horario getById(int id) {
+        return horarioDao.getById(id);
     }
 
-    public void alterar(Horario veiculo) {
+    public void update(Horario veiculo) {
         horarioDao.update(veiculo);
     }
 
-    public void excluir(int id) {
+    public void delete(int id) {
         horarioDao.delete(id);
     }
 

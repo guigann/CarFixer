@@ -20,19 +20,19 @@ public interface UsuarioDao {
 
         @SqlQuery("select * " +
                         " from usuario " +
-                        " where id_usuario = :id_usuario;")
-        Usuario get(@Bind("id_usuario") int id_usuario);
+                        " order by nome;")
+        List<Usuario> get();
 
         @SqlQuery("select * " +
                         " from usuario " +
-                        " order by nome;")
-        List<Usuario> getAll();
+                        " where id_usuario = :id_usuario;")
+        Usuario getById(@Bind("id_usuario") int id_usuario);
 
         @SqlQuery("select * " +
                         " from usuario " +
                         " where nome like :nome " +
                         " order by nome;")
-        List<Usuario> getAllByName(@Bind("nome") String nome);
+        List<Usuario> getByName(@Bind("nome") String nome);
 
         @SqlQuery("select * " +
                         " from usuario " +

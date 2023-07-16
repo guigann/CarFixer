@@ -25,36 +25,36 @@ public class ServicoController {
     }
     
     @GetMapping({"/", ""})
-    public List<Servico> consultarTodos(){
-        List<Servico> servicoList = servicoService.consultarTodos();
+    public List<Servico> get(){
+        List<Servico> servicoList = servicoService.get();
         return servicoList;
     }
     
     @GetMapping("/{id}")
     public Servico consultarServico(@PathVariable("id") int id){
-        Servico ret = servicoService.consultarPorId(id);
+        Servico ret = servicoService.getById(id);
         return ret;
     }
     
     @PostMapping({"", "/"})
-    public Servico inserir(@RequestBody Servico servico){
-        Servico ret = servicoService.inserir(servico);
+    public Servico insert(@RequestBody Servico servico){
+        Servico ret = servicoService.insert(servico);
         return ret;
     }
     
     @PutMapping({"", "/"})
-    public Servico alterar(@RequestBody Servico servico){
-        servicoService.alterar(servico);
+    public Servico update(@RequestBody Servico servico){
+        servicoService.update(servico);
         return servico;
     }
     
     @DeleteMapping("/{id}")
-    public Servico excluir(@PathVariable("id") int id){
-        Servico servico = servicoService.consultarPorId(id);
+    public Servico delete(@PathVariable("id") int id){
+        Servico servico = servicoService.getById(id);
         if (servico == null){
             throw new RuntimeException("Nao existe servico com este id para ser excluido....");
         }
-        servicoService.excluir(id);
+        servicoService.delete(id);
         return servico;
     }
 }

@@ -25,36 +25,36 @@ public class VeiculoController {
     }
     
     @GetMapping({"/", ""})
-    public List<Veiculo> consultarTodos(){
-        List<Veiculo> veiculoList = veiculoService.consultarTodos();
+    public List<Veiculo> get(){
+        List<Veiculo> veiculoList = veiculoService.get();
         return veiculoList;
     }
     
     @GetMapping("/{id}")
     public Veiculo consultarVeiculo(@PathVariable("id") int id){
-        Veiculo ret = veiculoService.consultarPorId(id);
+        Veiculo ret = veiculoService.getById(id);
         return ret;
     }
     
     @PostMapping({"", "/"})
-    public Veiculo inserir(@RequestBody Veiculo veiculo){
-        Veiculo ret = veiculoService.inserir(veiculo);
+    public Veiculo insert(@RequestBody Veiculo veiculo){
+        Veiculo ret = veiculoService.insert(veiculo);
         return ret;
     }
     
     @PutMapping({"", "/"})
-    public Veiculo alterar(@RequestBody Veiculo veiculo){
-        veiculoService.alterar(veiculo);
+    public Veiculo update(@RequestBody Veiculo veiculo){
+        veiculoService.update(veiculo);
         return veiculo;
     }
     
     @DeleteMapping("/{id}")
-    public Veiculo excluir(@PathVariable("id") int id){
-        Veiculo veiculo = veiculoService.consultarPorId(id);
+    public Veiculo delete(@PathVariable("id") int id){
+        Veiculo veiculo = veiculoService.getById(id);
         if (veiculo == null){
             throw new RuntimeException("Nao existe veiculo com este id para ser excluido....");
         }
-        veiculoService.excluir(id);
+        veiculoService.delete(id);
         return veiculo;
     }
 

@@ -18,16 +18,16 @@ public class Servico_AgendaService extends AgendaService {
         this.servico_agendaDao = jdbi.onDemand(Servico_AgendaDao.class);
     }
 
-    public Servico_Agenda inserir(Servico_Agenda servico_agenda) {
+    public Servico_Agenda insert(Servico_Agenda servico_agenda) {
         servico_agendaDao.insert(servico_agenda);
         return servico_agenda;
     }
 
     public List<Agenda> getByServico(int id_servico) {
-        List<Agenda> agendaList = servico_agendaDao.getAllByServico(id_servico);
+        List<Agenda> agendaList = servico_agendaDao.getByServico(id_servico);
 
         for (Agenda agenda : agendaList) {
-            agenda = this.listarProdutos(agenda);
+            agenda = this.getProdutos(agenda);
         }
 
         return agendaList;
@@ -35,7 +35,7 @@ public class Servico_AgendaService extends AgendaService {
 
     public Agenda get(int id_servico, int id_agenda) {
         Agenda agenda = servico_agendaDao.get(id_servico, id_agenda);
-        agenda = this.listarProdutos(agenda);
+        agenda = this.getProdutos(agenda);
 
         return agenda;
     }
@@ -44,8 +44,8 @@ public class Servico_AgendaService extends AgendaService {
         servico_agendaDao.delete(id_servico, id_agenda);
     }
 
-    public void deleteAllByServico(int id_servico) {
-        servico_agendaDao.deleteAllByServico(id_servico);
+    public void deleteByServico(int id_servico) {
+        servico_agendaDao.deleteByServico(id_servico);
     }
 
 }

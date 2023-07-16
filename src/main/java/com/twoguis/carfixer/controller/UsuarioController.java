@@ -24,36 +24,36 @@ public class UsuarioController {
     }
 
     @GetMapping({ "/", "" })
-    public List<Usuario> consultarTodos() {
-        List<Usuario> usuarioList = usuarioService.consultarTodos();
+    public List<Usuario> get() {
+        List<Usuario> usuarioList = usuarioService.get();
         return usuarioList;
     }
 
     @GetMapping("/{id}")
     public Usuario consultarUsuario(@PathVariable("id") int id) {
-        Usuario ret = usuarioService.consultarPorId(id);
+        Usuario ret = usuarioService.getById(id);
         return ret;
     }
 
     @PostMapping({ "", "/" })
-    public Usuario inserir(@RequestBody Usuario usuario) {
-        Usuario ret = usuarioService.inserir(usuario);
+    public Usuario insert(@RequestBody Usuario usuario) {
+        Usuario ret = usuarioService.insert(usuario);
         return ret;
     }
 
     @PutMapping({ "", "/" })
-    public Usuario alterar(@RequestBody Usuario usuario) {
-        usuarioService.alterar(usuario);
+    public Usuario update(@RequestBody Usuario usuario) {
+        usuarioService.update(usuario);
         return usuario;
     }
 
     @DeleteMapping("/{id}")
-    public Usuario excluir(@PathVariable("id") int id) {
-        Usuario usuario = usuarioService.consultarPorId(id);
+    public Usuario delete(@PathVariable("id") int id) {
+        Usuario usuario = usuarioService.getById(id);
         if (usuario == null) {
             throw new RuntimeException("Nao existe usuario com este id para ser excluido....");
         }
-        usuarioService.excluir(id);
+        usuarioService.delete(id);
         return usuario;
     }
 
@@ -69,11 +69,21 @@ public class UsuarioController {
 
     @GetMapping("/email/{email}/exists")
     public int emailExists(@PathVariable("email") String email) {
-    Usuario usuario = usuarioService.getByEmail(email);
+        Usuario usuario = usuarioService.getByEmail(email);
 
-    if (usuario != null && usuario.getEmail().equals(email)) {
-    return 200;
-    } else
-    return 404;
+        if (usuario != null && usuario.getEmail().equals(email)) {
+            return 200;
+        } else
+            return 404;
+    }
+
+    @GetMapping("/{email}/{senha}/authenticate")
+    public int authenticate(@PathVariable("email") String email, @PathVariable("senha") String senha) {
+        Usuario usuario = usuarioService.getByEmail(email);
+
+        if (usuario != null && usuario.getEmail().equals(email) && usuario.getSenha().equals(senha)) {
+            return 200;
+        } else
+            return 401;
     }
 }

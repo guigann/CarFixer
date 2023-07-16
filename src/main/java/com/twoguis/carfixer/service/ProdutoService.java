@@ -16,25 +16,25 @@ public class ProdutoService {
         this.produtoDao = jdbi.onDemand(ProdutoDao.class);
     }
     
-    public Produto inserir (Produto produto){
+    public Produto insert (Produto produto){
         int id_produto = produtoDao.insert(produto);
         produto.setId_produto(id_produto);
         return produto;
     }
     
-    public List<Produto> consultarTodos(){
-        return produtoDao.getAll();
+    public List<Produto> get(){
+        return produtoDao.get();
     }
 
-    public Produto consultarPorId(int id){
-        return produtoDao.get(id);
+    public Produto getById(int id){
+        return produtoDao.getById(id);
     }
     
-    public void alterar(Produto produto){
+    public void update(Produto produto){
         produtoDao.update(produto);
     }
     
-    public void excluir(int id){
+    public void delete(int id){
         produtoDao.delete(id);
     }
     

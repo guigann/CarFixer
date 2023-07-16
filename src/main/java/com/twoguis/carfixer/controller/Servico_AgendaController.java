@@ -31,30 +31,30 @@ public class Servico_AgendaController {
     }
     
     @GetMapping("/{id_agenda}")
-    public Agenda consultar(@PathVariable("id_servico") int id_servico,
+    public Agenda get(@PathVariable("id_servico") int id_servico,
                             @PathVariable("id_agenda") int id_agenda){
         Agenda agenda = servico_agendaService.get(id_servico, id_agenda);
         return agenda;
     }
     
     @PostMapping({"", "/"})
-    public Agenda inserir(@RequestBody Servico_Agenda servico_agenda){
-        Agenda agenda = servico_agendaService.inserir(servico_agenda);
+    public Agenda insert(@RequestBody Servico_Agenda servico_agenda){
+        Agenda agenda = servico_agendaService.insert(servico_agenda);
         return agenda;
     }
     
     @DeleteMapping({"", "/"})
-    public List<Agenda> deletarByServico(@PathVariable("id_servico") int id_servico){
+    public List<Agenda> deleteByServico(@PathVariable("id_servico") int id_servico){
         List<Agenda> agendaList = servico_agendaService.getByServico(id_servico);
         if (agendaList == null || agendaList.isEmpty()){
             throw new RuntimeException("Nao existe servico com este id para ser excluido....");
         }
-        servico_agendaService.deleteAllByServico(id_servico);
+        servico_agendaService.deleteByServico(id_servico);
         return agendaList;
     }
     
     @DeleteMapping("/{id_agenda}")
-    public Agenda deletar(
+    public Agenda delete(
             @PathVariable("id_servico") int id_servico, 
             @PathVariable("id_agenda") int id_agenda
     ){

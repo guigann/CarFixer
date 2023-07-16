@@ -25,36 +25,36 @@ public class AgendaController {
     }
     
     @GetMapping({"/", ""})
-    public List<Agenda> consultarTodos(){
-        List<Agenda> agendaList = agendaService.consultarTodos();
+    public List<Agenda> get(){
+        List<Agenda> agendaList = agendaService.get();
         return agendaList;
     }
     
     @GetMapping("/{id}")
     public Agenda consultarAgenda(@PathVariable("id") int id){
-        Agenda ret = agendaService.consultarPorId(id);
+        Agenda ret = agendaService.getById(id);
         return ret;
     }
     
     @PostMapping({"", "/"})
-    public Agenda inserir(@RequestBody Agenda agenda){
-        Agenda ret = agendaService.inserir(agenda);
+    public Agenda insert(@RequestBody Agenda agenda){
+        Agenda ret = agendaService.insert(agenda);
         return ret;
     }
     
     @PutMapping({"", "/"})
-    public Agenda alterar(@RequestBody Agenda agenda){
-        agendaService.alterar(agenda);
+    public Agenda update(@RequestBody Agenda agenda){
+        agendaService.update(agenda);
         return agenda;
     }
     
     @DeleteMapping("/{id}")
-    public Agenda excluir(@PathVariable("id") int id){
-        Agenda agenda = agendaService.consultarPorId(id);
+    public Agenda delete(@PathVariable("id") int id){
+        Agenda agenda = agendaService.getById(id);
         if (agenda == null){
             throw new RuntimeException("Nao existe agenda com este id para ser excluido....");
         }
-        agendaService.excluir(id);
+        agendaService.delete(id);
         return agenda;
     }
 }

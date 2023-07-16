@@ -25,36 +25,36 @@ public class HorarioController {
     }
     
     @GetMapping({"/", ""})
-    public List<Horario> consultarTodos(){
-        List<Horario> horarioList = horarioService.consultarTodos();
+    public List<Horario> get(){
+        List<Horario> horarioList = horarioService.get();
         return horarioList;
     }
     
     @GetMapping("/{id}")
     public Horario consultarHorario(@PathVariable("id") int id){
-        Horario ret = horarioService.consultarPorId(id);
+        Horario ret = horarioService.getById(id);
         return ret;
     }
     
     @PostMapping({"", "/"})
-    public Horario inserir(@RequestBody Horario horario){
-        Horario ret = horarioService.inserir(horario);
+    public Horario insert(@RequestBody Horario horario){
+        Horario ret = horarioService.insert(horario);
         return ret;
     }
     
     @PutMapping({"", "/"})
-    public Horario alterar(@RequestBody Horario horario){
-        horarioService.alterar(horario);
+    public Horario update(@RequestBody Horario horario){
+        horarioService.update(horario);
         return horario;
     }
     
     @DeleteMapping("/{id}")
-    public Horario excluir(@PathVariable("id") int id){
-        Horario horario = horarioService.consultarPorId(id);
+    public Horario delete(@PathVariable("id") int id){
+        Horario horario = horarioService.getById(id);
         if (horario == null){
             throw new RuntimeException("Nao existe horario com este id para ser excluido....");
         }
-        horarioService.excluir(id);
+        horarioService.delete(id);
         return horario;
     }
 }

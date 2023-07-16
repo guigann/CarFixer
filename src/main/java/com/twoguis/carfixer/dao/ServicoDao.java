@@ -20,13 +20,13 @@ public interface ServicoDao {
 
         @SqlQuery("select * " +
                         " from servico " +
-                        " where id_servico = :id_servico;")
-        Servico get(@Bind("id_servico") int id_servico);
+                        " order by nome;")
+        List<Servico> get();
 
         @SqlQuery("select * " +
                         " from servico " +
-                        " order by descricao;")
-        List<Servico> getAll();
+                        " where id_servico = :id_servico;")
+        Servico getById(@Bind("id_servico") int id_servico);
 
         @SqlUpdate("update servico" + " set nome = :nome, " + "descricao = :descricao"
                         + " where id_servico = :id_servico;")

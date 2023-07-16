@@ -21,39 +21,39 @@ public class AgendaService {
         this.produtoDao = jdbi.onDemand(ProdutoDao.class);
     }
 
-    public Agenda inserir(Agenda agenda) {
+    public Agenda insert(Agenda agenda) {
         int id_agenda = agendaDao.insert(agenda);
         agenda.setId_agenda(id_agenda);
         return agenda;
     }
 
-    public List<Agenda> consultarTodos() {
-        List<Agenda> agendas = agendaDao.getAll();
+    public List<Agenda> get() {
+        List<Agenda> agendas = agendaDao.get();
 
         for (Agenda agenda : agendas) {
-            agenda = listarProdutos(agenda);
+            agenda = getProdutos(agenda);
         }
 
         return agendas;
     }
 
-    public Agenda consultarPorId(int id) {
-        Agenda agenda = agendaDao.get(id);
-        agenda = listarProdutos(agenda);
+    public Agenda getById(int id) {
+        Agenda agenda = agendaDao.getById(id);
+        agenda = getProdutos(agenda);
 
         return agenda;
     }
 
-    public void alterar(Agenda agenda) {
+    public void update(Agenda agenda) {
         agendaDao.update(agenda);
     }
 
-    public void excluir(int id) {
+    public void delete(int id) {
         agendaDao.delete(id);
     }
 
-    public Agenda listarProdutos(Agenda agenda) {
-        List<Produto> produtos = produtoDao.getAllByAgenda(agenda.getId_agenda());
+    public Agenda getProdutos(Agenda agenda) {
+        List<Produto> produtos = produtoDao.getByAgenda(agenda.getId_agenda());
         agenda.setProdutos(produtos);
 
         return agenda;

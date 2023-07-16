@@ -20,26 +20,26 @@ public class VeiculoService {
         this.agendaDao = jdbi.onDemand(AgendaDao.class);
     }
 
-    public Veiculo inserir(Veiculo veiculo) {
+    public Veiculo insert(Veiculo veiculo) {
         int id_veiculo = veiculoDao.insert(veiculo);
         veiculo.setId_veiculo(id_veiculo);
         return veiculo;
     }
 
-    public List<Veiculo> consultarTodos() {
-        List<Veiculo> veiculos = veiculoDao.getAll();
+    public List<Veiculo> get() {
+        List<Veiculo> veiculos = veiculoDao.get();
 
         for (Veiculo veiculo : veiculos) {
-            veiculo = listarAgendas(veiculo);
+            veiculo = getAgendas(veiculo);
         }
 
         return veiculos;
     }
 
-    public Veiculo consultarPorId(int id) {
-        Veiculo veiculo = veiculoDao.get(id);
+    public Veiculo getById(int id) {
+        Veiculo veiculo = veiculoDao.getById(id);
 
-        veiculo = listarAgendas(veiculo);
+        veiculo = getAgendas(veiculo);
 
         return veiculo;
     }
@@ -48,16 +48,16 @@ public class VeiculoService {
        return veiculoDao.getByPlaca(placa);
     }
 
-    public void alterar(Veiculo veiculo) {
+    public void update(Veiculo veiculo) {
         veiculoDao.update(veiculo);
     }
 
-    public void excluir(int id) {
+    public void delete(int id) {
         veiculoDao.delete(id);
     }
 
-    public Veiculo listarAgendas(Veiculo veiculo) {
-        List<Agenda> agendas = agendaDao.getAllByVeiculo(veiculo.getId_veiculo());
+    public Veiculo getAgendas(Veiculo veiculo) {
+        List<Agenda> agendas = agendaDao.getByVeiculo(veiculo.getId_veiculo());
         veiculo.setAgendas(agendas);
 
         return veiculo;

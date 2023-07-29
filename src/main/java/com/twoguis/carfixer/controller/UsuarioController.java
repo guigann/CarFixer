@@ -2,6 +2,7 @@ package com.twoguis.carfixer.controller;
 
 import java.util.List;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,9 +19,11 @@ import com.twoguis.carfixer.service.UsuarioService;
 @RequestMapping("/api/v1/usuario")
 public class UsuarioController {
     private final UsuarioService usuarioService;
+    private final PasswordEncoder encoder;
 
-    public UsuarioController(UsuarioService usuarioService) {
+    public UsuarioController(UsuarioService usuarioService, PasswordEncoder encoder) {
         this.usuarioService = usuarioService;
+        this.encoder = encoder;
     }
 
     @GetMapping({ "/", "" })
@@ -37,6 +40,7 @@ public class UsuarioController {
 
     @PostMapping({ "", "/" })
     public Usuario insert(@RequestBody Usuario usuario) {
+        usuario.setSenha(encoder.encode(usuario.getSenha()));
         Usuario ret = usuarioService.insert(usuario);
         return ret;
     }
@@ -81,7 +85,7 @@ public class UsuarioController {
     public int authenticate(@PathVariable("email") String email, @PathVariable("senha") String senha) {
         Usuario usuario = usuarioService.getByEmail(email);
 
-        if (usuario != null && usuario.getEmail().equals(email) && usuario.getSenha().equals(senha)) {
+        if (usuario != null && usuario.getEmail().equals(email) && encoder.matches(senha, usuario.getSenha())) {
             return 200;
         } else
             return 401;

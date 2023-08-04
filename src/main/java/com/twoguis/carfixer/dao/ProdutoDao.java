@@ -25,8 +25,8 @@ public interface ProdutoDao {
 
         @SqlQuery("select * " +
                         " from produto " +
-                        " where id_produto = :id_produto;")
-        Produto getById(@Bind("id_produto") int id_produto);
+                        " where id = :id;")
+        Produto getById(@Bind("id") int id);
      
         @SqlQuery("select * " +
                         " from produto " +
@@ -35,12 +35,12 @@ public interface ProdutoDao {
         List<Produto> getByAgenda(@Bind("id_agenda") int id_agenda);
 
         @SqlUpdate("update produto " + " set id_agenda = :id_agenda, " + "descricao = :descricao"
-                        + " where id_produto = :id_produto;")
+                        + " where id = :id;")
         int update(@BindBean Produto produto);
 
         @SqlUpdate("delete " +
                         " from produto " +
-                        " where id_produto = :id_produto;")
-        int delete(@Bind("id_produto") int id_produto);
+                        " where id = :id;")
+        int delete(@Bind("id") int id);
 
 }

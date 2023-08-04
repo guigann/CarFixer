@@ -25,8 +25,8 @@ public interface UsuarioDao {
 
         @SqlQuery("select * " +
                         " from usuario " +
-                        " where id_usuario = :id_usuario;")
-        Usuario getById(@Bind("id_usuario") int id_usuario);
+                        " where id = :id;")
+        Usuario getById(@Bind("id") int id);
 
         @SqlQuery("select * " +
                         " from usuario " +
@@ -47,12 +47,12 @@ public interface UsuarioDao {
         @SqlUpdate("update usuario " +
                         " set nome = :nome, cpf = :cpf, email = :email, " +
                         "     telefone = :telefone, senha = :senha, permission = :permission " +
-                        " where id_usuario = :id_usuario;")
+                        " where id = :id;")
         int update(@BindBean Usuario usuario);
 
         @SqlUpdate("delete " +
                         " from usuario " +
-                        " where id_usuario = :id_usuario;")
-        int delete(@Bind("id_usuario") int id_usuario);
+                        " where id = :id;")
+        int delete(@Bind("id") int id);
 
 }

@@ -25,8 +25,8 @@ public interface AgendaDao {
 
         @SqlQuery("select * " +
                         " from agenda " +
-                        " where id_agenda = :id_agenda;")
-        Agenda getById(@Bind("id_agenda") int id_agenda);
+                        " where id = :id;")
+        Agenda getById(@Bind("id") int id);
 
         @SqlQuery("select * " +
                         " from agenda " +
@@ -43,12 +43,12 @@ public interface AgendaDao {
         @SqlUpdate("update agenda" + " set id_horario = :id_horario, " + "id_veiculo = :id_veiculo,"
                         + "status = :status,"
                         + "dt_previsao = :dt_previsao," + "dt_fim = :dt_fim," + "observacao = :observacao"
-                        + " where id_agenda = :id_agenda;")
+                        + " where id = :id;")
         int update(@BindBean Agenda agenda);
 
         @SqlUpdate("delete " +
                         " from agenda " +
-                        " where id_agenda = :id_agenda;")
-        int delete(@Bind("id_agenda") int id_agenda);
+                        " where id = :id;")
+        int delete(@Bind("id") int id);
 
 }

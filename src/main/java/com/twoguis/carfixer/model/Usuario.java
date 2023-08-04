@@ -14,7 +14,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class Usuario {
-    private int id_usuario;
+    private int id;
     private String nome;
     private String cpf;
     private String email;

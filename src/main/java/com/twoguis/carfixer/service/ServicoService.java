@@ -22,7 +22,7 @@ public class ServicoService {
     
     public Servico insert (Servico servico){
         int id_servico = servicoDao.insert(servico);
-        servico.setId_servico(id_servico);
+        servico.setId(id_servico);
         return servico;
     }
     

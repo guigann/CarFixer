@@ -15,7 +15,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class Agenda {
-    private int id_agenda;
+    private int id;
     private int id_horario;
     private int id_veiculo;
     private Status status;

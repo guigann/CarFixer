@@ -18,7 +18,7 @@ public class HorarioService {
 
     public Horario insert(Horario veiculo) {
         int id_horario = horarioDao.insert(veiculo);
-        veiculo.setId_horario(id_horario);
+        veiculo.setId(id_horario);
         return veiculo;
     }
 

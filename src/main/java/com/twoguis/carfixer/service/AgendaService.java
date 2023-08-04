@@ -23,7 +23,7 @@ public class AgendaService {
 
     public Agenda insert(Agenda agenda) {
         int id_agenda = agendaDao.insert(agenda);
-        agenda.setId_agenda(id_agenda);
+        agenda.setId(id_agenda);
         return agenda;
     }
 
@@ -53,7 +53,7 @@ public class AgendaService {
     }
 
     public Agenda getProdutos(Agenda agenda) {
-        List<Produto> produtos = produtoDao.getByAgenda(agenda.getId_agenda());
+        List<Produto> produtos = produtoDao.getByAgenda(agenda.getId());
         agenda.setProdutos(produtos);
 
         return agenda;

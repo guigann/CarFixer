@@ -38,6 +38,12 @@ public class UsuarioController {
         return ret;
     }
 
+    @GetMapping("email/{email}")
+    public Usuario getByEmail(@PathVariable("email") String email) {
+        Usuario ret = usuarioService.getByEmail(email);
+        return ret;
+    }
+
     @PostMapping({ "", "/" })
     public Usuario insert(@RequestBody Usuario usuario) {
         usuario.setSenha(encoder.encode(usuario.getSenha()));

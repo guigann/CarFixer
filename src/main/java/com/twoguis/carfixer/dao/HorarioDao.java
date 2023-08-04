@@ -25,8 +25,8 @@ public interface HorarioDao {
 
         @SqlQuery("select * " +
                         " from horario " +
-                        " where id_horario = :id_horario;")
-        Horario getById(@Bind("id_horario") int id_horario);
+                        " where id = :id;")
+        Horario getById(@Bind("id") int id);
 
         @SqlQuery("select * " +
                         " from horario " +
@@ -34,12 +34,12 @@ public interface HorarioDao {
                         " order by status;")
         List<Horario> getByNome(@Bind("status") String status);
 
-        @SqlUpdate("update horario " + " set status = :status, " + "data = :data" + " where id_horario = :id_horario;")
+        @SqlUpdate("update horario " + " set status = :status, " + "data = :data" + " where id = :id;")
         int update(@BindBean Horario horario);
 
         @SqlUpdate("delete " +
                         " from horario " +
-                        " where id_horario = :id_horario;")
-        int delete(@Bind("id_horario") int id_horario);
+                        " where id = :id;")
+        int delete(@Bind("id") int id);
 
 }

@@ -22,7 +22,7 @@ public class UsuarioService {
 
     public Usuario insert(Usuario usuario) {
         int id_usuario = usuarioDao.insert(usuario);
-        usuario.setId_usuario(id_usuario);
+        usuario.setId(id_usuario);
         return usuario;
     }
 
@@ -61,7 +61,7 @@ public class UsuarioService {
     }
 
     public Usuario getVeiculos(Usuario usuario) {
-        List<Veiculo> veiculos = veiculoDao.getByUsuario(usuario.getId_usuario());
+        List<Veiculo> veiculos = veiculoDao.getByUsuario(usuario.getId());
         usuario.setVeiculos(veiculos);
 
         return usuario;

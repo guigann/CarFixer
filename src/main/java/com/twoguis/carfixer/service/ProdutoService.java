@@ -18,7 +18,7 @@ public class ProdutoService {
     
     public Produto insert (Produto produto){
         int id_produto = produtoDao.insert(produto);
-        produto.setId_produto(id_produto);
+        produto.setId(id_produto);
         return produto;
     }
     

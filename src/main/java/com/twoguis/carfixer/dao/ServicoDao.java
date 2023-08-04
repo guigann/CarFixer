@@ -25,16 +25,16 @@ public interface ServicoDao {
 
         @SqlQuery("select * " +
                         " from servico " +
-                        " where id_servico = :id_servico;")
-        Servico getById(@Bind("id_servico") int id_servico);
+                        " where id = :id;")
+        Servico getById(@Bind("id") int id);
 
         @SqlUpdate("update servico" + " set nome = :nome, " + "descricao = :descricao"
-                        + " where id_servico = :id_servico;")
+                        + " where id = :id;")
         int update(@BindBean Servico servico);
 
         @SqlUpdate("delete " +
                         " from servico " +
-                        " where id_servico = :id_servico;")
-        int delete(@Bind("id_servico") int id_servico);
+                        " where id = :id;")
+        int delete(@Bind("id") int id);
 
 }

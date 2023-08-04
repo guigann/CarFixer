@@ -22,7 +22,7 @@ public class VeiculoService {
 
     public Veiculo insert(Veiculo veiculo) {
         int id_veiculo = veiculoDao.insert(veiculo);
-        veiculo.setId_veiculo(id_veiculo);
+        veiculo.setId(id_veiculo);
         return veiculo;
     }
 
@@ -57,7 +57,7 @@ public class VeiculoService {
     }
 
     public Veiculo getAgendas(Veiculo veiculo) {
-        List<Agenda> agendas = agendaDao.getByVeiculo(veiculo.getId_veiculo());
+        List<Agenda> agendas = agendaDao.getByVeiculo(veiculo.getId());
         veiculo.setAgendas(agendas);
 
         return veiculo;

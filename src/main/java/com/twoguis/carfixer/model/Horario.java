@@ -16,7 +16,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class Horario {  
-    private int id_horario;
+    private int id;
     private Status_Horario status;
     private Timestamp data;
 }

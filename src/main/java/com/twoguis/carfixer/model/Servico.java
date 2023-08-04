@@ -14,7 +14,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class Servico {
-    private int id_servico;
+    private int id;
     private String nome;
     private String descricao;
 }

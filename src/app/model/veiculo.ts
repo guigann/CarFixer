@@ -3,13 +3,13 @@ export class Veiculo {
     placa: string;
     modelo: string;
     tipo: string;
-    user_id: number;
+    id_cliente: number;
 
     constructor(){
         this.id = 0;
         this.placa = "";
         this.modelo = "";
         this.tipo = "";
-        this.user_id = 0;
+        this.id_cliente = 0;
     }
 }

@@ -5,7 +5,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { AddVeiculoPageRoutingModule } from './add-veiculo-routing.module';
-
 import { AddVeiculoPage } from './add-veiculo.page';
 
 @NgModule({

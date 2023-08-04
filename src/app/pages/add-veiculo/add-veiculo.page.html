@@ -65,10 +65,10 @@
 
           <ion-item>
             <ion-label position="stacked">Cliente</ion-label>
-            <ion-select aria-label="Cliente" placeholder="Dono do veículo" formControlName="user"
-              [(ngModel)]="veiculo.user_id">
+            <ion-select aria-label="Cliente" placeholder="Dono do veículo" formControlName="id_cliente"
+              [(ngModel)]="veiculo.id_cliente">
               <ion-item-sliding *ngFor="let cliente of clientes">
-                <ion-select-option value="cliente.id">{{cliente.name}}</ion-select-option>
+                <ion-select-option value="cliente.id">{{cliente.nome}}</ion-select-option>
               </ion-item-sliding>
               <!-- <ion-item-sliding >
                 <ion-item [routerLink]="['/add-veiculo/', veiculo.id]" detail>

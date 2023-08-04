@@ -1,19 +1,19 @@
-export class User {
+export class Usuario {
     id: number;
-    name: string;
+    nome: string;
     cpf: string;
-    phone: string;
+    telefone: string;
     email: string;
-    password: string;
+    senha: string;
     permission: number; //create a Enum class
 
     constructor() {
         this.id = 0;
-        this.name = "";
+        this.nome = "";
         this.cpf = "";
         this.email = "";
-        this.phone = "";
-        this.password = "";
+        this.telefone = "";
+        this.senha = "";
         this.permission = 0;
     }
 }

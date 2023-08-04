@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, LoadingController, NavController, ToastController } from '@ionic/angular';
-import { Veiculo } from 'src/app/model/veiculo';
-import { VeiculoService } from 'src/app/services/veiculo.service';
+import { Usuario } from 'src/app/model/usuario';
+import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
-  selector: 'app-veiculo',
-  templateUrl: './veiculo.page.html',
-  styleUrls: ['./veiculo.page.scss'],
+  selector: 'app-cliente',
+  templateUrl: './cliente.page.html',
+  styleUrls: ['./cliente.page.scss'],
 })
 
-export class VeiculoPage implements OnInit {
-  veiculos: Veiculo[];
+export class ClientePage implements OnInit {
+  usuarios: Usuario[];
 
-  constructor(private toastController: ToastController, private navController: NavController, private alertController: AlertController, private veiculoService: VeiculoService, private loadingController: LoadingController) {
-    this.veiculos = [];
+  constructor(private toastController: ToastController, private navController: NavController, private alertController: AlertController, private usuarioService: UsuarioService, private loadingController: LoadingController) {
+    this.usuarios = [];
   }
 
   ngOnInit() { }
@@ -24,8 +24,8 @@ export class VeiculoPage implements OnInit {
 
   async carregarLista() {
     this.showLoader();
-    await this.veiculoService.get().then((json) => {
-      this.veiculos = <Veiculo[]>(json);
+    await this.usuarioService.get().then((json) => {
+      this.usuarios = <Usuario[]>(json);
     });
     this.closeLoader();
   }
@@ -47,10 +47,10 @@ export class VeiculoPage implements OnInit {
     }, 500);
   }
 
-  async excluir(veiculo: Veiculo) {
+  async excluir(usuario: Usuario) {
     const alert = await this.alertController.create({
       header: 'Confirma a exclusão?',
-      message: veiculo.modelo + "(" + veiculo.placa + ")",
+      message: usuario.nome,
       buttons: [
         {
           text: 'Cancelar'
@@ -58,7 +58,7 @@ export class VeiculoPage implements OnInit {
           text: 'Confirmar',
           cssClass: 'danger',
           handler: () => {
-            this.veiculoService.delete(veiculo.id).then(() => {
+            this.usuarioService.delete(usuario.id).then(() => {
               this.carregarLista();
               this.showMessage('Registro excluído com sucesso!!!');
             }).catch(() => {
@@ -76,5 +76,5 @@ export class VeiculoPage implements OnInit {
   }
 }
 
-export { Veiculo };
+export { Usuario };
 

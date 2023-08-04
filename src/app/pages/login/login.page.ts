@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NavController, ToastController } from '@ionic/angular';
-import { UserService } from 'src/app/services/user.service';
+import { AlertController, LoadingController, NavController, ToastController } from '@ionic/angular';
+import { Usuario } from 'src/app/model/usuario';
+import { UsuarioService } from 'src/app/services/usuario.service';
+
 
 @Component({
   selector: 'app-login',
@@ -9,47 +11,74 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  
-  userService: UserService;
+  usuario: Usuario;
   formGroup: FormGroup;
 
-  constructor(private formBuilder: FormBuilder,
-    private toastController: ToastController,
-    private navController: NavController) { 
-      
-    this.userService = new UserService();
+  constructor(private toastController: ToastController, private navController: NavController, private formBuilder: FormBuilder, private alertController: AlertController, private usuarioService: UsuarioService, private loadingController: LoadingController) {
+    this.usuario = new Usuario();
 
     this.formGroup = this.formBuilder.group({
-      'cpf':['', Validators.compose([
+      'email': [this.usuario.email, Validators.compose([
         Validators.required
       ])],
-      'password':['', Validators.compose([
+      'senha': [this.usuario.senha, Validators.compose([
         Validators.required
-      ])],
-    });
+      ])]
+    })
   }
 
   ngOnInit() {
-    this.userService.logoutUser();
   }
 
-  bt_login(){
-    let cpf = this.formGroup.value.cpf;
-    let password = this.formGroup.value.password;
-    
-    let user = this.userService.checkUserLogin(cpf, password);
+  bt_login() {
+    this.showLoader();
+    this.usuario.email = this.formGroup.value.email;
+    this.usuario.senha = this.formGroup.value.senha;
 
-    if (user) {
-      this.userService.setLogged(user);
+    this.usuarioService.login(this.usuario).then((json: any) => {
+      let result = <number>(json);
+      if (result === 200) {
+        this.usuarioService.getByEmail(this.usuario.email).then((json: any) => {
+          this.usuario = <Usuario>(json);
+          if (this.usuario) {
+            this.usuarioService.setLogin(this.usuario);
+            this.showMessage('Login realizado com sucesso!!!');
+            this.navController.navigateBack('/home');
+          } else {
+            this.showMessage("There was an error in login");
+          }
+        }).catch((erro: any) => {
+          this.showMessage('There was an error in login! Erro:' + erro['mensage']);
+        });
+      }else{
+        this.showMessage('Email ou senha incorretos!')
+      }
+    }).catch((erro) => {
+      this.showMessage('There was an error in login! Erro:' + erro['mensage']);
+    });
 
-      this.navController.navigateRoot("/home");
-    } else {
-      this.showMessage("There was an error in login");
-    }
-
+    this.closeLoader();
   }
 
-  async showMessage(str: string){
+
+  showLoader() {
+    this.loadingController.create({
+      message: 'Carregando...'
+    }).then((res) => {
+      res.present();
+    })
+  }
+
+  closeLoader() {
+    setTimeout(() => {
+      this.loadingController.dismiss().then(() => {
+      }).catch((erro) => {
+        console.log('Erro: ', erro)
+      });
+    }, 500);
+  }
+
+  async showMessage(str: string) {
     const toast = await this.toastController.create({
       message: str,
       duration: 1500

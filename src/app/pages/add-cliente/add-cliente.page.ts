@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { UsuarioService } from 'src/app/services/usuario.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NavController, ToastController } from '@ionic/angular';
-import { User } from 'src/app/model/user';
-import { UserService } from 'src/app/services/user.service';
+import { Usuario } from 'src/app/model/usuario';
 
 @Component({
   selector: 'app-add-cliente',
@@ -11,78 +11,102 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./add-cliente.page.scss'],
 })
 export class AddClientePage implements OnInit {
-
   titlePage: string;
-  userService: UserService;
+  usuario: Usuario;
   formGroup: FormGroup;
-  user: User | undefined;
-  
-  constructor(private activatedRoute: ActivatedRoute,
-    private formBuilder: FormBuilder,
-    private toastController: ToastController,
-    private navController: NavController) { 
 
-    this.userService = new UserService();
+  constructor(private activatedRoute: ActivatedRoute, private toastController: ToastController, private navController: NavController, private formBuilder: FormBuilder, private usuarioService: UsuarioService) {
 
-    
-    let id = this.activatedRoute.snapshot.params['id'] | 0;
-
-    if (id > 0) {
-      this.user = this.userService.getById(id);
-      if (this.user) this.navController.navigateBack('/client-list');
-      this.titlePage = "Cliente"
-    } else {
-      this.titlePage = "Cadastro de Cliente"
-      
-    }
+    this.usuario = new Usuario();
 
     this.formGroup = this.formBuilder.group({
-      'name':[this.user?.name, Validators.compose([
+      'nome': [this.usuario?.nome, Validators.compose([
         Validators.required
       ])],
-      'cpf':[this.user?.cpf, Validators.compose([
+      'cpf': [this.usuario?.cpf, Validators.compose([
         Validators.required
       ])],
-      'phone':[this.user?.phone, Validators.compose([
+      'email': [this.usuario?.email, Validators.compose([
         Validators.required
       ])],
-      'password':[this.user?.password, Validators.compose([
+      'telefone': [this.usuario?.telefone, Validators.compose([
         Validators.required
-      ])],
+      ])]
     });
-      
+
+
+
+    let id = this.activatedRoute.snapshot.params['id'];
+
+    if (id != null) {
+      this.titlePage = "Cliente";
+      this.usuarioService.getById(id).then((json) => {
+        this.usuario = <Usuario>(json);
+        this.formGroup.get('nome')?.setValue(this.usuario.nome);
+        this.formGroup.get('email')?.setValue(this.usuario.email);
+        this.formGroup.get('cpf')?.setValue(this.usuario.cpf);
+        this.formGroup.get('telefone')?.setValue(this.usuario.telefone);
+      });
+    } else {
+      this.titlePage = "Cadastro de Cliente"
+    }
+
+    // if (id > 0) {
+    //   this.usuarioService.getById(id).then((json) => {
+    //     this.usuario = <Usuario>(json);
+    //   });
+
+    //   if (this.usuario)
+    //     this.navController.navigateBack('/cliente');
+    //   this.titlePage = "Cliente"
+    // } else {
+    //   this.titlePage = "Cadastro de Cliente"
+
+    // }
   }
 
   ngOnInit() {
   }
 
-  bt_save(){
-    let name = this.formGroup.value.name;
-    let cpf = this.formGroup.value.cpf;
-    let phone = this.formGroup.value.phone;
-    let password = this.formGroup.value.password;
+  bt_save() {
+    this.usuario.nome = this.formGroup.value.nome;
+    this.usuario.email = this.formGroup.value.email;
+    this.usuario.cpf = this.formGroup.value.cpf;
+    this.usuario.telefone = this.formGroup.value.telefone;
+    this.usuario.senha = "0";
+    this.usuario.permission = 0;
 
-    let user = new User();
-    user.name = name;
-    user.cpf = cpf;
-    user.phone = phone;
-    user.password = password;
-    user.permission = false;
-    
-    if (this.userService.save(user)) {
-      this.showMessage("Salvo com sucesso");
-      this.navController.navigateBack("/home");
-    } else {
-      this.showMessage("Houve um erro!");
-    }
+    this.usuarioService.checkEmail(this.usuario.email).then((json) => {
+      let result = <number>(json);
+      if (result === 404) {
+
+        this.usuarioService.save(this.usuario)
+          .then((json: any) => {
+            this.usuario = <Usuario>(json);
+            if (this.usuario) {
+              this.showMessage('Registro salvo com sucesso!!!');
+              this.navController.navigateBack('/usuario');
+            } else {
+              this.showMessage('Erro ao salvar o registro!');
+            }
+          }).catch((erro: any) => {
+            this.showMessage('Erro ao salvar o registro! Erro:' + erro['mensage']);
+          })
+
+      } else {
+        this.showMessage('Erro ao salvar o registro! Numero já cadastrado!');
+      }
+    }).catch((erro: any) => {
+      this.showMessage('Erro ao verificar o email! Erro:' + erro['mensage']);
+    });
+
   }
 
-  async showMessage(str: string){
+  async showMessage(texto: string) {
     const toast = await this.toastController.create({
-      message: str,
+      message: texto,
       duration: 1500
-    })
+    });
     toast.present();
   }
-
 }

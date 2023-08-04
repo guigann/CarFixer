@@ -27,8 +27,30 @@ const routes: Routes = [
     path: 'client-list',
     loadChildren: () => import('./pages/client-list/client-list.module').then( m => m.ClientListPageModule)
   },
-
-
+  {
+    path: 'veiculo',
+    loadChildren: () => import('./pages/veiculo/veiculo.module').then( m => m.VeiculoPageModule)
+  },
+  {
+    path: 'add-veiculo',
+    loadChildren: () => import('./pages/add-veiculo/add-veiculo.module').then( m => m.AddVeiculoPageModule)
+  },
+  {
+    path: 'add-veiculo/:id',
+    loadChildren: () => import('./pages/add-veiculo/add-veiculo.module').then( m => m.AddVeiculoPageModule)
+  },
+  {
+    path: 'agendamento',
+    loadChildren: () => import('./pages/agendamento/agendamento.module').then( m => m.AgendamentoPageModule)
+  },
+  {
+    path: 'add-agendamento',
+    loadChildren: () => import('./pages/add-agendamento/add-agendamento.module').then( m => m.AddAgendamentoPageModule)
+  },
+  {
+    path: 'add-agendamento/:id',
+    loadChildren: () => import('./pages/add-agendamento/add-agendamento.module').then( m => m.AddAgendamentoPageModule)
+  }
 ];
 
 @NgModule({
@@ -37,4 +59,5 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
+
 export class AppRoutingModule { }

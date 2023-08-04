@@ -5,15 +5,15 @@ export class User {
     phone: string;
     email: string;
     password: string;
-    permission: boolean;
+    permission: number; //create a Enum class
 
-    constructor(){
+    constructor() {
         this.id = 0;
         this.name = "";
         this.cpf = "";
         this.email = "";
         this.phone = "";
         this.password = "";
-        this.permission = false;
+        this.permission = 0;
     }
 }

@@ -5,7 +5,7 @@ export class User {
     phone: string;
     email: string;
     password: string;
-    permission: number;
+    permission: number; //create a Enum class
 
     constructor() {
         this.id = 0;

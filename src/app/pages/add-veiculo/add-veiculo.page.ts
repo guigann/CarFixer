@@ -39,7 +39,6 @@ export class AddVeiculoPage implements OnInit {
     })
 
     let id = this.activatedRoute.snapshot.params['id'];
-
     if (id != null) {
       this.veiculoService.getById(parseFloat(id)).then((json) => {
         this.veiculo = <Veiculo>(json);
@@ -68,7 +67,6 @@ export class AddVeiculoPage implements OnInit {
     this.veiculoService.checkPlaca(this.veiculo.placa).then((json) => {
       let result = <number>(json);
       if (result === 404) {
-
         this.veiculoService.save(this.veiculo)
           .then((json: any) => {
             this.veiculo = <Veiculo>(json);

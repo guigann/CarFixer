@@ -36,7 +36,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/add-veiculo/add-veiculo.module').then( m => m.AddVeiculoPageModule)
   },
   {
-    path: 'add-veiculo/:id_veiculo',
+    path: 'add-veiculo/:id',
     loadChildren: () => import('./pages/add-veiculo/add-veiculo.module').then( m => m.AddVeiculoPageModule)
   },
   // {

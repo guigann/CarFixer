@@ -85,7 +85,7 @@ export class AddClientePage implements OnInit {
             this.usuario = <Usuario>(json);
             if (this.usuario) {
               this.showMessage('Registro salvo com sucesso!!!');
-              this.navController.navigateBack('/usuario');
+              this.navController.navigateBack('/cliente');
             } else {
               this.showMessage('Erro ao salvar o registro!');
             }

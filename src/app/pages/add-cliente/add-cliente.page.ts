@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NavController, ToastController } from '@ionic/angular';
 import { Usuario } from 'src/app/model/usuario';
+import { Veiculo } from '../veiculo/veiculo.page';
+import { VeiculoService } from 'src/app/services/veiculo.service';
 
 @Component({
   selector: 'app-add-cliente',
@@ -12,24 +14,25 @@ import { Usuario } from 'src/app/model/usuario';
 })
 export class AddClientePage implements OnInit {
   titlePage: string;
-  usuario: Usuario;
+  cliente: Usuario;
+  // veiculos: Veiculo[];
   formGroup: FormGroup;
 
-  constructor(private activatedRoute: ActivatedRoute, private toastController: ToastController, private navController: NavController, private formBuilder: FormBuilder, private usuarioService: UsuarioService) {
+  constructor(private activatedRoute: ActivatedRoute, private toastController: ToastController, private navController: NavController, private formBuilder: FormBuilder, private usuarioService: UsuarioService, private veiculoService: VeiculoService) {
 
-    this.usuario = new Usuario();
+    this.cliente = new Usuario();
 
     this.formGroup = this.formBuilder.group({
-      'nome': [this.usuario?.nome, Validators.compose([
+      'nome': [this.cliente?.nome, Validators.compose([
         Validators.required
       ])],
-      'cpf': [this.usuario?.cpf, Validators.compose([
+      'cpf': [this.cliente?.cpf, Validators.compose([
         Validators.required
       ])],
-      'email': [this.usuario?.email, Validators.compose([
+      'email': [this.cliente?.email, Validators.compose([
         Validators.required
       ])],
-      'telefone': [this.usuario?.telefone, Validators.compose([
+      'telefone': [this.cliente?.telefone, Validators.compose([
         Validators.required
       ])]
     });
@@ -40,23 +43,28 @@ export class AddClientePage implements OnInit {
 
     if (id != null) {
       this.titlePage = "Cliente";
-      this.usuarioService.getById(id).then((json) => {
-        this.usuario = <Usuario>(json);
-        this.formGroup.get('nome')?.setValue(this.usuario.nome);
-        this.formGroup.get('email')?.setValue(this.usuario.email);
-        this.formGroup.get('cpf')?.setValue(this.usuario.cpf);
-        this.formGroup.get('telefone')?.setValue(this.usuario.telefone);
+      this.usuarioService.getById(id).then((json:any) => {
+        this.cliente = <Usuario>(json);
+        this.formGroup.get('nome')?.setValue(this.cliente.nome);
+        this.formGroup.get('email')?.setValue(this.cliente.email);
+        this.formGroup.get('cpf')?.setValue(this.cliente.cpf);
+        this.formGroup.get('telefone')?.setValue(this.cliente.telefone);
       });
     } else {
       this.titlePage = "Cadastro de Cliente"
     }
 
+    // this.veiculos = [];0
+    // veiculoService.getByUser(this.cliente.id).then((json:any) =>{
+    //   this.veiculos = <Veiculo[]>(json) || [];
+    // })
+    
     // if (id > 0) {
-    //   this.usuarioService.getById(id).then((json) => {
-    //     this.usuario = <Usuario>(json);
+    //   this.clienteService.getById(id).then((json) => {
+    //     this.cliente = <cliente>(json);
     //   });
 
-    //   if (this.usuario)
+    //   if (this.cliente)
     //     this.navController.navigateBack('/cliente');
     //   this.titlePage = "Cliente"
     // } else {
@@ -69,21 +77,21 @@ export class AddClientePage implements OnInit {
   }
 
   bt_save() {
-    this.usuario.nome = this.formGroup.value.nome;
-    this.usuario.email = this.formGroup.value.email;
-    this.usuario.cpf = this.formGroup.value.cpf;
-    this.usuario.telefone = this.formGroup.value.telefone;
-    this.usuario.senha = "0";
-    this.usuario.permission = 0;
+    this.cliente.nome = this.formGroup.value.nome;
+    this.cliente.email = this.formGroup.value.email;
+    this.cliente.cpf = this.formGroup.value.cpf;
+    this.cliente.telefone = this.formGroup.value.telefone;
+    this.cliente.senha = "0";
+    this.cliente.permission = 0;
 
-    this.usuarioService.checkEmail(this.usuario.email).then((json) => {
+    this.usuarioService.checkEmail(this.cliente.email).then((json:any) => {
       let result = <number>(json);
       if (result === 404) {
 
-        this.usuarioService.save(this.usuario)
+        this.usuarioService.save(this.cliente)
           .then((json: any) => {
-            this.usuario = <Usuario>(json);
-            if (this.usuario) {
+            this.cliente = <Usuario>(json);
+            if (this.cliente) {
               this.showMessage('Registro salvo com sucesso!!!');
               this.navController.navigateBack('/cliente');
             } else {

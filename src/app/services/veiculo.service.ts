@@ -79,6 +79,11 @@ export class VeiculoService {
     return await this.httpClient.get(urlAuxiliar).toPromise();
   }
 
+  async getByUser(id: number) {
+    let urlAuxiliar = this.url + "/usuario/" + id;
+    return await this.httpClient.get(urlAuxiliar).toPromise();
+  }
+
   async save(veiculo: Veiculo) {
     if (veiculo.id === 0) {
       return await this.httpClient.post(this.url, JSON.stringify(veiculo), this.httpHeaders).toPromise();

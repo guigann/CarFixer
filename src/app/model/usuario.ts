@@ -1,3 +1,5 @@
+import { Veiculo } from "./veiculo";
+
 export class Usuario {
     id: number;
     nome: string;
@@ -6,6 +8,7 @@ export class Usuario {
     email: string;
     senha: string;
     permission: number; //create a Enum class
+    veiculos: Veiculo[]
 
     constructor() {
         this.id = 0;
@@ -15,5 +18,6 @@ export class Usuario {
         this.telefone = "";
         this.senha = "";
         this.permission = 0;
+        this.veiculos = [];
     }
 }

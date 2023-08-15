@@ -56,6 +56,9 @@ export class AddVeiculoPage implements OnInit {
   }
 
   ngOnInit() {
+    if (UsuarioService.protect()) {
+      this.navController.navigateBack('/login');
+    }
   }
 
   salvar() {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Agendamento } from '../model/agendamento';
+import { Agendamento } from '../model/agenda';
 
 @Injectable({
   providedIn: 'root'

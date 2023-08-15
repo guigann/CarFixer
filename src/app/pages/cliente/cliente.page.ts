@@ -16,7 +16,11 @@ export class ClientePage implements OnInit {
     this.usuarios = [];
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    if (UsuarioService.protect()) {
+      this.navController.navigateBack('/login');
+    }
+   }
 
   async ionViewWillEnter() {
     this.carregarLista();

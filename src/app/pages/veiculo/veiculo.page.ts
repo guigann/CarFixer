@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, LoadingController, NavController, ToastController } from '@ionic/angular';
 import { Veiculo } from 'src/app/model/veiculo';
+import { UsuarioService } from 'src/app/services/usuario.service';
 import { VeiculoService } from 'src/app/services/veiculo.service';
 
 @Component({
@@ -16,7 +17,11 @@ export class VeiculoPage implements OnInit {
     this.veiculos = [];
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    if (UsuarioService.protect()) {
+      this.navController.navigateBack('/login');
+    }
+  }
 
   async ionViewWillEnter() {
     this.carregarLista();

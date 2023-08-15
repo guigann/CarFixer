@@ -74,6 +74,9 @@ export class AddClientePage implements OnInit {
   }
 
   ngOnInit() {
+    if (UsuarioService.protect()) {
+      this.navController.navigateBack('/login');
+    }
   }
 
   bt_save() {

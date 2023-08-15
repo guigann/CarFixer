@@ -1,4 +1,4 @@
-export class Agendamento {
+export class Agenda {
     id: number;
     data: string;
     status: string;

@@ -67,9 +67,9 @@ export class UsuarioService {
 
     static protect() {
         if (this.getLogin() === null) {
-            return false;
-        } else
             return true;
+        } else
+            return false;
     }
 
 }

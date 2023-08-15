@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Usuario } from '../cliente/cliente.page';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -9,13 +10,15 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 })
 export class HomePage implements OnInit {
   usuario: Usuario;
-  
-  constructor() {
+
+  constructor(private navController: NavController) {
     this.usuario = UsuarioService.getLogin();
   }
 
   ngOnInit() {
-    UsuarioService.protect();
+    if (UsuarioService.protect()) {
+      this.navController.navigateBack('/login');
+    }
   }
 
 }

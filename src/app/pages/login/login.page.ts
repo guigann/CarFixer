@@ -28,6 +28,9 @@ export class LoginPage implements OnInit {
   }
 
   ngOnInit() {
+    if (!UsuarioService.protect()) {
+      this.navController.navigateBack('/home');
+    }
   }
 
   bt_login() {
@@ -50,7 +53,7 @@ export class LoginPage implements OnInit {
         }).catch((erro: any) => {
           this.showMessage('There was an error in login! Erro:' + erro['mensage']);
         });
-      }else{
+      } else {
         this.showMessage('Email ou senha incorretos!')
       }
     }).catch((erro) => {

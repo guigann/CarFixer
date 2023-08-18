@@ -1,15 +1,23 @@
-export class Agenda {
-    id: number;
-    data: string;
-    status: string;
-    veiculo_id: number;
-    tipo_servico_id: number;
+import { Status } from './status';
 
-    constructor(){
-        this.id = 0;
-        this.data = "";
-        this.status = "";
-        this.veiculo_id = 0;
-        this.tipo_servico_id = 0;
-    }
+export class Agenda {
+  id: number;
+  id_horario: number;
+  id_veiculo: number;
+  status: Status;
+  dt_previsao: Date|undefined;
+  dt_fim: Date|undefined;
+  observacao: string;
+  produtos: string;
+
+  constructor() {
+    this.id = 0;
+    this.id_horario = 0;
+    this.id_veiculo = 0;
+    this.status = Status.Pendente;
+    this.dt_previsao = undefined;
+    this.dt_fim = undefined;
+    this.observacao = '';
+    this.produtos = '';
+  }
 }

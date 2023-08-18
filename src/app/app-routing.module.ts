@@ -39,18 +39,18 @@ const routes: Routes = [
     path: 'add-veiculo/:id',
     loadChildren: () => import('./pages/add-veiculo/add-veiculo.module').then( m => m.AddVeiculoPageModule)
   },
-  // {
-  //   path: 'agendamento',
-  //   loadChildren: () => import('./pages/agendamento/agendamento.module').then( m => m.AgendamentoPageModule)
-  // },
-  // {
-  //   path: 'add-agendamento',
-  //   loadChildren: () => import('./pages/add-agendamento/add-agendamento.module').then( m => m.AddAgendamentoPageModule)
-  // },
-  // {
-  //   path: 'add-agendamento/:id',
-  //   loadChildren: () => import('./pages/add-agendamento/add-agendamento.module').then( m => m.AddAgendamentoPageModule)
-  // }
+  {
+    path: 'agenda',
+    loadChildren: () => import('./pages/agenda/agenda.module').then( m => m.AgendaPageModule)
+  },
+  {
+    path: 'add-agenda',
+    loadChildren: () => import('./pages/add-agenda/add-agenda.module').then( m => m.AddAgendaPageModule)
+  },
+  {
+    path: 'add-agenda/:id',
+    loadChildren: () => import('./pages/add-agenda/add-agenda.module').then( m => m.AddAgendaPageModule)
+  }
 ];
 
 @NgModule({

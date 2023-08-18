@@ -1,0 +1,39 @@
+#GET
+GET http://localhost:8087/api/v1/servico/
+Content-Type: application/json
+###
+
+#POST
+POST http://localhost:8087/api/v1/servico
+Content-Type: application/json
+
+{
+    "nome":"Pintura",
+    "descricao":"Loren Ypson"
+}
+###
+
+#PUT
+PUT http://localhost:8087/api/v1/servico
+Content-Type: application/json
+
+{
+    "id_servico":1,
+    "nome":"Pintura",
+    "descricao":"Loren Ypson"
+}
+###
+
+#PATCH
+PATCH http://localhost:8087/api/v1/servico
+Content-Type: application/json
+
+{
+    "id_servico":1,
+    "descricao":"Loren Ypson Loren Ypson"
+}
+###
+
+#DELETE
+DELETE http://localhost:8087/api/v1/servico/2
+Content-Type: application/json

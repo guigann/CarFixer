@@ -1,0 +1,39 @@
+#GET
+GET http://localhost:8087/api/v1/servico/1/agenda
+Content-Type: application/json
+###
+
+#POST
+POST http://localhost:8087/api/v1/servico/1/agenda
+Content-Type: application/json
+
+{
+    "id_servico":1,
+    "id_agenda":1,
+    "observacao":""
+}
+###
+
+#PUT / NOT SUPORTED
+PUT http://localhost:8087/api/v1/servico/1/agenda
+Content-Type: application/json
+
+{
+    "id_servico":1,
+    "id_agenda":1,
+    "observacao":"a"
+}
+###
+
+#PATCH / NOT SUPORTED
+PATCH http://localhost:8087/api/v1/servico/1/agenda
+Content-Type: application/json
+
+{
+    "observacao":""
+}
+###
+
+#DELETE
+DELETE http://localhost:8087/api/v1/servico/1/agenda/2
+Content-Type: application/json

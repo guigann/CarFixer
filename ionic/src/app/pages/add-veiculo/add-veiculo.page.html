@@ -1,0 +1,122 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-title>CarFixer</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defautHref="/veiculo"></ion-back-button>
+    </ion-buttons>
+
+    <ion-button slot="end" fill="outline" id="click-trigger"><ion-icon slot="start"
+        name="person-circle"></ion-icon>Jose</ion-button>
+    <ion-popover trigger="click-trigger" triggerAction="click">
+      <ng-template>
+        <ion-content class="ion-padding">Perfil</ion-content>
+        <ion-content class="ion-padding" routerLink="/login">Logout</ion-content>
+      </ng-template>
+    </ion-popover>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-text class="ion-text-center">
+    <h1>Cadastrar Veículo</h1>
+  </ion-text>
+
+
+  <ion-grid>
+    <form [formGroup]="formGroup" (ngSubmit)="salvar()">
+
+      <ion-row>
+        <ion-col>
+
+          <ion-item>
+            <ion-label position="stacked">Modelo</ion-label>
+            <ion-input type="text" formControlName="modelo" [(ngModel)]="veiculo.modelo"></ion-input>
+          </ion-item>
+
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+
+          <ion-item>
+            <ion-label position="stacked">Tipo</ion-label>
+            <ion-select aria-label="Tipo" placeholder="Tipo de veículo" formControlName="tipo"
+              [(ngModel)]="veiculo.tipo">
+              <ion-select-option value="Carro">Carro</ion-select-option>
+              <ion-select-option value="Motocicleta">Motocicleta</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+        </ion-col>
+
+        <ion-col>
+
+          <ion-item>
+            <ion-label position="stacked">Placa</ion-label>
+            <ion-input type="text" formControlName="placa" [(ngModel)]="veiculo.placa"></ion-input>
+          </ion-item>
+
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+
+          <ion-item>
+            <ion-label position="stacked">Cliente</ion-label>
+            <ion-select aria-label="Cliente" placeholder="Dono do veículo" formControlName="id_cliente"
+              [(ngModel)]="veiculo.id_cliente">
+              <ion-item-sliding *ngFor="let cliente of clientes">
+                <ion-select-option [value]="cliente.id">{{cliente.nome}}</ion-select-option>
+              </ion-item-sliding>
+              <!-- <ion-item-sliding >
+                <ion-item [routerLink]="['/add-veiculo/', veiculo.id]" detail>
+                  <ion-label>
+                    <h2>
+                      <ion-icon name="list-outline" [color]="'primary'"></ion-icon>
+                      {{veiculo.modelo}}
+                    </h2>
+                  </ion-label>
+                </ion-item>
+              </ion-item-sliding> -->
+
+            </ion-select>
+          </ion-item>
+
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+
+          <ion-button type="submit" expand="block" color="primary" [disabled]="!formGroup.valid">Cadastrar</ion-button>
+
+        </ion-col>
+      </ion-row>
+
+    </form>
+
+  </ion-grid>
+
+  <ion-text class="ion-text-center">
+    <h2>Agendas</h2>
+  </ion-text>
+  <ion-text class="ion-text-center" [hidden]="(veiculo.agendas.length > 0)">
+    <p>Esse veículo não possui agendas cadastradas!</p>
+  </ion-text>
+  <ion-list [hidden]="!veiculo.agendas.length">
+    <ion-item-sliding *ngFor="let agenda of veiculo.agendas">
+      <ion-item [routerLink]="['/add-agenda/', agenda.id]" detail>
+        <ion-label>
+          <h2>
+            <ion-icon name="search-outline" [color]="'primary'"></ion-icon>
+            Data: {{agenda.id_horario}}ㅤStatus: {{agenda.status}}
+          </h2>
+        </ion-label>
+      </ion-item>
+    </ion-item-sliding>
+  </ion-list>
+
+
+</ion-content>

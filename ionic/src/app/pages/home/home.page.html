@@ -1,0 +1,51 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>CarFixer</ion-title>
+
+    <ion-button slot="end" fill="outline" id="click-trigger"><ion-icon slot="start" name="person-circle"></ion-icon>{{usuario.nome}}</ion-button>
+    <ion-popover trigger="click-trigger" triggerAction="click">
+      <ng-template>
+        <ion-content class="ion-padding">Perfil</ion-content>
+        <ion-content class="ion-padding" routerLink="/login">Logout</ion-content>
+      </ng-template>
+    </ion-popover>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-text class="ion-text-center"><h1>CarFixer App</h1></ion-text>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col><ion-card routerLink="/cliente">
+          <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
+          <ion-card-header>
+            <ion-card-title class="ion-text-center">Clientes</ion-card-title>
+          </ion-card-header>
+        </ion-card></ion-col>
+
+      <ion-col><ion-card routerLink="/veiculo">
+          <img src="assets/imgs/car.png" />
+          <ion-card-header>
+            <ion-card-title class="ion-text-center">Veículos</ion-card-title>
+          </ion-card-header>
+        </ion-card></ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col><ion-card routerLink="/agenda">
+          <img src="assets/imgs/calendar.png" />
+          <ion-card-header>
+            <ion-card-title class="ion-text-center">Agendas</ion-card-title>
+          </ion-card-header>
+        </ion-card></ion-col>
+
+      <ion-col><ion-card routerLink="/">
+          <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
+          <ion-card-header>
+            <ion-card-title class="ion-text-center">Serviços</ion-card-title>
+          </ion-card-header>
+        </ion-card></ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

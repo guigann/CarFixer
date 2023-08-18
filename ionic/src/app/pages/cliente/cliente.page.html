@@ -1,0 +1,28 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-back-button defautHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Clientes</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-text class="ion-text-center"><h1>Clientes</h1></ion-text>
+
+  <ion-list>
+    <ion-item-sliding *ngFor="let usuario of usuarios">
+    <ion-item [routerLink]="['/add-cliente', usuario.id]" detail>
+      <ion-label>
+        <h2>{{usuario.nome}}</h2>
+      </ion-label>
+    </ion-item>
+  </ion-item-sliding>
+  </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button routerLink="/add-cliente" color="primary">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

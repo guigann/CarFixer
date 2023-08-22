@@ -5,7 +5,8 @@
       <ion-back-button defautHref="/agenda"></ion-back-button>
     </ion-buttons>
 
-    <ion-button slot="end" fill="outline" id="click-trigger"><ion-icon slot="start" name="person-circle"></ion-icon>Jose</ion-button>
+    <ion-button slot="end" fill="outline" id="click-trigger"><ion-icon slot="start"
+        name="person-circle"></ion-icon>Jose</ion-button>
     <ion-popover trigger="click-trigger" triggerAction="click">
       <ng-template>
         <ion-content class="ion-padding">Perfil</ion-content>
@@ -53,23 +54,6 @@
 
         </ion-col>
 
-        <!-- <ion-col> -->
-
-          <!-- <ion-item>
-            <ion-label position="stacked">Tipo de serviço</ion-label>
-            <ion-select aria-label="Tipo" placeholder="Tipo de Serviço" formControlName="tipo_servico"
-              [(ngModel)]="agenda.tipo_servico_id">
-              <ion-item-sliding *ngFor="let tipo_servico of tipo_servicos">
-                <ion-select-option value="tipo_servico.id">{{tipo_servico.nome}}</ion-select-option>
-              </ion-item-sliding>
-              //for each tipo_servico;
-            </ion-select>
-          </ion-item> -->
-
-        <!-- </ion-col> -->
-      </ion-row>
-
-      <ion-row>
         <ion-col>
 
           <ion-item>
@@ -84,8 +68,37 @@
           </ion-item>
 
         </ion-col>
+        
       </ion-row>
 
+      <ion-row>
+        <ion-col>
+
+          <ion-item>
+            <ion-label position="stacked">Serviços</ion-label>
+            <ion-select id="servico" aria-label="Serviço" placeholder="Serviço" formControlName="servico">
+              <ion-item *ngFor="let servico of servicos">
+                <ion-select-option value="servico.id">{{servico.nome}}</ion-select-option>
+              </ion-item>
+            </ion-select>
+
+          </ion-item>
+          
+        </ion-col>
+        
+        <ion-col>
+          <ion-button shape="round" color="primary" (click)="addServico()">+</ion-button>
+        </ion-col>
+      </ion-row>
+      
+      <ion-row>
+        <ion-item *ngFor="let servico of servicos">
+          <!-- <ion-checkbox></ion-checkbox> -->
+          <ion-label>{{servico.nome}}</ion-label>
+        </ion-item>
+      </ion-row>
+
+      
       <ion-row>
         <ion-col>
 

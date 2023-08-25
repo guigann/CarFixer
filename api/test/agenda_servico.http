@@ -1,32 +1,32 @@
 #GET
-GET http://localhost:8087/api/v1/servico/1/agenda
+GET http://localhost:8087/api/v1/agenda/2/servico
 Content-Type: application/json
 ###
 
 #POST
-POST http://localhost:8087/api/v1/servico/1/agenda
+POST http://localhost:8087/api/v1/agenda/2/servico
 Content-Type: application/json
 
 {
-    "id_servico":1,
+    "id":1,
     "id_agenda":2,
     "observacao":""
 }
 ###
 
 #PUT / NOT SUPORTED
-PUT http://localhost:8087/api/v1/servico/1/agenda
+PUT http://localhost:8087/api/v1/agenda/2/servico
 Content-Type: application/json
 
 {
+    "id_agenda":2,
     "id_servico":1,
-    "id_agenda":1,
     "observacao":"a"
 }
 ###
 
 #PATCH / NOT SUPORTED
-PATCH http://localhost:8087/api/v1/servico/1/agenda
+PATCH http://localhost:8087/api/v1/agenda/1/servico
 Content-Type: application/json
 
 {
@@ -35,5 +35,5 @@ Content-Type: application/json
 ###
 
 #DELETE
-DELETE http://localhost:8087/api/v1/servico/1/agenda/2
+DELETE http://localhost:8087/api/v1/agenda/2/servico/1
 Content-Type: application/json

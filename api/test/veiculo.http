@@ -8,10 +8,10 @@ POST http://localhost:8087/api/v1/veiculo
 Content-Type: application/json
 
 {
-    "placa":"CCC-222",
+    "placa":"CCB-222",
     "modelo":"Mustang",
     "tipo":"Carro", 
-    "id_cliente":1
+    "id_cliente":2
 }
 ###
 
@@ -20,7 +20,7 @@ PUT http://localhost:8087/api/v1/veiculo
 Content-Type: application/json
 
 {
-    "id_veiculo":1,
+    "id":4,
     "placa":"ABC-123",
     "modelo":"Honda HRV",
     "tipo":"Carro",
@@ -39,5 +39,5 @@ Content-Type: application/json
 ###
 
 #DELETE
-DELETE http://localhost:8087/api/v1/veiculo/2
+DELETE http://localhost:8087/api/v1/veiculo/4
 Content-Type: application/json

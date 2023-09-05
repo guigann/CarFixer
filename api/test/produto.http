@@ -19,8 +19,8 @@ PUT http://localhost:8087/api/v1/produto
 Content-Type: application/json
 
 {
-    "id_produto":1,
-    "id_agenda":4,
+    "id":1,
+    "id_agenda":2,
     "descricao":"Pneu"
 }
 ###
@@ -30,11 +30,11 @@ PATCH http://localhost:8087/api/v1/produto
 Content-Type: application/json
 
 {
-    "id_produto":1,
+    "id":1,
     "descricao":"Pneus"
 }
 ###
 
 #DELETE
-DELETE http://localhost:8087/api/v1/produto/4  
+DELETE http://localhost:8087/api/v1/produto/1
 Content-Type: application/json

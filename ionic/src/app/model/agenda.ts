@@ -8,7 +8,7 @@ export class Agenda {
   dt_previsao: Date|undefined;
   dt_fim: Date|undefined;
   observacao: string;
-  produtos: string;
+  produtos: any[];
 
   constructor() {
     this.id = 0;
@@ -18,6 +18,6 @@ export class Agenda {
     this.dt_previsao = undefined;
     this.dt_fim = undefined;
     this.observacao = '';
-    this.produtos = '';
+    this.produtos = [];
   }
 }

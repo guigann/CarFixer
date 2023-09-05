@@ -6,7 +6,7 @@
     </ion-buttons>
 
     <ion-button slot="end" fill="outline" id="click-trigger"><ion-icon slot="start"
-        name="person-circle"></ion-icon>Jose</ion-button>
+        name="person-circle"></ion-icon>{{usuario.nome}}</ion-button>
     <ion-popover trigger="click-trigger" triggerAction="click">
       <ng-template>
         <ion-content class="ion-padding">Perfil</ion-content>
@@ -27,12 +27,18 @@
 
       <ion-row>
         <ion-col>
-
           <ion-item>
             <ion-label position="stacked">Data</ion-label>
-            <ion-input type="date" formControlName="id_horario" [(ngModel)]="agenda.id_horario"></ion-input>
+            <ion-input type="date" id="inputData" (change)="loadHorariosDisponiveisPorDia()"></ion-input>
           </ion-item>
-
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label position="stacked">Horário</ion-label>
+            <ion-select id="horario" aria-label="Horário" placeholder="Selecione um Horário" formControlName="id_horario" >
+              <ion-select-option *ngFor="let horario of horariosDisponiveis" value="{{horario.id}}" [disabled]="(horario.status == 'Ocupado'? true : false)">{{horario.data.getHours()}}h{{horario.data.getMinutes()}}</ion-select-option>
+            </ion-select>
+          </ion-item>
         </ion-col>
       </ion-row>
 
@@ -46,7 +52,7 @@
               <ion-select-option value="Pendente">Pendente</ion-select-option>
               <ion-select-option value="Aprovado">Aprovado</ion-select-option>
               <ion-select-option value="Reprovado">Reprovado</ion-select-option>
-              <ion-select-option value="Em Andamento">Em Andamento</ion-select-option>
+              <ion-select-option value="Em_Andamento">Em Andamento</ion-select-option>
               <ion-select-option value="Concluido">Concluído</ion-select-option>
               <ion-select-option value="Encerrado">Encerrado</ion-select-option>
             </ion-select>
@@ -58,12 +64,8 @@
 
           <ion-item>
             <ion-label position="stacked">Veículo</ion-label>
-            <ion-select aria-label="Veículo" placeholder="Veículo agendado" formControlName="veiculo"
-              [(ngModel)]="agenda.id_veiculo">
-              <ion-item-sliding *ngFor="let veiculo of veiculos">
-                <ion-select-option value="veiculo.id">{{veiculo.modelo}} - {{veiculo.placa}}</ion-select-option>
-              </ion-item-sliding>
-              //for each veículo: modelo + placa;
+            <ion-select aria-label="Veículo" placeholder="Selecione um Veículo" formControlName="id_veiculo" [(ngModel)]="agenda.id_veiculo">
+              <ion-select-option *ngFor="let veiculo of veiculos" value="{{veiculo.id}}">{{veiculo.modelo}} - {{veiculo.placa}}</ion-select-option>
             </ion-select>
           </ion-item>
 
@@ -75,29 +77,47 @@
         <ion-col>
 
           <ion-item>
-            <ion-label position="stacked">Serviços</ion-label>
-            <ion-select id="servico" aria-label="Serviço" placeholder="Serviço" formControlName="servico">
-              <ion-item *ngFor="let servico of servicos">
-                <ion-select-option value="servico.id">{{servico.nome}}</ion-select-option>
-              </ion-item>
-            </ion-select>
+            <ion-label position="stacked">Previsão termino</ion-label>
+            <ion-input type="date" formControlName="prevTermino"></ion-input>
+            <!-- <ion-input type="date" formControlName="prevTermino" [(ngModel)]="agenda.id_horario"></ion-input> -->
+          </ion-item>
 
+        </ion-col>
+        <ion-col id="divServicoSelect">
+          <ion-item style="flex-grow: 1">
+            <ion-label position="stacked">Serviços</ion-label>
+            <ion-select id="servico" aria-label="Serviço" placeholder="Selecione um serviço">
+              <ion-select-option *ngFor="let servico of allServicos" value="{{servico.id}}">{{servico.nome}}</ion-select-option>
+            </ion-select>
           </ion-item>
           
-        </ion-col>
-        
-        <ion-col>
-          <ion-button shape="round" color="primary" (click)="addServico()">+</ion-button>
+          <ion-item id="addButtonBox" style="flex-grow: 0">
+            <!-- <ion-button id="addButton" shape="round" color="primary" (click)="calcularHorarios(new Date())">+</ion-button> -->
+            <ion-button id="addButton" shape="round" color="primary" (click)="addServico()">+</ion-button>
+          </ion-item>
         </ion-col>
       </ion-row>
       
-      <ion-row>
-        <ion-item *ngFor="let servico of servicos">
-          <!-- <ion-checkbox></ion-checkbox> -->
-          <ion-label>{{servico.nome}}</ion-label>
-        </ion-item>
-      </ion-row>
+      <div id="servicosAdd">
+        <ion-text>
+          <h3>Serviços adicionados</h3>
+        </ion-text>
+        <ion-row>
+          <ion-item class="areaServicoAdd" *ngFor="let servico of addedServicos">
+            <ion-button fill="clear" (click)="removeServico(servico)">{{servico.nome}} 
+              <ion-icon class="iconCloseServico" name="close-circle-outline"></ion-icon>
+            </ion-button>
+          </ion-item>
+        </ion-row>
+      </div>
 
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-textarea label="Observações:" placeholder="" formControlName="observacao" [(ngModel)]="agenda.observacao"></ion-textarea>
+          </ion-item>
+        </ion-col>
+      </ion-row>
       
       <ion-row>
         <ion-col>

@@ -35,8 +35,8 @@
         <ion-col>
           <ion-item>
             <ion-label position="stacked">Horário</ion-label>
-            <ion-select id="horario" aria-label="Horário" placeholder="Selecione um Horário" formControlName="id_horario" >
-              <ion-select-option *ngFor="let horario of horariosDisponiveis" value="{{horario.id}}" [disabled]="(horario.status == 'Ocupado'? true : false)">{{horario.data.getHours()}}h{{horario.data.getMinutes()}}</ion-select-option>
+            <ion-select id="horario" aria-label="Horário" placeholder="Selecione um Horário" formControlName="horario" >
+              <ion-select-option *ngFor="let horario of horariosDisponiveis" value="{{horario.data}}" [disabled]="(horario.status == 'Ocupado'? true : false)">{{horario.data.getHours()}}h{{horario.data.getMinutes()}}</ion-select-option>
             </ion-select>
           </ion-item>
         </ion-col>

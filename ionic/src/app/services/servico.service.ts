@@ -11,6 +11,8 @@ export class ServicoService {
   };
 
   url: string = 'http://localhost:8087/api/v1/servico';
+  urlAgenda = (idAgenda: number) =>
+    `http://localhost:8087/api/v1/agenda/${idAgenda}/servico`;
 
   constructor(private httpClient: HttpClient) {}
 
@@ -20,6 +22,11 @@ export class ServicoService {
 
   async getById(id: number) {
     let urlAuxiliar = this.url + '/' + id;
+    return await this.httpClient.get(urlAuxiliar).toPromise();
+  }
+
+  async getByIdAgenda(idAgenda: number) {
+    let urlAuxiliar = this.urlAgenda(idAgenda);
     return await this.httpClient.get(urlAuxiliar).toPromise();
   }
 
@@ -34,10 +41,27 @@ export class ServicoService {
         .toPromise();
     }
   }
+  async putOnAgenda(idAgenda: number, idServico: number) {
+    return await this.httpClient
+      .post(
+        this.urlAgenda(idAgenda),
+        { id: idServico, id_agenda: idAgenda, observacao: '' },
+        this.httpHeaders
+      )
+      .toPromise();
+  }
 
   async delete(id: number) {
     let urlAuxiliar = this.url + '/' + id;
     return await this.httpClient.delete(urlAuxiliar).toPromise();
   }
 
+  async deleteFromAgenda(idAgenda: number, idServico: number) {
+    let urlAuxiliar = this.urlAgenda(idAgenda) + '/servico/' + idServico;
+    return await this.httpClient.delete(urlAuxiliar).toPromise();
+  }
 }
+
+//   GET http://localhost:8087/api/v1/agenda/10/servico
+//   POST http://localhost:8087/api/v1/agenda/2/servico
+// DELETE http://localhost:8087/api/v1/agenda/2/servico/1

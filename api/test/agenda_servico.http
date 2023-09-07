@@ -1,15 +1,15 @@
 #GET
-GET http://localhost:8087/api/v1/agenda/2/servico
+GET http://localhost:8087/api/v1/agenda/12/servico
 Content-Type: application/json
 ###
 
 #POST
-POST http://localhost:8087/api/v1/agenda/2/servico
+POST http://localhost:8087/api/v1/agenda/10/servico
 Content-Type: application/json
 
 {
-    "id":1,
-    "id_agenda":2,
+    "id":2,
+    "id_agenda":10,
     "observacao":""
 }
 ###

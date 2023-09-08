@@ -35,8 +35,8 @@
         <ion-col>
           <ion-item>
             <ion-label position="stacked">Horário</ion-label>
-            <ion-select id="horario" aria-label="Horário" placeholder="Selecione um Horário" formControlName="horario" >
-              <ion-select-option *ngFor="let horario of horariosDisponiveis" value="{{horario.data}}" [disabled]="(horario.status == 'Ocupado'? true : false)">{{horario.data.getHours()}}h{{horario.data.getMinutes()}}</ion-select-option>
+            <ion-select id="horario" aria-label="Horário" placeholder="Selecione um Horário" formControlName="horario">
+              <ion-select-option *ngFor="let horario of horariosDisponiveis" value="{{horario.data}}" [disabled]="(horario.status == 'Ocupado'? true : false)">{{horario.data.getHours()}}h{{twoDigitsCheck(horario.data.getMinutes())}}</ion-select-option>
             </ion-select>
           </ion-item>
         </ion-col>
@@ -64,7 +64,7 @@
 
           <ion-item>
             <ion-label position="stacked">Veículo</ion-label>
-            <ion-select aria-label="Veículo" placeholder="Selecione um Veículo" formControlName="id_veiculo" [(ngModel)]="agenda.id_veiculo">
+            <ion-select id="veiculo" aria-label="Veículo" placeholder="Selecione um Veículo" formControlName="id_veiculo" [(ngModel)]="agenda.id_veiculo">
               <ion-select-option *ngFor="let veiculo of veiculos" value="{{veiculo.id}}">{{veiculo.modelo}} - {{veiculo.placa}}</ion-select-option>
             </ion-select>
           </ion-item>
@@ -134,3 +134,8 @@
 
 
 </ion-content>
+
+<!-- 
+  por no select-option caso preciso:
+      class="ion-text-wrap"
+ -->

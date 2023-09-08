@@ -25,10 +25,8 @@ export class AddAgendaPage implements OnInit {
   veiculos: Veiculo[];
   allServicos: Servico[];
   addedServicos: Servico[];
-  allHorariosByDia: Horario[];
   horariosDisponiveis: Horario[];
-
-  horariosOcupados: Horario[]; //teste
+  horariosOcupados: Horario[];
 
   //**** */
   // setando de forma implicita definições da tabela independente que ainda não foi implementada:
@@ -74,11 +72,6 @@ export class AddAgendaPage implements OnInit {
       this.allServicos = <Servico[]>json;
     });
 
-    this.allHorariosByDia = []; // --------------------- não esta filtrado por dia
-    this.horarioService.get().then((json) => {
-      this.allHorariosByDia = <Horario[]>json;
-    });
-
     this.formGroup = this.formBuilder.group({
       horario: [
         // this.agenda.id_horario,
@@ -97,6 +90,11 @@ export class AddAgendaPage implements OnInit {
       observacao: [this.agenda.observacao],
     });
 
+    this.veiculos = [];
+    this.veiculoService.get().then((json: any) => {
+      this.veiculos = <Veiculo[]>json;
+    });
+
     let id = this.activatedRoute.snapshot.params['id'];
 
     if (id != null) {
@@ -105,34 +103,63 @@ export class AddAgendaPage implements OnInit {
         // this.formGroup.get('id_horario')?.setValue(this.agenda.id_horario);
         this.formGroup.get('status')?.setValue(this.agenda.status);
         this.formGroup.get('veiculo')?.setValue(this.agenda.id_veiculo);
+        this.formGroup.get('prevTermino')?.setValue(this.agenda.dt_previsao);
+        this.formGroup.get('observacao')?.setValue(this.agenda.observacao);
+
+        this.horarioService
+          .getById(this.agenda.id_horario)
+          .then((json: any) => {
+            let inputData: any = document.getElementById('inputData');
+            let horario = <Horario>json;
+            let data = new Date(horario.data);
+            let [dia, mes, ano] = [
+              data.getDate(),
+              data.getMonth(),
+              data.getFullYear(),
+            ];
+
+            inputData.value =
+              ano + '-' + this.twoDigitsCheck(mes + 1) + '-' + this.twoDigitsCheck(dia);
+
+            let horarioSelect: any = document.getElementById('horario');
+            let [horas, minutos] = [data.getHours(), data.getMinutes()];
+            horarioSelect.selectedText = horas + 'h' + this.twoDigitsCheck(minutos);
+
+            inputData.readonly = true;
+            horarioSelect.disabled = true;
+          });
+
+        this.veiculoService
+          .getById(this.agenda.id_veiculo)
+          .then((json: any) => {
+            let veiculo = <Veiculo>json;
+
+            let selectVeiculo: any = document.getElementById('veiculo');
+            selectVeiculo.selectedText = `${veiculo.modelo} - ${veiculo.placa}`;
+
+            selectVeiculo.disabled = true;
+          });
+
+        this.servicoService.getByIdAgenda(this.agenda.id).then((json: any) => {
+          this.addedServicos = <Servico[]>json;
+        });
       });
     }
-
-    this.veiculos = [];
-    this.veiculoService.get().then((json: any) => {
-      this.veiculos = <Veiculo[]>json;
-    });
   }
 
   ngOnInit() {}
 
   salvar() {
-    // Criar obj horario e salvar no banco, após salvar a agenda alterar status para 'Ocupado'
-    //this.agenda.id_horario = this.formGroup.value.horario;
+    let dataSelect = new Date(this.formGroup.value.horario);
 
-    console.log('Valor retornado pelo select: ' + this.formGroup.value.horario);
+    this.horarioService.save(new Horario(dataSelect)).then((json) => {
+      let horarioSalvo = <Horario>json;
+      console.log('horario pre-salvo no banco: ');
+      console.log(horarioSalvo);
 
-    let horario = new Horario(new Date(this.formGroup.value.horario));
-
-    let horario2: Horario;
-    this.horarioService.save(horario).then((json) => {
-      horario2 = <Horario>json;
-      console.log('horario2: ');
-      console.log(horario2);
-
-      this.agenda.id_horario = horario2.id;
+      this.agenda.id_horario = horarioSalvo.id;
       this.agenda.status = this.formGroup.value.status;
-      this.agenda.id_veiculo = this.formGroup.value.id_veiculo;
+      this.agenda.id_veiculo = this.formGroup.value.veiculo.id;
       this.agenda.dt_previsao = this.formGroup.value.prevTermino;
       this.agenda.observacao = this.formGroup.value.observacao;
       this.agenda.produtos = [];
@@ -155,15 +182,18 @@ export class AddAgendaPage implements OnInit {
       this.agendaService.save(this.agenda).then((json) => {
         let agenda = <Agenda>json;
 
-        // mudar status do horario
+        horarioSalvo.status = 'Ocupado';
+        this.horarioService.save(horarioSalvo);
+
         this.addedServicos.forEach((servico) => {
-          // this.servicoService.save(servico);
-          this.servicoService.putOnAgenda(agenda.id, servico.id)
+          this.servicoService.putOnAgenda(agenda.id, servico.id);
         });
+        // se servicos não forem salvos, exibir msg de erro
         this.exibirMensagem('Registro salvo com sucesso!!!');
         this.navController.navigateBack('/agenda');
       });
     });
+    // se agenda nn for salva o horario salvo no banco deverá ser deletado do banco
   }
 
   async exibirMensagem(texto: string) {
@@ -219,34 +249,65 @@ export class AddAgendaPage implements OnInit {
     let dataHTML: any = document.getElementById('inputData');
     let dataString = dataHTML.value;
     let diaSelecionado = new Date(dataString);
+    diaSelecionado.setDate(diaSelecionado.getDate() + 1);
 
     let horariosDoDia = this.calcularHorarios(diaSelecionado);
 
-    /**
-     * obter do banco os horários já ocupados e comparar com o vetor
-     */
-
     for (let i = 0; i < horariosDoDia.length; i++) {
-      // for (let z = 0; z < this.horariosOcupados.length; z++) {
-      //   let horarioOcupadoString = this.horariosOcupados[z].data.toDateString();
-      //   if(horariosDoDia[i].data.toDateString() == horarioOcupadoString){
-      //     horariosDoDia[i].status = this.horariosOcupados[z].status;
-      //   }
-      // }
+      for (let z = 0; z < this.horariosOcupados.length; z++) {
+        let horarioOcupado = this.horariosOcupados[z];
+        // console.log('horarioOcupado.data :');
+        // console.log(horarioOcupado);
+
+        // let val1 = horariosDoDia[i].data;
+        let val1 = new Date(
+          horariosDoDia[i].data.getTime() +
+            horariosDoDia[i].data.getTimezoneOffset() * 60000
+        );
+        let val2 = new Date(horarioOcupado.data);
+        // const dataHoraUtc = new Date(dataHora.getTime() + (dataHora.getTimezoneOffset() * 60000));
+
+        let objVal1 = {
+          year: val1.getFullYear(),
+          month: val1.getMonth(), // lembrando q vai de 0 a 11
+          day: val1.getDate(),
+          hour: val1.getHours(),
+          minute: val1.getMinutes(),
+          second: val1.getSeconds(),
+        };
+        let objVal2 = {
+          year: val2.getUTCFullYear(),
+          month: val2.getUTCMonth(),
+          day: val2.getUTCDate(),
+          hour: val2.getUTCHours(),
+          minute: val2.getUTCMinutes(),
+          second: val2.getUTCSeconds(),
+        };
+        // console.log('objVal1: ');
+        // console.log(objVal1);
+        // console.log(' objVal2: ');
+        // console.log(objVal2);
+
+        if (objVal1.month === objVal2.month) {
+          if (objVal1.day === objVal2.day) {
+            if (objVal1.hour === objVal2.hour) {
+              if (objVal1.minute === objVal2.minute) {
+                horariosDoDia[i].status = horarioOcupado.status;
+                // console.log(
+                //   'horarios iguais: ' +
+                // horariosDoDia[i].data +
+                //     ' e ' +
+                // horarioOcupado.data
+                //   );
+                console.log('horarios iguais: ');
+                console.log(objVal1);
+                console.log(objVal2);
+              }
+            }
+          }
+        }
+      }
     }
-
-    // let horariosOcupadosDoDia = this.horariosOcupados.filter((a)=>a.data.getFullYear() === diaSelecionado.getFullYear());
-
-    // console.log(horariosOcupadosDoDia);
-
-    // horariosDoDia.filter((horario)=>{
-    //   horariosOcupados.forEach(element => {
-    //     horario.data ==
-
-    //   });
-    // })
-
-    //              Falta mesclar a lista de horarios gerados com a lista de horarios do banco para assim listar corretamente no select Horario
 
     console.log(horariosDoDia);
     this.horariosDisponiveis = horariosDoDia;
@@ -261,5 +322,9 @@ export class AddAgendaPage implements OnInit {
     if (data != null || data != undefined) {
       return true;
     } else return false;
+  }
+
+  twoDigitsCheck(num: number) {
+    return (num >= 10 ? num : `0${num}`);
   }
 }

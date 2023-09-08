@@ -40,5 +40,4 @@ export class HorarioService {
     let urlAuxiliar = this.url + '/' + id;
     return await this.httpClient.delete(urlAuxiliar).toPromise();
   }
-
 }

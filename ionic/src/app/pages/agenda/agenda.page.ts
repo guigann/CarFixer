@@ -28,6 +28,7 @@ export class AgendaPage implements OnInit {
     this.carregarLista();
   }
 
+
   async carregarLista() {
     this.showLoader();
     await this.agendaService.get().then((json) => {

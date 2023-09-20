@@ -11,8 +11,8 @@ Content-Type: application/json
     "id_horario":1,
     "id_veiculo":1,
     "status":"Pendente",
-    "dt_previsao":"2023-05-19",
-    "dt_fim":"2023-05-19",
+    "dt_previsao":"",
+    "dt_fim":"",
     "observacao":""
     
 }
@@ -23,7 +23,7 @@ PUT http://localhost:8087/api/v1/agenda
 Content-Type: application/json
 
 {
-    "id_agenda":6,
+    "id":4,
     "id_horario":1,
     "id_veiculo":1,
     "status":"Pendente",
@@ -44,5 +44,5 @@ Content-Type: application/json
 ###
 
 #DELETE
-DELETE http://localhost:8087/api/v1/agenda/5
+DELETE http://localhost:8087/api/v1/agenda/4
 Content-Type: application/json

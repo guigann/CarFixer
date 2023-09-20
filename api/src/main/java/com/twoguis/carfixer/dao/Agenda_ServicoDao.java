@@ -15,13 +15,13 @@ import com.twoguis.carfixer.model.Servico;
 @RegisterBeanMapper(Servico.class)
 public interface Agenda_ServicoDao {
 
-        @SqlUpdate("insert into servico_agenda (id_agenda, id_servico) values (:id_agenda, :id)")
+        @SqlUpdate("insert into servico_agenda (id_agenda, id_servico, observacao) values (:id_agenda, :id, :observacao)")
         void insert(@BindBean Agenda_Servico agenda_servico);
 
-        @SqlQuery("select s.* from servico s, servico_agenda sa where sa.id_servico = s.id and sa.id_agenda = :id_agenda and sa.id_servico = :id_servico;")
+        @SqlQuery("select s.*, sa.observacao from servico s, servico_agenda sa where sa.id_servico = s.id and sa.id_agenda = :id_agenda and sa.id_servico = :id_servico;")
         Servico get(@Bind("id_agenda") int id_agenda, @Bind("id_servico") int id_servico);
 
-        @SqlQuery("select s.* from servico s, servico_agenda sa where sa.id_servico = s.id and sa.id_agenda = :id_agenda;")
+        @SqlQuery("select s.*, sa.observacao from servico s, servico_agenda sa where sa.id_servico = s.id and sa.id_agenda = :id_agenda;")
         List<Servico> getByServicoAgenda(@Bind("id_agenda") int id_agenda);
 
         @SqlUpdate("delete " +

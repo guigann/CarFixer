@@ -5,7 +5,7 @@
     <ion-button slot="end" fill="outline" id="click-trigger"><ion-icon slot="start" name="person-circle"></ion-icon>{{usuario.nome}}</ion-button>
     <ion-popover trigger="click-trigger" triggerAction="click">
       <ng-template>
-        <ion-content class="ion-padding">Perfil</ion-content>
+        <ion-content class="ion-padding" routerLink="/profile">Perfil</ion-content>
         <ion-content class="ion-padding" routerLink="/login">Logout</ion-content>
       </ng-template>
     </ion-popover>
@@ -14,7 +14,7 @@
 
 <ion-content [fullscreen]="true">
   <ion-text class="ion-text-center"><h1>CarFixer App</h1></ion-text>
-
+  
   <ion-grid>
     <ion-row>
       <ion-col><ion-card routerLink="/cliente">

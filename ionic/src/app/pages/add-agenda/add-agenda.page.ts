@@ -28,6 +28,8 @@ export class AddAgendaPage implements OnInit {
   horariosDisponiveis: Horario[];
   horariosOcupados: Horario[];
 
+  isEditing: boolean = false;
+
   //**** */
   // setando de forma implicita definições da tabela independente que ainda não foi implementada:
   horario_rangeMin: Date = new Date();
@@ -72,24 +74,6 @@ export class AddAgendaPage implements OnInit {
       this.allServicos = <Servico[]>json;
     });
 
-    this.formGroup = this.formBuilder.group({
-      horario: [
-        // this.agenda.id_horario,
-        '',
-        Validators.compose([Validators.required]),
-      ],
-      status: [this.agenda.status, Validators.compose([Validators.required])],
-      id_veiculo: [
-        this.agenda.id_veiculo,
-        Validators.compose([Validators.required]),
-      ],
-      prevTermino: [
-        this.agenda.dt_previsao,
-        Validators.compose([Validators.required]),
-      ],
-      observacao: [this.agenda.observacao],
-    });
-
     this.veiculos = [];
     this.veiculoService.get().then((json: any) => {
       this.veiculos = <Veiculo[]>json;
@@ -100,7 +84,6 @@ export class AddAgendaPage implements OnInit {
     if (id != null) {
       this.agendaService.getById(parseFloat(id)).then((json) => {
         this.agenda = <Agenda>json;
-        // this.formGroup.get('id_horario')?.setValue(this.agenda.id_horario);
         this.formGroup.get('status')?.setValue(this.agenda.status);
         this.formGroup.get('veiculo')?.setValue(this.agenda.id_veiculo);
         this.formGroup.get('prevTermino')?.setValue(this.agenda.dt_previsao);
@@ -145,9 +128,28 @@ export class AddAgendaPage implements OnInit {
         });
       });
     }
+
+    this.formGroup = this.formBuilder.group({
+      horario: ['', Validators.compose([Validators.required]),
+      ],
+      status: [this.agenda.status, Validators.compose([Validators.required])],
+      id_veiculo: [
+        this.agenda.id_veiculo,
+        Validators.compose([Validators.required]),
+      ],
+      prevTermino: [
+        this.agenda.dt_previsao,
+        Validators.compose([Validators.required]),
+      ],
+      observacao: [this.agenda.observacao],
+    });
   }
 
   ngOnInit() {}
+
+  ionViewWillEnter(){
+    this.isEditing = false;
+  }
 
   salvar() {
     let dataSelect = new Date(this.formGroup.value.horario);
@@ -159,7 +161,7 @@ export class AddAgendaPage implements OnInit {
 
       this.agenda.id_horario = horarioSalvo.id;
       this.agenda.status = this.formGroup.value.status;
-      this.agenda.id_veiculo = this.formGroup.value.veiculo.id;
+      this.agenda.id_veiculo = this.formGroup.value.id_veiculo;
       this.agenda.dt_previsao = this.formGroup.value.prevTermino;
       this.agenda.observacao = this.formGroup.value.observacao;
       this.agenda.produtos = [];
@@ -326,5 +328,9 @@ export class AddAgendaPage implements OnInit {
 
   twoDigitsCheck(num: number) {
     return (num >= 10 ? num : `0${num}`);
+  }
+
+  bt_editing(){
+    this.isEditing = !this.isEditing;
   }
 }

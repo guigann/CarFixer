@@ -8,16 +8,7 @@
     
     <ion-buttons slot="end">
       <ion-button *ngIf="agenda.id != 0 && !isEditing" fill="outline" (click)="bt_editing()">Editar</ion-button>
-      <ion-button fill="outline" id="click-trigger"><ion-icon slot="start" name="person-circle"></ion-icon>{{usuario.nome}}</ion-button>
     </ion-buttons>
-    <ion-popover trigger="click-trigger" triggerAction="click">
-      <ng-template>
-        <ion-content class="ion-padding">Perfil</ion-content>
-        <ion-content class="ion-padding" routerLink="/login"
-          >Logout</ion-content
-        >
-      </ng-template>
-    </ion-popover>
   </ion-toolbar>
 </ion-header>
 
@@ -65,11 +56,11 @@
             <ion-label position="stacked">Status</ion-label>
             <ion-select
               aria-label="Tipo"
+              id="status"
               placeholder="Status do agenda"
               formControlName="status"
-              [(ngModel)]="agenda.status"
               [disabled]="!isEditing"
-            >
+              >
               <ion-select-option value="Pendente">Pendente</ion-select-option>
               <ion-select-option value="Aprovado">Aprovado</ion-select-option>
               <ion-select-option value="Reprovado">Reprovado</ion-select-option>
@@ -90,11 +81,11 @@
               aria-label="Veículo"
               placeholder="Selecione um Veículo"
               formControlName="id_veiculo"
-              [(ngModel)]="agenda.id_veiculo"
               [disabled]="!isEditing"
             >
               <ion-select-option
                 *ngFor="let veiculo of veiculos"
+                
                 value="{{veiculo.id}}"
                 >{{veiculo.modelo}} - {{veiculo.placa}}</ion-select-option
               >
@@ -183,14 +174,23 @@
             [disabled]="!formGroup.valid"
             >Cadastrar</ion-button
           >
+          <ion-button *ngIf="!isEditing"
+            expand="block"
+            color="primary"
+            routerLink="/agenda"
+            fill="outline"
+            >Voltar</ion-button
+          >
           <ion-button *ngIf="isEditing"
             expand="block"
             color="primary"
+            (click)="bt_update()"
             >Salvar</ion-button
           >
           <ion-button *ngIf="isEditing"
             expand="block"
             color="primary"
+            fill="outline"
             (click)="bt_editing()"
             >Cancelar</ion-button
           >

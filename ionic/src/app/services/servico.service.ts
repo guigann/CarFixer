@@ -57,7 +57,12 @@ export class ServicoService {
   }
 
   async deleteFromAgenda(idAgenda: number, idServico: number) {
-    let urlAuxiliar = this.urlAgenda(idAgenda) + '/servico/' + idServico;
+    let urlAuxiliar = this.urlAgenda(idAgenda)+"/"+ idServico;
+    return await this.httpClient.delete(urlAuxiliar).toPromise();
+  }
+
+  async deleteAllFromAgenda(idAgenda: number) {
+    let urlAuxiliar = this.urlAgenda(idAgenda);
     return await this.httpClient.delete(urlAuxiliar).toPromise();
   }
 }
@@ -65,3 +70,4 @@ export class ServicoService {
 //   GET http://localhost:8087/api/v1/agenda/10/servico
 //   POST http://localhost:8087/api/v1/agenda/2/servico
 // DELETE http://localhost:8087/api/v1/agenda/2/servico/1
+// DELETE ALL http://localhost:8087/api/v1/agenda/10/servico/

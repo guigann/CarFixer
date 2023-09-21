@@ -50,7 +50,13 @@ const routes: Routes = [
   {
     path: 'add-agenda/:id',
     loadChildren: () => import('./pages/add-agenda/add-agenda.module').then( m => m.AddAgendaPageModule)
+  },
+  {
+    path: 'profile',
+    loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule)
   }
+
+
 ];
 
 @NgModule({

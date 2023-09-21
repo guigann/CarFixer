@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-back-button defautHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <form [formGroup]="formGroup" (ngSubmit)="save()">
+
+    <div class="ion-text-center">
+      <ion-text><b>{{usuario.nome}}</b></ion-text>
+    </div>
+
+    <ion-item>
+      <ion-label position="stacked">Nome</ion-label>
+      <ion-input type="text" formControlName="nome" [(ngModel)]="usuario.nome"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">CPF</ion-label>
+      <ion-input type="text" formControlName="cpf" [(ngModel)]="usuario.cpf" [readonly]="true"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">E-mail</ion-label>
+      <ion-input type="text" formControlName="email" [readonly]="true" [(ngModel)]="usuario.email"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Telefone</ion-label>
+      <ion-input type="text" formControlName="telefone" [(ngModel)]="usuario.telefone"></ion-input>
+    </ion-item>
+
+    <!-- <ion-text class="ion-text-center">
+      <h2>Veículos</h2>
+    </ion-text> -->
+
+   <!-- <ion-text class="ion-text-center" [hidden]="(usuario.veiculos.length > 0)">
+      <p>Esse usuario não possui veículos cadastrados!</p>
+    </ion-text>
+      <ion-list [hidden]="!usuario.veiculos.length">
+      <ion-item-sliding *ngFor="let veiculo of usuario.veiculos">
+        <ion-item [routerLink]="['/add-veiculo/', veiculo.id]" detail>
+          <ion-label>
+            <h2>
+              <ion-icon name="car-outline" [color]="'primary'"></ion-icon>
+              {{veiculo.modelo}}
+            </h2>
+          </ion-label>
+        </ion-item>
+      </ion-item-sliding>
+    </ion-list> -->
+
+    <ion-button type="submit" expand="block" color="primary" [disabled]="!formGroup.valid">Salvar</ion-button>
+  </form>
+</ion-content>

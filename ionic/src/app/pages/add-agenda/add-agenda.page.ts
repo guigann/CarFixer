@@ -102,36 +102,33 @@ export class AddAgendaPage implements OnInit {
             ];
 
             inputData.value =
-              ano + '-' + this.twoDigitsCheck(mes + 1) + '-' + this.twoDigitsCheck(dia);
+              ano +
+              '-' +
+              this.twoDigitsCheck(mes + 1) +
+              '-' +
+              this.twoDigitsCheck(dia);
 
             let horarioSelect: any = document.getElementById('horario');
             let [horas, minutos] = [data.getHours(), data.getMinutes()];
-            horarioSelect.selectedText = horas + 'h' + this.twoDigitsCheck(minutos);
+            horarioSelect.selectedText =
+              horas + 'h' + this.twoDigitsCheck(minutos);
 
             inputData.readonly = true;
             horarioSelect.disabled = true;
           });
 
-        this.veiculoService
-          .getById(this.agenda.id_veiculo)
-          .then((json: any) => {
-            let veiculo = <Veiculo>json;
-
-            let selectVeiculo: any = document.getElementById('veiculo');
-            selectVeiculo.selectedText = `${veiculo.modelo} - ${veiculo.placa}`;
-
-            selectVeiculo.disabled = true;
-          });
+        this.enableSelectVeiculoEditing(false);
 
         this.servicoService.getByIdAgenda(this.agenda.id).then((json: any) => {
           this.addedServicos = <Servico[]>json;
         });
+
+        this.enableSelectStatusEditing(false);
       });
     }
 
     this.formGroup = this.formBuilder.group({
-      horario: ['', Validators.compose([Validators.required]),
-      ],
+      horario: ['', Validators.compose([Validators.required])],
       status: [this.agenda.status, Validators.compose([Validators.required])],
       id_veiculo: [
         this.agenda.id_veiculo,
@@ -147,7 +144,7 @@ export class AddAgendaPage implements OnInit {
 
   ngOnInit() {}
 
-  ionViewWillEnter(){
+  ionViewWillEnter() {
     this.isEditing = false;
   }
 
@@ -196,6 +193,45 @@ export class AddAgendaPage implements OnInit {
       });
     });
     // se agenda nn for salva o horario salvo no banco deverá ser deletado do banco
+  }
+
+  bt_update(){
+    console.log(this.agenda);
+    this.agenda.status = this.formGroup.value.status || this.agenda.status;
+    this.agenda.id_veiculo = this.formGroup.value.id_veiculo || this.agenda.id_veiculo;
+    this.agenda.dt_previsao = this.formGroup.value.prevTermino || this.agenda.dt_previsao;
+    this.agenda.observacao = this.formGroup.value.observacao || this.agenda.observacao;
+    
+    console.log(this.agenda);
+    
+    this.agendaService.save(this.agenda).then((json) => {
+      let agenda = <Agenda>json;
+
+      this.servicoService.getByIdAgenda(this.agenda.id).then((json: any) => {
+        let servicos = <Servico[]>json;
+        if (servicos.length > 0) {
+          this.servicoService.deleteAllFromAgenda(agenda.id).then(_=>{
+            if (this.addedServicos.length > 0) {
+              this.addedServicos.forEach((servico) => {
+                this.servicoService.putOnAgenda(agenda.id, servico.id);
+              });
+            }
+          });
+        } else {
+          this.addedServicos.forEach((servico) => {
+            this.servicoService.putOnAgenda(agenda.id, servico.id);
+          });
+        }
+      });
+
+
+      /**
+       * add produtos
+       */
+
+      this.exibirMensagem('Registro salvo com sucesso!!!');
+      window.location.reload();
+    });
   }
 
   async exibirMensagem(texto: string) {
@@ -285,22 +321,13 @@ export class AddAgendaPage implements OnInit {
           minute: val2.getUTCMinutes(),
           second: val2.getUTCSeconds(),
         };
-        // console.log('objVal1: ');
-        // console.log(objVal1);
-        // console.log(' objVal2: ');
-        // console.log(objVal2);
-
+        
         if (objVal1.month === objVal2.month) {
           if (objVal1.day === objVal2.day) {
             if (objVal1.hour === objVal2.hour) {
               if (objVal1.minute === objVal2.minute) {
                 horariosDoDia[i].status = horarioOcupado.status;
-                // console.log(
-                //   'horarios iguais: ' +
-                // horariosDoDia[i].data +
-                //     ' e ' +
-                // horarioOcupado.data
-                //   );
+                
                 console.log('horarios iguais: ');
                 console.log(objVal1);
                 console.log(objVal2);
@@ -327,10 +354,45 @@ export class AddAgendaPage implements OnInit {
   }
 
   twoDigitsCheck(num: number) {
-    return (num >= 10 ? num : `0${num}`);
+    return num >= 10 ? num : `0${num}`;
   }
 
-  bt_editing(){
+  bt_editing() {
     this.isEditing = !this.isEditing;
+    this.enableSelectStatusEditing(this.isEditing);
+    this.enableSelectVeiculoEditing(this.isEditing);
+
+    if (!this.isEditing) {
+      window.location.reload();
+    }
+  }
+
+  enableSelectStatusEditing(state: boolean) {
+    let selectStatus: any = document.getElementById('status');
+    if (state) {
+      selectStatus.selectedText = '';
+      selectStatus.disabled = false;
+    } else {
+      selectStatus.selectedText = this.agenda.status.replace('_', ' ');
+      selectStatus.disabled = true;
+    }
+  }
+  enableSelectVeiculoEditing(state: boolean) {
+    let selectVeiculo: any = document.getElementById('veiculo');
+    if (state) {
+      this.veiculoService.getById(this.agenda.id_veiculo).then((json: any) => {
+        let veiculo = <Veiculo>json;
+        selectVeiculo.selectedText = `${veiculo.modelo} - ${veiculo.placa}`; // isso impede de alterar veículo, devera ser repensado
+      });
+      selectVeiculo.disabled = false;
+    } else {
+      this.veiculoService.getById(this.agenda.id_veiculo).then((json: any) => {
+        let veiculo = <Veiculo>json;
+
+        selectVeiculo.selectedText = `${veiculo.modelo} - ${veiculo.placa}`;
+
+        selectVeiculo.disabled = true;
+      });
+    }
   }
 }

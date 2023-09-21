@@ -121,6 +121,7 @@ export class AddAgendaPage implements OnInit {
 
         this.servicoService.getByIdAgenda(this.agenda.id).then((json: any) => {
           this.addedServicos = <Servico[]>json;
+          this.allServicos = this.filtrarVetorServicos(this.allServicos,this.addedServicos);
         });
 
         this.enableSelectStatusEditing(false);
@@ -195,42 +196,50 @@ export class AddAgendaPage implements OnInit {
     // se agenda nn for salva o horario salvo no banco deverá ser deletado do banco
   }
 
-  bt_update(){
+  bt_update() {
     console.log(this.agenda);
     this.agenda.status = this.formGroup.value.status || this.agenda.status;
-    this.agenda.id_veiculo = this.formGroup.value.id_veiculo || this.agenda.id_veiculo;
-    this.agenda.dt_previsao = this.formGroup.value.prevTermino || this.agenda.dt_previsao;
-    this.agenda.observacao = this.formGroup.value.observacao || this.agenda.observacao;
-    
+    this.agenda.id_veiculo =
+      this.formGroup.value.id_veiculo || this.agenda.id_veiculo;
+    this.agenda.dt_previsao =
+      this.formGroup.value.prevTermino || this.agenda.dt_previsao;
+    this.agenda.observacao =
+      this.formGroup.value.observacao || this.agenda.observacao;
+
     console.log(this.agenda);
-    
+
     this.agendaService.save(this.agenda).then((json) => {
       let agenda = <Agenda>json;
 
       this.servicoService.getByIdAgenda(this.agenda.id).then((json: any) => {
         let servicos = <Servico[]>json;
         if (servicos.length > 0) {
-          this.servicoService.deleteAllFromAgenda(agenda.id).then(_=>{
+          console.log('servicos: Precisa deletar');
+
+          this.servicoService.deleteAllFromAgenda(agenda.id).then((_) => {
+            console.log('servicos: deletados!!');
             if (this.addedServicos.length > 0) {
               this.addedServicos.forEach((servico) => {
-                this.servicoService.putOnAgenda(agenda.id, servico.id);
+                this.servicoService.putOnAgenda(agenda.id, servico.id).then(_ => window.location.reload());
               });
+              console.log('servicos: adicionados!!');
+              console.log(this.addedServicos);
             }
           });
         } else {
           this.addedServicos.forEach((servico) => {
-            this.servicoService.putOnAgenda(agenda.id, servico.id);
+            this.servicoService.putOnAgenda(agenda.id, servico.id).then(_ => window.location.reload());
           });
+          console.log('servicos adicionados');
+          console.log(this.addedServicos);
         }
       });
-
 
       /**
        * add produtos
        */
 
       this.exibirMensagem('Registro salvo com sucesso!!!');
-      window.location.reload();
     });
   }
 
@@ -321,13 +330,13 @@ export class AddAgendaPage implements OnInit {
           minute: val2.getUTCMinutes(),
           second: val2.getUTCSeconds(),
         };
-        
+
         if (objVal1.month === objVal2.month) {
           if (objVal1.day === objVal2.day) {
             if (objVal1.hour === objVal2.hour) {
               if (objVal1.minute === objVal2.minute) {
                 horariosDoDia[i].status = horarioOcupado.status;
-                
+
                 console.log('horarios iguais: ');
                 console.log(objVal1);
                 console.log(objVal2);
@@ -394,5 +403,17 @@ export class AddAgendaPage implements OnInit {
         selectVeiculo.disabled = true;
       });
     }
+  }
+
+  filtrarVetorServicos(vetor1: Servico[], vetor2: Servico[]): Servico[] {
+    //array1 - array2
+    const res = vetor1.filter(({ id }) => {
+      let flag = true;
+      vetor2.forEach((item) => {
+        if (item.id === id) flag = false;
+      });
+      return flag;
+    });
+    return res;
   }
 }

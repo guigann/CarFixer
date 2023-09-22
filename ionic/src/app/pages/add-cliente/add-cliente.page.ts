@@ -85,7 +85,7 @@ export class AddClientePage implements OnInit {
     this.cliente.cpf = this.formGroup.value.cpf;
     this.cliente.telefone = this.formGroup.value.telefone;
     this.cliente.senha = "0";
-    this.cliente.permission = 0;
+    this.cliente.permission = 'Cliente';
 
     this.usuarioService.checkEmail(this.cliente.email).then((json:any) => {
       let result = <number>(json);

@@ -7,7 +7,7 @@ export class Usuario {
     telefone: string;
     email: string;
     senha: string;
-    permission: number; //create a Enum class
+    permission: "Cliente"|"Funcionario"|"Admin";
     veiculos: Veiculo[]
 
     constructor() {
@@ -17,7 +17,7 @@ export class Usuario {
         this.email = "";
         this.telefone = "";
         this.senha = "";
-        this.permission = 0;
+        this.permission = "Cliente";
         this.veiculos = [];
     }
 }

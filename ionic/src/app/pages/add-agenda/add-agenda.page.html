@@ -1,42 +1,50 @@
 <ion-header>
-  <ion-toolbar color="dark">
+  <ion-toolbar>
     <ion-title>CarFixer</ion-title>
     <ion-buttons slot="start">
       <ion-back-button defautHref="/agenda"></ion-back-button>
     </ion-buttons>
 
-    <ion-button slot="end" fill="outline" id="click-trigger"><ion-icon slot="start"
-        name="person-circle"></ion-icon>{{usuario.nome}}</ion-button>
-    <ion-popover trigger="click-trigger" triggerAction="click">
-      <ng-template>
-        <ion-content class="ion-padding">Perfil</ion-content>
-        <ion-content class="ion-padding" routerLink="/login">Logout</ion-content>
-      </ng-template>
-    </ion-popover>
+    
+    <ion-buttons slot="end">
+      <ion-button *ngIf="agenda.id != 0 && !isEditing" fill="outline" (click)="bt_editing()">Editar</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-text class="ion-text-center">
-    <h1>Cadastrar Agenda</h1>
+    <h1>{{agenda.id == 0? "Cadastrar Agenda" : isEditing? "Alterar Agenda" : "Agenda"}}</h1>
   </ion-text>
-
 
   <ion-grid>
     <form [formGroup]="formGroup" (ngSubmit)="salvar()">
-
       <ion-row>
         <ion-col>
           <ion-item>
             <ion-label position="stacked">Data</ion-label>
-            <ion-input type="date" id="inputData" (change)="loadHorariosDisponiveisPorDia()"></ion-input>
+            <ion-input
+              type="date"
+              id="inputData"
+              (change)="loadHorariosDisponiveisPorDia()"
+            ></ion-input>
           </ion-item>
         </ion-col>
         <ion-col>
           <ion-item>
             <ion-label position="stacked">Horário</ion-label>
-            <ion-select id="horario" aria-label="Horário" placeholder="Selecione um Horário" formControlName="horario">
-              <ion-select-option *ngFor="let horario of horariosDisponiveis" value="{{horario.data}}" [disabled]="(horario.status == 'Ocupado'? true : false)">{{horario.data.getHours()}}h{{twoDigitsCheck(horario.data.getMinutes())}}</ion-select-option>
+            <ion-select
+              id="horario"
+              aria-label="Horário"
+              placeholder="Selecione um Horário"
+              formControlName="horario"
+            >
+              <ion-select-option
+                *ngFor="let horario of horariosDisponiveis"
+                value="{{horario.data}}"
+                [disabled]="(horario.status == 'Ocupado'? true : false)"
+                >{{horario.data.getHours()}}h{{twoDigitsCheck(horario.data.getMinutes())}}</ion-select-option
+              >
             </ion-select>
           </ion-item>
         </ion-col>
@@ -44,68 +52,100 @@
 
       <ion-row>
         <ion-col>
-
           <ion-item>
             <ion-label position="stacked">Status</ion-label>
-            <ion-select aria-label="Tipo" placeholder="Status do agenda" formControlName="status"
-              [(ngModel)]="agenda.status">
+            <ion-select
+              aria-label="Tipo"
+              id="status"
+              placeholder="Status do agenda"
+              formControlName="status"
+              [disabled]="!isEditing"
+              >
               <ion-select-option value="Pendente">Pendente</ion-select-option>
               <ion-select-option value="Aprovado">Aprovado</ion-select-option>
               <ion-select-option value="Reprovado">Reprovado</ion-select-option>
-              <ion-select-option value="Em_Andamento">Em Andamento</ion-select-option>
+              <ion-select-option value="Em_Andamento"
+                >Em Andamento</ion-select-option
+              >
               <ion-select-option value="Concluido">Concluído</ion-select-option>
               <ion-select-option value="Encerrado">Encerrado</ion-select-option>
             </ion-select>
           </ion-item>
-
         </ion-col>
 
         <ion-col>
-
           <ion-item>
             <ion-label position="stacked">Veículo</ion-label>
-            <ion-select id="veiculo" aria-label="Veículo" placeholder="Selecione um Veículo" formControlName="id_veiculo" [(ngModel)]="agenda.id_veiculo">
-              <ion-select-option *ngFor="let veiculo of veiculos" value="{{veiculo.id}}">{{veiculo.modelo}} - {{veiculo.placa}}</ion-select-option>
+            <ion-select
+              id="veiculo"
+              aria-label="Veículo"
+              placeholder="Selecione um Veículo"
+              formControlName="id_veiculo"
+              [disabled]="!isEditing"
+            >
+              <ion-select-option
+                *ngFor="let veiculo of veiculos"
+                
+                value="{{veiculo.id}}"
+                >{{veiculo.modelo}} - {{veiculo.placa}}</ion-select-option
+              >
             </ion-select>
           </ion-item>
-
         </ion-col>
-        
       </ion-row>
 
       <ion-row>
         <ion-col>
-
           <ion-item>
             <ion-label position="stacked">Previsão termino</ion-label>
-            <ion-input type="date" formControlName="prevTermino"></ion-input>
-            <!-- <ion-input type="date" formControlName="prevTermino" [(ngModel)]="agenda.id_horario"></ion-input> -->
+            <ion-input type="date" formControlName="prevTermino" [readonly]="!isEditing && agenda.id != 0"></ion-input>
           </ion-item>
-
         </ion-col>
-        <ion-col id="divServicoSelect">
+        <ion-col id="divServicoSelect" *ngIf="isEditing || agenda.id == 0">
           <ion-item style="flex-grow: 1">
             <ion-label position="stacked">Serviços</ion-label>
-            <ion-select id="servico" aria-label="Serviço" placeholder="Selecione um serviço">
-              <ion-select-option *ngFor="let servico of allServicos" value="{{servico.id}}">{{servico.nome}}</ion-select-option>
+            <ion-select
+              id="servico"
+              aria-label="Serviço"
+              placeholder="Selecione um serviço"
+            >
+              <ion-select-option
+                *ngFor="let servico of allServicos"
+                value="{{servico.id}}"
+                >{{servico.nome}}</ion-select-option
+              >
             </ion-select>
           </ion-item>
-          
+
           <ion-item id="addButtonBox" style="flex-grow: 0">
-            <!-- <ion-button id="addButton" shape="round" color="primary" (click)="calcularHorarios(new Date())">+</ion-button> -->
-            <ion-button id="addButton" shape="round" color="primary" (click)="addServico()">+</ion-button>
+            <ion-button
+              id="addButton"
+              shape="round"
+              color="primary"
+              (click)="isEditing? addServico() : false"
+              >+</ion-button
+            >
           </ion-item>
         </ion-col>
       </ion-row>
-      
+
       <div id="servicosAdd">
         <ion-text>
           <h3>Serviços adicionados</h3>
         </ion-text>
         <ion-row>
-          <ion-item class="areaServicoAdd" *ngFor="let servico of addedServicos">
-            <ion-button fill="clear" (click)="removeServico(servico)">{{servico.nome}} 
-              <ion-icon class="iconCloseServico" name="close-circle-outline"></ion-icon>
+          <ion-item
+            class="areaServicoAdd"
+            *ngFor="let servico of addedServicos"
+            
+          >
+          <ion-button fill="clear" (click)="isEditing? removeServico(servico) : false" 
+              >{{servico.nome}}
+              <ion-icon
+                class="iconCloseServico"
+                name="close-circle-outline"
+                *ngIf="isEditing || agenda.id == 0"
+              ></ion-icon>
             </ion-button>
           </ion-item>
         </ion-row>
@@ -114,25 +154,50 @@
       <ion-row>
         <ion-col>
           <ion-item>
-            <ion-textarea label="Observações:" placeholder="" formControlName="observacao" [(ngModel)]="agenda.observacao"></ion-textarea>
+            <ion-textarea
+              label="Observações:"
+              placeholder=""
+              formControlName="observacao"
+              [(ngModel)]="agenda.observacao"
+              [readonly]="!isEditing && agenda.id != 0"
+            ></ion-textarea>
           </ion-item>
         </ion-col>
       </ion-row>
-      
-      <ion-row>
+
+      <ion-row >
         <ion-col>
-
-          <ion-button type="submit" expand="block" color="primary" [disabled]="!formGroup.valid">Cadastrar</ion-button>
-
+          <ion-button *ngIf="agenda.id == 0"
+            type="submit"
+            expand="block"
+            color="primary"
+            [disabled]="!formGroup.valid"
+            >Cadastrar</ion-button
+          >
+          <ion-button *ngIf="!isEditing"
+            expand="block"
+            color="primary"
+            routerLink="/agenda"
+            fill="outline"
+            >Voltar</ion-button
+          >
+          <ion-button *ngIf="isEditing"
+            expand="block"
+            color="primary"
+            (click)="bt_update()"
+            >Salvar</ion-button
+          >
+          <ion-button *ngIf="isEditing"
+            expand="block"
+            color="primary"
+            fill="outline"
+            (click)="bt_editing()"
+            >Cancelar</ion-button
+          >
         </ion-col>
       </ion-row>
-
     </form>
-
   </ion-grid>
-
-
-
 </ion-content>
 
 <!-- 

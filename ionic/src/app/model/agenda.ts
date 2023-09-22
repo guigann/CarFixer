@@ -1,12 +1,10 @@
-import { Status } from './status';
-
 export class Agenda {
   id: number;
   id_horario: number;
   id_veiculo: number;
   status: Status;
-  dt_previsao: Date|undefined;
-  dt_fim: Date|undefined;
+  dt_previsao: Date | undefined;
+  dt_fim: Date | undefined;
   observacao: string;
   produtos: any[];
 
@@ -20,4 +18,13 @@ export class Agenda {
     this.observacao = '';
     this.produtos = [];
   }
+}
+
+export enum Status {
+  Pendente = "Pendente",
+  Aprovado = "Aprovado",
+  Reprovado = "Reprovado",
+  Em_Andamento = "Em_Andamento",
+  Concluido = "Concluido",
+  Cancelado = "Cancelado"
 }

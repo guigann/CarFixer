@@ -70,5 +70,14 @@ CREATE TABLE servico_agenda (
     PRIMARY KEY (id_servico, id_agenda)
 );
 
+CREATE TABLE sistema (
+	id INT NOT NULL AUTO_INCREMENT,
+	nomeEmpresa VARCHAR(5000) NOT NULL,
+    horario_rangeMin DATETIME NOT NULL,
+    horario_rangeMax DATETIME NOT NULL,
+    horasPorAgendamento INT NOT NULL,
+    PRIMARY KEY (id)
+);
+
 #INSERTS
 INSERT INTO usuario (nome, cpf, email, telefone, senha, permission) VALUES("Gustavo", "050.189.540-00", "gustavo@gmail.com", "11111111111", "123", "Cliente");

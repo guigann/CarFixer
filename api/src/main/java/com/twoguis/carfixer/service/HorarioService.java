@@ -16,10 +16,10 @@ public class HorarioService {
         this.horarioDao = jdbi.onDemand(HorarioDao.class);
     }
 
-    public Horario insert(Horario veiculo) {
-        int id_horario = horarioDao.insert(veiculo);
-        veiculo.setId(id_horario);
-        return veiculo;
+    public Horario insert(Horario horario) {
+        int id_horario = horarioDao.insert(horario);
+        horario.setId(id_horario);
+        return horario;
     }
 
     public List<Horario> get() {
@@ -30,8 +30,8 @@ public class HorarioService {
         return horarioDao.getById(id);
     }
 
-    public void update(Horario veiculo) {
-        horarioDao.update(veiculo);
+    public void update(Horario horario) {
+        horarioDao.update(horario);
     }
 
     public void delete(int id) {

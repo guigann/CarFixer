@@ -8,13 +8,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+@ToString
 @Setter
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
-@ToString
-public class Horario {  
+@AllArgsConstructor
+public class Sistema {
     private int id;
-    private Status_Horario status;
-    private Timestamp data;
+    private String nomeEmpresa;
+    private Timestamp horario_rangeMin;
+    private Timestamp horario_rangeMax;
+    private int horasPorAgendamento;
 }

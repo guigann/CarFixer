@@ -28,9 +28,9 @@ export class LoginPage implements OnInit {
   }
 
   ngOnInit() {
-    if (!UsuarioService.protect()) {
-      this.navController.navigateBack('/home');
-    }
+    // if (!UsuarioService.protect()) {
+    //   this.navController.navigateBack('/home');
+    // }
   }
 
   bt_login() {
@@ -43,7 +43,7 @@ export class LoginPage implements OnInit {
       if (result === 200) {
         this.usuarioService.getByEmail(this.usuario.email).then((json: any) => {
           this.usuario = <Usuario>(json);
-          if (this.usuario) {
+          if (this.usuario && this.usuario.permission != "Cliente") {
             this.usuarioService.setLogin(this.usuario);
             this.showMessage('Login realizado com sucesso!!!');
             this.navController.navigateBack('/home');

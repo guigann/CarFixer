@@ -10,10 +10,10 @@ Content-Type: application/json
 {
     "nome":"Gabriel"    ,
     "cpf":"111.111.111-12",
-    "email":"gab@gmail.com",
+    "email":"g@g",
     "telefone":"2222222222",
     "senha":"123",
-    "permission":"Cliente"
+    "permission":"Admin"
 }
 ###
 

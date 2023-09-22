@@ -1,0 +1,33 @@
+#GET
+GET http://localhost:8087/api/v1/sistema/
+Content-Type: application/json
+###
+
+#POST
+POST http://localhost:8087/api/v1/sistema
+Content-Type: application/json
+
+{
+    "nomeEmpresa":"CarFixer",
+    "horario_rangeMin":"2023-09-28T15:00:00.000+00:00",
+    "horario_rangeMax":"2023-09-28T15:00:00.000+00:00",
+    "horasPorAgendamento":1
+}
+###
+
+#PUT
+PUT http://localhost:8087/api/v1/sistema
+Content-Type: application/json
+
+{
+    "id":1,
+    "nomeEmpresa":"CarFixer",
+    "horario_rangeMin":"",
+    "horario_rangeMax":"",
+    "horasPorAgendamento":1
+}
+###
+
+#DELETE
+DELETE http://localhost:8087/api/v1/sistema/1
+Content-Type: application/json

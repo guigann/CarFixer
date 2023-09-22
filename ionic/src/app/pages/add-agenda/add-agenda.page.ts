@@ -156,10 +156,11 @@ export class AddAgendaPage implements OnInit {
       let horarioSalvo = <Horario>json;
       console.log('horario pre-salvo no banco: ');
       console.log(horarioSalvo);
+      console.log(this.formGroup.value.id_veiculo);
 
       this.agenda.id_horario = horarioSalvo.id;
-      this.agenda.status = this.formGroup.value.status;
-      this.agenda.id_veiculo = this.formGroup.value.veiculo.id;
+      this.agenda.status = this.formGroup.value.status;      
+      this.agenda.id_veiculo = this.formGroup.value.id_veiculo;
       this.agenda.dt_previsao = this.formGroup.value.prevTermino;
       this.agenda.observacao = this.formGroup.value.observacao;
       this.agenda.produtos = [];

@@ -15,10 +15,10 @@ import com.twoguis.carfixer.model.Produto;
 public interface ProdutoDao {
 
         @GetGeneratedKeys
-        @SqlUpdate("insert into produto (id_agenda, descricao) values (:id_agenda, :descricao)")
+        @SqlUpdate("insert into produto (descricao) values (:descricao)")
         int insert(@BindBean Produto produto);
 
- @SqlQuery("select * " +
+        @SqlQuery("select * " +
                         " from produto " +
                         " order by descricao;")
         List<Produto> get();
@@ -27,14 +27,8 @@ public interface ProdutoDao {
                         " from produto " +
                         " where id = :id;")
         Produto getById(@Bind("id") int id);
-     
-        @SqlQuery("select * " +
-                        " from produto " +
-                        " where id_agenda = :id_agenda " +
-                        " order by id_agenda;")
-        List<Produto> getByAgenda(@Bind("id_agenda") int id_agenda);
 
-        @SqlUpdate("update produto " + " set id_agenda = :id_agenda, " + "descricao = :descricao"
+        @SqlUpdate("update produto " + " set descricao = :descricao"
                         + " where id = :id;")
         int update(@BindBean Produto produto);
 

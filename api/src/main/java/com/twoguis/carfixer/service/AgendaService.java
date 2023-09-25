@@ -6,7 +6,7 @@ import org.jdbi.v3.core.Jdbi;
 import org.springframework.stereotype.Service;
 
 import com.twoguis.carfixer.dao.AgendaDao;
-import com.twoguis.carfixer.dao.ProdutoDao;
+import com.twoguis.carfixer.dao.Agenda_ProdutoDao;
 import com.twoguis.carfixer.model.Agenda;
 import com.twoguis.carfixer.model.Produto;
 
@@ -14,11 +14,11 @@ import com.twoguis.carfixer.model.Produto;
 public class AgendaService {
 
     private final AgendaDao agendaDao;
-    private final ProdutoDao produtoDao;
+    private final Agenda_ProdutoDao agenda_produtoDao;
 
     public AgendaService(Jdbi jdbi) {
         this.agendaDao = jdbi.onDemand(AgendaDao.class);
-        this.produtoDao = jdbi.onDemand(ProdutoDao.class);
+        this.agenda_produtoDao = jdbi.onDemand(Agenda_ProdutoDao.class);
     }
 
     public Agenda insert(Agenda agenda) {
@@ -63,7 +63,7 @@ public class AgendaService {
     }
 
     public Agenda getProdutos(Agenda agenda) {
-        List<Produto> produtos = produtoDao.getByAgenda(agenda.getId());
+        List<Produto> produtos = agenda_produtoDao.getByProdutoAgenda(agenda.getId());
         agenda.setProdutos(produtos);
 
         return agenda;

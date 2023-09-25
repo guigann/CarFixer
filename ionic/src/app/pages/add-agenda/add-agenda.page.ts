@@ -12,6 +12,8 @@ import { Usuario } from 'src/app/model/usuario';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { Horario } from 'src/app/model/horario';
 import { HorarioService } from 'src/app/services/horario.service';
+import { Produto } from 'src/app/model/produto';
+import { ProdutoService } from 'src/app/services/produto.service';
 
 @Component({
   selector: 'app-add-agenda',
@@ -24,7 +26,9 @@ export class AddAgendaPage implements OnInit {
   formGroup: FormGroup;
   veiculos: Veiculo[];
   allServicos: Servico[];
+  allProdutos: Produto[];
   addedServicos: Servico[];
+  addedProdutos: Produto[];
   horariosDisponiveis: Horario[];
   horariosOcupados: Horario[];
 
@@ -45,6 +49,7 @@ export class AddAgendaPage implements OnInit {
     private agendaService: AgendaService,
     private veiculoService: VeiculoService,
     private servicoService: ServicoService,
+    private produtoService: ProdutoService,
     private usuarioService: UsuarioService,
     private horarioService: HorarioService
   ) {
@@ -67,11 +72,17 @@ export class AddAgendaPage implements OnInit {
     this.horariosDisponiveis = [];
 
     this.addedServicos = [];
+    this.addedProdutos = [];
     this.agenda = new Agenda();
 
     this.allServicos = [];
     this.servicoService.get().then((json) => {
       this.allServicos = <Servico[]>json;
+    });
+    
+    this.allProdutos = [];
+    this.produtoService.get().then((json) => {
+      this.allProdutos = <Produto[]>json;
     });
 
     this.veiculos = [];
@@ -123,6 +134,12 @@ export class AddAgendaPage implements OnInit {
           this.addedServicos = <Servico[]>json;
           this.allServicos = this.filtrarVetorServicos(this.allServicos,this.addedServicos);
         });
+
+        this.addedProdutos = this.agenda.produtos;
+        // this.produtoService.getByIdAgenda(this.agenda.id).then((json: any) => {
+        //   this.addedProdutos = <Produto[]>json;
+        //   this.allProdutos = this.filtrarVetorProdutos(this.allProdutos,this.addedProdutos);
+        // });
 
         this.enableSelectStatusEditing(false);
       });
@@ -211,6 +228,24 @@ export class AddAgendaPage implements OnInit {
 
     console.log(this.agenda);
 
+    
+      //apagar produtos atuais no banco
+      //add os do array
+
+      console.log("this.agenda.produtos");
+      console.log(this.agenda.produtos);
+      console.log("this.addedProdutos");
+      console.log(this.addedProdutos);
+      
+    this.agenda.produtos.forEach(produto=>{
+      this.produtoService.delete(produto.id);
+    })
+    this.addedProdutos.forEach(produto=>{
+      this.produtoService.save(produto);
+    })
+
+
+
     this.agendaService.save(this.agenda).then((json) => {
       let agenda = <Agenda>json;
 
@@ -238,9 +273,6 @@ export class AddAgendaPage implements OnInit {
         }
       });
 
-      /**
-       * add produtos
-       */
 
       this.exibirMensagem('Registro salvo com sucesso!!!');
     });
@@ -267,12 +299,31 @@ export class AddAgendaPage implements OnInit {
 
     select.value = '';
   }
+  // addProduto() {
+  //   let select: any = document.getElementById('servico');
+  //   let idService = select.value;
+
+  //   if (select.value > 0) {
+  //     this.servicoService.getById(parseFloat(idService)).then((json: any) => {
+  //       this.addedServicos.push(<Servico>json);
+  //       this.allServicos = this.allServicos.filter(({ id }) => id != idService);
+  //     });
+  //   }
+
+  //   select.value = '';
+  // }
 
   removeServico(servico: Servico) {
     this.addedServicos = this.addedServicos.filter(
       ({ id }) => id != servico.id
     );
     this.allServicos.push(servico);
+  }
+  removeProduto(produto: Produto) {
+    this.addedProdutos = this.addedProdutos.filter(
+      ({ id }) => id != produto.id
+    );
+    this.allProdutos.push(produto);
   }
 
   calcularHorarios(dia: Date) {
@@ -409,6 +460,17 @@ export class AddAgendaPage implements OnInit {
   }
 
   filtrarVetorServicos(vetor1: Servico[], vetor2: Servico[]): Servico[] {
+    //array1 - array2
+    const res = vetor1.filter(({ id }) => {
+      let flag = true;
+      vetor2.forEach((item) => {
+        if (item.id === id) flag = false;
+      });
+      return flag;
+    });
+    return res;
+  }
+  filtrarVetorProdutos(vetor1: Produto[], vetor2: Produto[]): Produto[] {
     //array1 - array2
     const res = vetor1.filter(({ id }) => {
       let flag = true;

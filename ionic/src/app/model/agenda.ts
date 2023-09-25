@@ -1,3 +1,5 @@
+import { Produto } from "./produto";
+
 export class Agenda {
   id: number;
   id_horario: number;
@@ -6,7 +8,7 @@ export class Agenda {
   dt_previsao: Date | undefined;
   dt_fim: Date | undefined;
   observacao: string;
-  produtos: any[];
+  produtos: Produto[];
 
   constructor() {
     this.id = 0;

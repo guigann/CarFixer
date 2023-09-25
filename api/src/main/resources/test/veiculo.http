@@ -20,11 +20,11 @@ PUT http://localhost:8087/api/v1/veiculo
 Content-Type: application/json
 
 {
-    "id":4,
-    "placa":"ABC-123",
-    "modelo":"Honda HRV",
-    "tipo":"Carro",
-    "id_cliente":2
+    "id":1,
+    "placa":"CCB-222",
+    "modelo":"Mustang",
+    "tipo":"Carro", 
+    "id_cliente":1
 }
 ###
 

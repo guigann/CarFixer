@@ -9,8 +9,8 @@ Content-Type: application/json
 
 {
     "dias":"01",
-    "hr_inicio":"2023-09-28T15:00:00.000+00:00",
-    "hr_termino":"2023-09-28T15:00:00.000+00:00"
+    "hr_inicio":"10:20",
+    "hr_termino":"18:30"
 }
 ###
 
@@ -20,9 +20,9 @@ Content-Type: application/json
 
 {
     "id":1,
-    "dias":"011",
-    "hr_inicio":"",
-    "hr_termino":""
+    "dias":"01",
+    "hr_inicio":"11:20",
+    "hr_termino":"12:30"
 }
 ###
 

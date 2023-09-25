@@ -5,16 +5,23 @@
       <ion-back-button defautHref="/agenda"></ion-back-button>
     </ion-buttons>
 
-    
     <ion-buttons slot="end">
-      <ion-button *ngIf="agenda.id != 0 && !isEditing" fill="outline" (click)="bt_editing()">Editar</ion-button>
+      <ion-button
+        *ngIf="agenda.id != 0 && !isEditing"
+        fill="outline"
+        (click)="bt_editing()"
+        >Editar</ion-button
+      >
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-text class="ion-text-center">
-    <h1>{{agenda.id == 0? "Cadastrar Agenda" : isEditing? "Alterar Agenda" : "Agenda"}}</h1>
+    <h1>
+      {{agenda.id == 0? "Cadastrar Agenda" : isEditing? "Alterar Agenda" :
+      "Agenda"}}
+    </h1>
   </ion-text>
 
   <ion-grid>
@@ -60,7 +67,7 @@
               placeholder="Status do agenda"
               formControlName="status"
               [disabled]="!isEditing"
-              >
+            >
               <ion-select-option value="Pendente">Pendente</ion-select-option>
               <ion-select-option value="Aprovado">Aprovado</ion-select-option>
               <ion-select-option value="Reprovado">Reprovado</ion-select-option>
@@ -85,7 +92,6 @@
             >
               <ion-select-option
                 *ngFor="let veiculo of veiculos"
-                
                 value="{{veiculo.id}}"
                 >{{veiculo.modelo}} - {{veiculo.placa}}</ion-select-option
               >
@@ -98,7 +104,11 @@
         <ion-col>
           <ion-item>
             <ion-label position="stacked">Previsão termino</ion-label>
-            <ion-input type="date" formControlName="prevTermino" [readonly]="!isEditing && agenda.id != 0"></ion-input>
+            <ion-input
+              type="date"
+              formControlName="prevTermino"
+              [readonly]="!isEditing && agenda.id != 0"
+            ></ion-input>
           </ion-item>
         </ion-col>
         <ion-col id="divServicoSelect" *ngIf="isEditing || agenda.id == 0">
@@ -137,9 +147,10 @@
           <ion-item
             class="areaServicoAdd"
             *ngFor="let servico of addedServicos"
-            
           >
-          <ion-button fill="clear" (click)="isEditing? removeServico(servico) : false" 
+            <ion-button
+              fill="clear"
+              (click)="isEditing? removeServico(servico) : false"
               >{{servico.nome}}
               <ion-icon
                 class="iconCloseServico"
@@ -151,6 +162,28 @@
         </ion-row>
       </div>
 
+      <div id="produtosAdd">
+        <ion-text>
+          <h3>Produtos adicionados</h3>
+        </ion-text>
+        <ion-row>
+          <ion-item
+            class="areaProdutoAdd"
+            *ngFor="let produto of addedProdutos"
+          >
+            <ion-button
+              fill="clear"
+              (click)="isEditing? removeProduto(produto) : false"
+              >{{produto.descricao}}
+              <ion-icon
+                class="iconCloseServico"
+                name="close-circle-outline"
+                *ngIf="isEditing || agenda.id == 0"
+              ></ion-icon>
+            </ion-button>
+          </ion-item>
+        </ion-row>
+      </div>
       <ion-row>
         <ion-col>
           <ion-item>
@@ -165,29 +198,33 @@
         </ion-col>
       </ion-row>
 
-      <ion-row >
+      <ion-row>
         <ion-col>
-          <ion-button *ngIf="agenda.id == 0"
+          <ion-button
+            *ngIf="agenda.id == 0"
             type="submit"
             expand="block"
             color="primary"
             [disabled]="!formGroup.valid"
             >Cadastrar</ion-button
           >
-          <ion-button *ngIf="!isEditing"
+          <ion-button
+            *ngIf="!isEditing"
             expand="block"
             color="primary"
             routerLink="/agenda"
             fill="outline"
             >Voltar</ion-button
           >
-          <ion-button *ngIf="isEditing"
+          <ion-button
+            *ngIf="isEditing"
             expand="block"
             color="primary"
             (click)="bt_update()"
             >Salvar</ion-button
           >
-          <ion-button *ngIf="isEditing"
+          <ion-button
+            *ngIf="isEditing"
             expand="block"
             color="primary"
             fill="outline"

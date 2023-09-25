@@ -17,26 +17,44 @@
             this.regra_funcionamentoDao = jdbi.onDemand(Regra_FuncionamentoDao.class);
         }
 
-        public Regra_Funcionamento insert(Regra_Funcionamento regra_funcionamento) {
-            List<Integer> diasInt = regra_funcionamento.getDiasInt();
+    public Regra_Funcionamento insert(Regra_Funcionamento regra_funcionamento) {
+        List<Integer> diasInt = regra_funcionamento.getDiasInt();
 
-            if (diasInt != null && !diasInt.isEmpty()) {
-                StringBuilder diasBuilder = new StringBuilder();
+        if (diasInt != null && !diasInt.isEmpty()) {
+            StringBuilder diasBuilder = new StringBuilder();
 
-                for (Integer dia : diasInt) {
-                    if (dia >= 0 && dia <= 9) { // Verifica se o número é válido (0 a 9)
-                        diasBuilder.append(dia);
-                    }
+            for (Integer dia : diasInt) {
+                if (dia >= 0 && dia <= 9) { // Verifica se o número é válido (0 a 9)
+                    diasBuilder.append(dia);
                 }
-
-                String dias = diasBuilder.toString();
-                regra_funcionamento.setDias(dias);
             }
 
-            int id_regra_funcionamento = regra_funcionamentoDao.insert(regra_funcionamento);
-            regra_funcionamento.setId(id_regra_funcionamento);
-            return regra_funcionamento;
+            String dias = diasBuilder.toString();
+            regra_funcionamento.setDias(dias);
         }
+
+        int id_regra_funcionamento = regra_funcionamentoDao.insert(regra_funcionamento);
+        regra_funcionamento.setId(id_regra_funcionamento);
+        return regra_funcionamento;
+    }
+
+
+    public Regra_Funcionamento getById(int id) {
+        Regra_Funcionamento regra_funcionamento = regra_funcionamentoDao.getById(id);
+
+        if (regra_funcionamento != null) {
+            String dias = regra_funcionamento.getDias();
+            List<Integer> diasInt = new ArrayList<>();
+
+            for (int i = 0; i < dias.length(); i++) {
+                char c = dias.charAt(i);
+                int intValue = Character.getNumericValue(c);
+                if (intValue >= 0 && intValue <= 9) { // Verifica se o caractere é um dígito válido
+                    diasInt.add(intValue);
+                }
+            }
+
+            regra_funcionamento.setDiasInt(diasInt);
 
         // public List<Regra_Funcionamento> get() {
         // List<Regra_Funcionamento> regra_funcionamentos =
@@ -74,6 +92,7 @@
             }
 
             return regra_funcionamentos;
+
         }
 
         public Regra_Funcionamento getById(int id) {
@@ -105,3 +124,4 @@
             regra_funcionamentoDao.delete(id);
         }
     }
+}

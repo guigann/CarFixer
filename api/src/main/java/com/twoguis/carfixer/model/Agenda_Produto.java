@@ -11,7 +11,6 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Produto {
-    private int id;
-    private String descricao;    
+public class Agenda_Produto extends Produto {
+    private int id_agenda;
 }

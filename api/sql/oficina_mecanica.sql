@@ -46,10 +46,8 @@ CREATE TABLE agenda (
 
 CREATE TABLE produto (
     id INT NOT NULL AUTO_INCREMENT,
-    id_agenda INT NOT NULL,
 	descricao VARCHAR(5000),
-	PRIMARY KEY (id),
-	CONSTRAINT FK_id_agenda FOREIGN KEY (id_agenda) REFERENCES agenda(id)
+	PRIMARY KEY (id)
 );
 
 CREATE TABLE servico (
@@ -68,6 +66,16 @@ CREATE TABLE servico_agenda (
 	CONSTRAINT FK_id_agenda_a FOREIGN KEY (id_agenda) REFERENCES agenda(id),
     
     PRIMARY KEY (id_servico, id_agenda)
+);
+
+CREATE TABLE produto_agenda (
+	id_produto INT NOT NULL,
+    id_agenda INT NOT NULL,
+	observacao VARCHAR(5000),
+	CONSTRAINT FK_id_produto_a FOREIGN KEY (id_produto ) REFERENCES produto(id),
+	CONSTRAINT FK_id_agenda_b FOREIGN KEY (id_agenda) REFERENCES agenda(id),
+    
+    PRIMARY KEY (id_produto, id_agenda)
 );
 
 CREATE TABLE sistema (

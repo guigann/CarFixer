@@ -79,5 +79,13 @@ CREATE TABLE sistema (
     PRIMARY KEY (id)
 );
 
+CREATE TABLE regra_funcionamento (
+	id INT NOT NULL AUTO_INCREMENT,
+    dias VARCHAR(7) NOT NULL,
+	hr_inicio VARCHAR(5000) NOT NULL,
+    hr_termino VARCHAR(5000) NOT NULL,
+    PRIMARY KEY (id)
+);
+	
 #INSERTS
 INSERT INTO usuario (nome, cpf, email, telefone, senha, permission) VALUES("Gustavo", "050.189.540-00", "gustavo@gmail.com", "11111111111", "123", "Cliente");

@@ -18,6 +18,21 @@ public class Regra_FuncionamentoService {
     }
 
     public Regra_Funcionamento insert(Regra_Funcionamento regra_funcionamento) {
+        List<Integer> diasInt = regra_funcionamento.getDiasInt();
+
+        if (diasInt != null && !diasInt.isEmpty()) {
+            StringBuilder diasBuilder = new StringBuilder();
+
+            for (Integer dia : diasInt) {
+                if (dia >= 0 && dia <= 9) { // Verifica se o número é válido (0 a 9)
+                    diasBuilder.append(dia);
+                }
+            }
+
+            String dias = diasBuilder.toString();
+            regra_funcionamento.setDias(dias);
+        }
+
         int id_regra_funcionamento = regra_funcionamentoDao.insert(regra_funcionamento);
         regra_funcionamento.setId(id_regra_funcionamento);
         return regra_funcionamento;
@@ -63,13 +78,19 @@ public class Regra_FuncionamentoService {
 
     public Regra_Funcionamento getById(int id) {
         Regra_Funcionamento regra_funcionamento = regra_funcionamentoDao.getById(id);
-        List<Integer> diasInt = new ArrayList<>();
 
         if (regra_funcionamento != null) {
-            char arr[] = regra_funcionamento.getDias().toCharArray(); // convert the String object to array of char
-            for (char c : arr) {
-                diasInt.add(Integer.valueOf(c));
+            String dias = regra_funcionamento.getDias();
+            List<Integer> diasInt = new ArrayList<>();
+
+            for (int i = 0; i < dias.length(); i++) {
+                char c = dias.charAt(i);
+                int intValue = Character.getNumericValue(c);
+                if (intValue >= 0 && intValue <= 9) { // Verifica se o caractere é um dígito válido
+                    diasInt.add(intValue);
+                }
             }
+
             regra_funcionamento.setDiasInt(diasInt);
         }
 

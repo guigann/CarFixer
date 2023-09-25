@@ -44,8 +44,17 @@ public class VeiculoService {
         return veiculo;
     }
 
-    public Veiculo getByPlaca(String placa){
-       return veiculoDao.getByPlaca(placa);
+    public List<Veiculo> getByUsuario(int id) {
+        List<Veiculo> veiculos = veiculoDao.getByUsuario(id);
+
+        for (Veiculo veiculo : veiculos) {
+            veiculo = getAgendas(veiculo);
+        }
+        return veiculos;
+    }
+
+    public Veiculo getByPlaca(String placa) {
+        return veiculoDao.getByPlaca(placa);
     }
 
     public void update(Veiculo veiculo) {

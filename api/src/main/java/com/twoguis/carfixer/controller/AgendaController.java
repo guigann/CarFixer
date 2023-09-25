@@ -37,6 +37,12 @@ public class AgendaController {
         Agenda ret = agendaService.getById(id);
         return ret;
     }
+
+    @GetMapping("/veiculo/{id}")
+    public List<Agenda> consultarPorVeiculo(@PathVariable("id") int id){
+        List<Agenda> ret = agendaService.getByVeiculo(id);
+        return ret;
+    }
     
     @PostMapping({"", "/"})
     public Agenda insert(@RequestBody Agenda agenda){

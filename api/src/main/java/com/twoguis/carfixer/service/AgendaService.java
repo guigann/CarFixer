@@ -44,6 +44,16 @@ public class AgendaService {
         return agenda;
     }
 
+    public List<Agenda> getByVeiculo(int id) {
+        List<Agenda> agendas = agendaDao.getByVeiculo(id);
+
+        for (Agenda agenda : agendas) {
+            agenda = getProdutos(agenda);
+        }
+
+        return agendas;
+    }
+
     public void update(Agenda agenda) {
         agendaDao.update(agenda);
     }

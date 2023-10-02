@@ -3,6 +3,7 @@ import { AlertController, LoadingController, NavController, ToastController } fr
 import { Veiculo } from 'src/app/model/veiculo';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { VeiculoService } from 'src/app/services/veiculo.service';
+import { Usuario } from '../cliente/cliente.page';
 
 @Component({
   selector: 'app-veiculo',
@@ -12,9 +13,11 @@ import { VeiculoService } from 'src/app/services/veiculo.service';
 
 export class VeiculoPage implements OnInit {
   veiculos: Veiculo[];
+  usuarios: Usuario[];
 
-  constructor(private toastController: ToastController, private navController: NavController, private alertController: AlertController, private veiculoService: VeiculoService, private loadingController: LoadingController) {
+  constructor(private toastController: ToastController, private navController: NavController, private alertController: AlertController, private veiculoService: VeiculoService, private usuarioService: UsuarioService, private loadingController: LoadingController) {
     this.veiculos = [];
+    this.usuarios = [];
   }
 
   ngOnInit() {
@@ -32,7 +35,24 @@ export class VeiculoPage implements OnInit {
     await this.veiculoService.get().then((json) => {
       this.veiculos = <Veiculo[]>(json);
     });
+
+
+    this.usuarioService.get().then((json) => {
+      this.usuarios = (<Usuario[]>json)
+    });
+
+
     this.closeLoader();
+  }
+
+  getNome(id_cliente: number) {
+    let result = '';
+    this.usuarios.map((usuario) => {
+      if (usuario.id === id_cliente) {
+        result = usuario.nome + " - " + usuario.cpf;
+      }
+    })
+    return result;
   }
 
   showLoader() {

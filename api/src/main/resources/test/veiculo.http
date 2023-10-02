@@ -8,9 +8,9 @@ POST http://localhost:8087/api/v1/veiculo
 Content-Type: application/json
 
 {
-    "placa":"CCA-222",
-    "modelo":"Mustang",
-    "tipo":"Carro", 
+    "placa":"BAA-213",
+    "modelo":"Honda",
+    "tipo":"Moto", 
     "id_cliente":2
 }
 ###

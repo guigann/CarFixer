@@ -132,7 +132,7 @@
               id="addButton"
               shape="round"
               color="primary"
-              (click)="isEditing? addServico() : false"
+              (click)="(isEditing || agenda.id == 0)? addServico() : false"
               >+</ion-button
             >
           </ion-item>

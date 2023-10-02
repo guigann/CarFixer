@@ -134,12 +134,11 @@ export class AddAgendaPage implements OnInit {
           this.addedServicos = <Servico[]>json;
           this.allServicos = this.filtrarVetorServicos(this.allServicos,this.addedServicos);
         });
+        this.produtoService.getByIdAgenda(this.agenda.id).then((json: any) => {
+          this.addedProdutos = <Produto[]>json;
+          this.allProdutos = this.filtrarVetorProdutos(this.allProdutos,this.addedProdutos);
+        });
 
-        this.addedProdutos = this.agenda.produtos;
-        // this.produtoService.getByIdAgenda(this.agenda.id).then((json: any) => {
-        //   this.addedProdutos = <Produto[]>json;
-        //   this.allProdutos = this.filtrarVetorProdutos(this.allProdutos,this.addedProdutos);
-        // });
 
         this.enableSelectStatusEditing(false);
       });

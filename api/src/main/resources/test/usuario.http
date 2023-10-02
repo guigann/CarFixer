@@ -8,9 +8,9 @@ POST http://localhost:8087/api/v1/usuario
 Content-Type: application/json
 
 {
-    "nome":"Gui"    ,
+    "nome":"Guimas"    ,
     "cpf":"111.111.111-12",
-    "email":"g@g",
+    "email":"gab@gab",
     "telefone":"2222222222",
     "senha":"123",
     "permission":"Admin"
@@ -28,7 +28,7 @@ Content-Type: application/json
     "email":"gustavo@gmail.com",
     "telefone":"11111111111",
     "senha":123,
-    "permission":"Cliente"
+    "permission":"Admin"
 }
 ###
 

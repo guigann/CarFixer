@@ -11,6 +11,8 @@ export class ProdutoService {
   };
 
   url: string = 'http://localhost:8087/api/v1/produto';
+  urlAgenda = (idAgenda: number) =>
+    `http://localhost:8087/api/v1/agenda/${idAgenda}/produto`;
 
   
   constructor(private httpClient: HttpClient) { }
@@ -21,6 +23,11 @@ export class ProdutoService {
 
   async getById(id: number) {
     let urlAuxiliar = this.url + '/' + id;
+    return await this.httpClient.get(urlAuxiliar).toPromise();
+  }
+
+  async getByIdAgenda(idAgenda: number) {
+    let urlAuxiliar = this.urlAgenda(idAgenda);
     return await this.httpClient.get(urlAuxiliar).toPromise();
   }
 

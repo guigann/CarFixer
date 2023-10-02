@@ -1,5 +1,5 @@
 #GET
-GET http://localhost:8087/api/v1/agenda/2/produto
+GET http://localhost:8087/api/v1/agenda/1/produto
 Content-Type: application/json
 ###
 

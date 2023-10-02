@@ -8,7 +8,9 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-text class="ion-text-center"><h1>{{ titlePage }}</h1></ion-text>
+  <ion-text class="ion-text-center">
+    <h1>{{ titlePage }}</h1>
+  </ion-text>
 
   <form [formGroup]="formGroup" (ngSubmit)="bt_save()">
     <ion-item>
@@ -20,31 +22,37 @@
       <ion-label position="stacked">Email</ion-label>
       <ion-input type="text" formControlName="email"></ion-input>
     </ion-item>
-    
+
     <ion-item>
       <ion-label position="stacked">CPF</ion-label>
       <ion-input type="text" formControlName="cpf"></ion-input>
     </ion-item>
-    
+
     <ion-item>
       <ion-label position="stacked">Telefone</ion-label>
       <ion-input type="text" formControlName="telefone"></ion-input>
     </ion-item>
 
     <div id="buttons">
-      <ion-button type="submit" size="large" shape="round" expand="block" color="primary" [disabled]="!formGroup.valid">Save</ion-button>
+      <ion-button type="submit" size="large" shape="round" expand="block" color="primary"
+        [disabled]="!formGroup.valid">Save</ion-button>
     </div>
   </form>
 
-  <ion-text class="ion-text-center"><h2>Veículos</h2></ion-text>
-  <ion-text class="ion-text-center" [hidden]="(cliente.veiculos.length > 0)"><p>Esse cliente não possui veículos cadastrados!</p></ion-text>
+  <ion-text class="ion-text-center">
+    <h2>Veículos</h2>
+  </ion-text>
+  <ion-text class="ion-text-center" [hidden]="(cliente.veiculos.length > 0)">
+    <p>Esse cliente não possui veículos cadastrados!</p>
+  </ion-text>
   <ion-list [hidden]="!cliente.veiculos.length">
     <ion-item-sliding *ngFor="let veiculo of cliente.veiculos">
       <ion-item [routerLink]="['/add-veiculo/', veiculo.id]" detail>
         <ion-label>
           <h2>
-            <ion-icon name="car-outline" [color]="'primary'"></ion-icon>
-            {{veiculo.modelo}}
+            <ion-icon name="{{(veiculo.tipo === 'Carro' ? 'car-outline' : 'bicycle-outline')}}"
+              [color]="'primary'"></ion-icon>
+            {{veiculo.modelo}} - {{veiculo.placa}}
           </h2>
         </ion-label>
       </ion-item>

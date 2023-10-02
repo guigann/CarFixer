@@ -11,8 +11,8 @@ export class ServicoService {
   };
 
   url: string = 'http://localhost:8087/api/v1/servico';
-  urlAgenda = (idAgenda: number) =>
-    `http://localhost:8087/api/v1/agenda/${idAgenda}/servico`;
+    urlAgenda = (idAgenda: number) =>
+      `http://localhost:8087/api/v1/agenda/${idAgenda}/servico`;
 
   constructor(private httpClient: HttpClient) {}
 

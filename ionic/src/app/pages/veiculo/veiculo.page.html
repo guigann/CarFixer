@@ -1,4 +1,3 @@
-
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
@@ -13,10 +12,15 @@
     <ion-item-sliding *ngFor="let veiculo of veiculos">
       <ion-item [routerLink]="['/add-veiculo/', veiculo.id]" detail>
         <ion-label>
-          <h2>
-            <ion-icon name="list-outline" [color]="'primary'"></ion-icon>
-            {{veiculo.modelo}}
-          </h2>
+            <h1>
+              <ion-icon name="{{(veiculo.tipo === 'Carro' ? 'car-outline' : 'bicycle-outline')}}" [color]="'primary'"></ion-icon>
+              <h2>
+                <b>{{veiculo.modelo}} - {{veiculo.placa}}</b>
+              </h2>
+              <p><b>Cliente:</b>
+                {{getNome(veiculo.id_cliente)}}
+              </p>
+            </h1>
         </ion-label>
       </ion-item>
       <ion-item-options side="start">

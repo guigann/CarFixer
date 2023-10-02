@@ -79,7 +79,7 @@ export class AddAgendaPage implements OnInit {
     this.servicoService.get().then((json) => {
       this.allServicos = <Servico[]>json;
     });
-    
+
     this.allProdutos = [];
     this.produtoService.get().then((json) => {
       this.allProdutos = <Produto[]>json;
@@ -132,7 +132,7 @@ export class AddAgendaPage implements OnInit {
 
         this.servicoService.getByIdAgenda(this.agenda.id).then((json: any) => {
           this.addedServicos = <Servico[]>json;
-          this.allServicos = this.filtrarVetorServicos(this.allServicos,this.addedServicos);
+          this.allServicos = this.filtrarVetorServicos(this.allServicos, this.addedServicos);
         });
         this.produtoService.getByIdAgenda(this.agenda.id).then((json: any) => {
           this.addedProdutos = <Produto[]>json;
@@ -159,32 +159,32 @@ export class AddAgendaPage implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   ionViewWillEnter() {
     this.isEditing = false;
   }
 
   salvar() {
-    let dataSelect = new Date(this.formGroup.value.horario);
+      let dataSelect = new Date(this.formGroup.value.horario);
 
-    this.horarioService.save(new Horario(dataSelect)).then((json) => {
-      let horarioSalvo = <Horario>json;
-      console.log('horario pre-salvo no banco: ');
-      console.log(horarioSalvo);
-      console.log(this.formGroup.value.id_veiculo);
+      this.horarioService.save(new Horario(dataSelect)).then((json) => {
+        let horarioSalvo = <Horario>json;
+        console.log('horario pre-salvo no banco: ');
+        console.log(horarioSalvo);
+        console.log(this.formGroup.value.id_veiculo);
 
-      this.agenda.id_horario = horarioSalvo.id;
+        this.agenda.id_horario = horarioSalvo.id;
 
-      this.agenda.status = this.formGroup.value.status;
+        this.agenda.status = this.formGroup.value.status;
 
-      this.agenda.id_veiculo = this.formGroup.value.id_veiculo;
-      this.agenda.dt_previsao = this.formGroup.value.prevTermino;
-      this.agenda.observacao = this.formGroup.value.observacao;
-      this.agenda.produtos = [];
+        this.agenda.id_veiculo = this.formGroup.value.id_veiculo;
+        this.agenda.dt_previsao = this.formGroup.value.prevTermino;
+        this.agenda.observacao = this.formGroup.value.observacao;
+        this.agenda.produtos = [];
 
-      console.log(
-        'id_horario = ' +
+        console.log(
+          'id_horario = ' +
           this.agenda.id_horario +
           'status = ' +
           this.agenda.status +
@@ -196,22 +196,22 @@ export class AddAgendaPage implements OnInit {
           this.agenda.observacao +
           'produtos = ' +
           this.agenda.produtos
-      );
+        );
 
-      this.agendaService.save(this.agenda).then((json) => {
-        let agenda = <Agenda>json;
+        this.agendaService.save(this.agenda).then((json) => {
+          let agenda = <Agenda>json;
 
-        horarioSalvo.status = 'Ocupado';
-        this.horarioService.save(horarioSalvo);
+          horarioSalvo.status = 'Ocupado';
+          this.horarioService.save(horarioSalvo);
 
-        this.addedServicos.forEach((servico) => {
-          this.servicoService.putOnAgenda(agenda.id, servico.id);
+          this.addedServicos.forEach((servico) => {
+            this.servicoService.putOnAgenda(agenda.id, servico.id);
+          });
+          // se servicos não forem salvos, exibir msg de erro
+          this.exibirMensagem('Registro salvo com sucesso!!!');
+          this.navController.navigateBack('/agenda');
         });
-        // se servicos não forem salvos, exibir msg de erro
-        this.exibirMensagem('Registro salvo com sucesso!!!');
-        this.navController.navigateBack('/agenda');
       });
-    });
     // se agenda nn for salva o horario salvo no banco deverá ser deletado do banco
   }
 
@@ -227,19 +227,19 @@ export class AddAgendaPage implements OnInit {
 
     console.log(this.agenda);
 
-    
-      //apagar produtos atuais no banco
-      //add os do array
 
-      console.log("this.agenda.produtos");
-      console.log(this.agenda.produtos);
-      console.log("this.addedProdutos");
-      console.log(this.addedProdutos);
-      
-    this.agenda.produtos.forEach(produto=>{
+    //apagar produtos atuais no banco
+    //add os do array
+
+    console.log("this.agenda.produtos");
+    console.log(this.agenda.produtos);
+    console.log("this.addedProdutos");
+    console.log(this.addedProdutos);
+
+    this.agenda.produtos.forEach(produto => {
       this.produtoService.delete(produto.id);
     })
-    this.addedProdutos.forEach(produto=>{
+    this.addedProdutos.forEach(produto => {
       this.produtoService.save(produto);
     })
 
@@ -362,7 +362,7 @@ export class AddAgendaPage implements OnInit {
         // let val1 = horariosDoDia[i].data;
         let val1 = new Date(
           horariosDoDia[i].data.getTime() +
-            horariosDoDia[i].data.getTimezoneOffset() * 60000
+          horariosDoDia[i].data.getTimezoneOffset() * 60000
         );
         let val2 = new Date(horarioOcupado.data);
         // const dataHoraUtc = new Date(dataHora.getTime() + (dataHora.getTimezoneOffset() * 60000));

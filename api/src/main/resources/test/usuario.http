@@ -3,6 +3,11 @@ GET http://localhost:8087/api/v1/usuario/
 Content-Type: application/json
 ###
 
+#GET
+GET http://localhost:8087/api/v1/usuario/email/gui@gui
+Content-Type: application/json
+###
+
 #POST
 POST http://localhost:8087/api/v1/usuario
 Content-Type: application/json

@@ -8,7 +8,7 @@ POST http://localhost:8087/api/v1/servico
 Content-Type: application/json
 
 {
-    "nome":"Lanternagem6",
+    "nome":"Troca de Vela",
     "descricao":"Loren Ypson"
 }
 ###

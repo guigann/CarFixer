@@ -43,8 +43,28 @@ export class ProdutoService {
     }
   }
 
+  async putOnAgenda(idAgenda: number, idProduto: number) {
+    return await this.httpClient
+      .post(
+        this.urlAgenda(idAgenda),
+        { id: idProduto, id_agenda: idAgenda, observacao: '' },
+        this.httpHeaders
+      )
+      .toPromise();
+  }
+
   async delete(id: number) {
     let urlAuxiliar = this.url + '/' + id;
+    return await this.httpClient.delete(urlAuxiliar).toPromise();
+  }
+
+  async deleteFromAgenda(idAgenda: number, idProduto: number) {
+    let urlAuxiliar = this.urlAgenda(idAgenda)+"/"+ idProduto;
+    return await this.httpClient.delete(urlAuxiliar).toPromise();
+  }
+
+  async deleteAllFromAgenda(idAgenda: number) {
+    let urlAuxiliar = this.urlAgenda(idAgenda);
     return await this.httpClient.delete(urlAuxiliar).toPromise();
   }
 }

@@ -162,6 +162,33 @@
         </ion-row>
       </div>
 
+      <ion-col id="divServicoSelect" *ngIf="isEditing || agenda.id == 0">
+        <ion-item style="flex-grow: 1">
+          <ion-label position="stacked">Produtos</ion-label>
+          <ion-select
+            id="produto"
+            aria-label="Produto"
+            placeholder="Selecione um Produto"
+          >
+            <ion-select-option
+              *ngFor="let produto of allProdutos"
+              value="{{produto.id}}"
+              >{{produto.descricao}}</ion-select-option
+            >
+          </ion-select>
+        </ion-item>
+
+        <ion-item id="addButtonBox" style="flex-grow: 0">
+          <ion-button
+            id="addButton"
+            shape="round"
+            color="primary"
+            (click)="(isEditing || agenda.id == 0)? addProduto() : false"
+            >+</ion-button
+          >
+        </ion-item>
+      </ion-col>
+
       <div id="produtosAdd">
         <ion-text>
           <h3>Produtos adicionados</h3>

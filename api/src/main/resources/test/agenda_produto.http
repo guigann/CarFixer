@@ -1,5 +1,5 @@
 #GET
-GET http://localhost:8087/api/v1/agenda/1/produto
+GET http://localhost:8087/api/v1/agenda/2/produto
 Content-Type: application/json
 ###
 
@@ -8,7 +8,7 @@ POST http://localhost:8087/api/v1/agenda/2/produto
 Content-Type: application/json
 
 {
-    "id":1,
+    "id":2,
     "id_agenda":2
 }
 ###
@@ -33,5 +33,5 @@ Content-Type: application/json
 ###
 
 #DELETE
-DELETE http://localhost:8087/api/v1/agenda/2/produto/1
+DELETE http://localhost:8087/api/v1/agenda/2/produtou
 Content-Type: application/json

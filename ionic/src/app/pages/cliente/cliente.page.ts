@@ -30,6 +30,7 @@ export class ClientePage implements OnInit {
     this.showLoader();
     await this.usuarioService.get().then((json) => {
       this.usuarios = <Usuario[]>(json);
+      this.usuarios = this.usuarios.filter(user => user.permission === "Cliente")
     });
     this.closeLoader();
   }

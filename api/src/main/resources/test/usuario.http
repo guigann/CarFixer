@@ -8,12 +8,12 @@ POST http://localhost:8087/api/v1/usuario
 Content-Type: application/json
 
 {
-    "nome":"Gui"    ,
-    "cpf":"111.111.111-12",
-    "email":"g@g",
+    "nome":"Yuri"    ,
+    "cpf":"111.111.111-32",
+    "email":"yuri@gmail.com",
     "telefone":"2222222222",
     "senha":"123",
-    "permission":"Admin"
+    "permission":"Funcionario"
 }
 ###
 
@@ -22,13 +22,15 @@ PUT http://localhost:8087/api/v1/usuario
 Content-Type: application/json
 
 {
-    "id":1,
-    "nome":"Gustiavin",
-    "cpf":"050.189.540-00",
-    "email":"gustavo@gmail.com",
-    "telefone":"11111111111",
-    "senha":123,
-    "permission":"Cliente"
+    
+    "id": 2,
+    "nome": "Gabriel",
+    "cpf": "11111111111",
+    "email": "gabrielspdev@gmail.com",
+    "telefone": "(11) 11111-1111",
+    "permission": "Admin",
+    "senha":"123"
+  
 }
 ###
 
@@ -43,5 +45,5 @@ Content-Type: application/json
 ###
 
 #DELETE
-DELETE http://localhost:8087/api/v1/usuario/1
+DELETE http://localhost:8087/api/v1/usuario/2
 Content-Type: application/json

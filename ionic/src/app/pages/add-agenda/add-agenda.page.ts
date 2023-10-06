@@ -134,12 +134,11 @@ export class AddAgendaPage implements OnInit {
           this.addedServicos = <Servico[]>json;
           this.allServicos = this.filtrarVetorServicos(this.allServicos, this.addedServicos);
         });
+        this.produtoService.getByIdAgenda(this.agenda.id).then((json: any) => {
+          this.addedProdutos = <Produto[]>json;
+          this.allProdutos = this.filtrarVetorProdutos(this.allProdutos,this.addedProdutos);
+        });
 
-        this.addedProdutos = this.agenda.produtos;
-        // this.produtoService.getByIdAgenda(this.agenda.id).then((json: any) => {
-        //   this.addedProdutos = <Produto[]>json;
-        //   this.allProdutos = this.filtrarVetorProdutos(this.allProdutos,this.addedProdutos);
-        // });
 
         this.enableSelectStatusEditing(false);
       });
@@ -228,26 +227,32 @@ export class AddAgendaPage implements OnInit {
 
     console.log(this.agenda);
 
-
-    //apagar produtos atuais no banco
-    //add os do array
-
-    console.log("this.agenda.produtos");
-    console.log(this.agenda.produtos);
-    console.log("this.addedProdutos");
-    console.log(this.addedProdutos);
-
-    this.agenda.produtos.forEach(produto => {
-      this.produtoService.delete(produto.id);
-    })
-    this.addedProdutos.forEach(produto => {
-      this.produtoService.save(produto);
-    })
-
-
-
     this.agendaService.save(this.agenda).then((json) => {
       let agenda = <Agenda>json;
+
+      this.produtoService.getByIdAgenda(this.agenda.id).then((json: any) => {
+        let produtos = <Produto[]>json;
+        if (produtos.length > 0) {
+          //apagar produtos atuais no banco
+          //add os do array
+          this.produtoService.deleteAllFromAgenda(agenda.id).then((_) => {
+            console.log("produtos: deletados!!");
+            if (this.addedProdutos.length > 0) {
+              this.addedProdutos.forEach((produto) => {
+                this.produtoService.putOnAgenda(agenda.id, produto.id);
+              });
+              console.log("produtos: adicionados!!");
+              console.log(this.addedProdutos);
+            }
+          });
+        } else {
+          this.addedProdutos.forEach((produto) => {
+            this.produtoService.putOnAgenda(agenda.id, produto.id);
+          });
+          console.log("produtos adicionados");
+          console.log(this.addedProdutos);
+        }
+      });
 
       this.servicoService.getByIdAgenda(this.agenda.id).then((json: any) => {
         let servicos = <Servico[]>json;
@@ -258,7 +263,7 @@ export class AddAgendaPage implements OnInit {
             console.log('servicos: deletados!!');
             if (this.addedServicos.length > 0) {
               this.addedServicos.forEach((servico) => {
-                this.servicoService.putOnAgenda(agenda.id, servico.id).then(_ => window.location.reload());
+                this.servicoService.putOnAgenda(agenda.id, servico.id);
               });
               console.log('servicos: adicionados!!');
               console.log(this.addedServicos);
@@ -266,7 +271,7 @@ export class AddAgendaPage implements OnInit {
           });
         } else {
           this.addedServicos.forEach((servico) => {
-            this.servicoService.putOnAgenda(agenda.id, servico.id).then(_ => window.location.reload());
+            this.servicoService.putOnAgenda(agenda.id, servico.id)
           });
           console.log('servicos adicionados');
           console.log(this.addedServicos);
@@ -275,6 +280,8 @@ export class AddAgendaPage implements OnInit {
 
 
       this.exibirMensagem('Registro salvo com sucesso!!!');
+      this.navController.navigateBack('/agenda');
+
     });
   }
 
@@ -299,19 +306,19 @@ export class AddAgendaPage implements OnInit {
 
     select.value = '';
   }
-  // addProduto() {
-  //   let select: any = document.getElementById('servico');
-  //   let idService = select.value;
+  addProduto() {
+    let select: any = document.getElementById('produto');
+    let idProduto = select.value;
 
-  //   if (select.value > 0) {
-  //     this.servicoService.getById(parseFloat(idService)).then((json: any) => {
-  //       this.addedServicos.push(<Servico>json);
-  //       this.allServicos = this.allServicos.filter(({ id }) => id != idService);
-  //     });
-  //   }
+    if (select.value > 0) {
+      this.produtoService.getById(parseFloat(idProduto)).then((json: any) => {
+        this.addedProdutos.push(<Produto>json);
+        this.allProdutos = this.allProdutos.filter(({ id }) => id != idProduto);
+      });
+    }
 
-  //   select.value = '';
-  // }
+    select.value = '';
+  }
 
   removeServico(servico: Servico) {
     this.addedServicos = this.addedServicos.filter(

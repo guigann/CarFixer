@@ -49,7 +49,11 @@ public class UsuarioService {
     }
 
     public Usuario getByEmail(String email) {
-        return usuarioDao.getByEmail(email);
+        Usuario usuario = usuarioDao.getByEmail(email);
+
+        usuario = getVeiculos(usuario);
+
+        return usuario;
     }
 
     public void update(Usuario usuario) {

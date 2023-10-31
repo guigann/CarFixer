@@ -5,7 +5,7 @@ A elaboração começou no início de 2023 e será concluído no fim do mesmo. O
 
 Versões da documentação do Sistema:
 - 3ª / Final - DocumentaoCarFixer.pdf
-- 2ª - [DocumentaoCarFixer.pdf](https://github.com/guigann/CarFixer/files/13216341/Documentao_CarFixer.pdf)
+- 2ª - [DocumentacaoCarFixer.pdf](https://github.com/guigann/CarFixer/files/13216341/Documentao_CarFixer.pdf)
 - 1ª - [DocumentacaoCarFixer.pdf](https://github.com/guigann/CarFixer/files/13216331/DocumentacaoPPCarFixer.1.pdf)
 
 

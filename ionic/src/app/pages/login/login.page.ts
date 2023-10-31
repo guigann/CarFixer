@@ -28,6 +28,7 @@ export class LoginPage implements OnInit {
   }
 
   ngOnInit() {
+    UsuarioService.logout()
     // if (!UsuarioService.protect()) {
     //   this.navController.navigateBack('/home');
     // }

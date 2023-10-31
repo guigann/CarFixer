@@ -71,4 +71,14 @@ public class UsuarioService {
         return usuario;
     }
 
+    public static String genPassword() {
+        String chars = "0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        int passwordLength = 12;
+        String password = "";
+        for (int i = 0; i <= passwordLength; i++) {
+            double randomNumber = Math.floor(Math.random() * chars.length());
+            password += chars.substring((int) randomNumber, (int) randomNumber + 1);
+        }
+        return password;
+    }
 }

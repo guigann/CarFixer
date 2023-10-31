@@ -51,11 +51,11 @@ public class UsuarioController {
 
     @PostMapping({ "", "/" })
     public Usuario insert(@RequestBody Usuario usuario) {
-        // if (usuario.getSenha().equals("")) {
-        //     usuario.setSenha(UsuarioService.genPassword());
-        //     emailService.sendSimpleMessage(usuario.getEmail(), "Sua senha no CarFixer",
-        //             "Sua senha gerada no CarFixer foi: " + usuario.getSenha());
-        // }
+        if (usuario.getSenha().equals("")) {
+            usuario.setSenha(UsuarioService.genPassword());
+            emailService.sendSimpleMessage(usuario.getEmail(), "Sua senha no CarFixer",
+                    "Sua senha gerada no CarFixer foi: " + usuario.getSenha());
+        }
 
         usuario.setSenha(encoder.encode(usuario.getSenha()));
         Usuario ret = usuarioService.insert(usuario);

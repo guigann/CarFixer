@@ -13,7 +13,7 @@ POST http://localhost:8087/api/v1/usuario
 Content-Type: application/json
 
 {
-    "nome":"Gui"    ,
+    "nome":"Gui",
     "cpf":"111.111.111-32",
     "email":"legitzerasoulegitmsm@gmail.com",
     "telefone":"2222222222",
@@ -50,5 +50,5 @@ Content-Type: application/json
 ###
 
 #DELETE
-DELETE http://localhost:8087/api/v1/usuario/2
+DELETE http://localhost:8087/api/v1/usuario/7
 Content-Type: application/json

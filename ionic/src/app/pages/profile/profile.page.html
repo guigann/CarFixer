@@ -22,7 +22,7 @@
 
     <ion-item>
       <ion-label position="stacked">CPF</ion-label>
-      <ion-input type="text" formControlName="cpf" [(ngModel)]="usuario.cpf" [readonly]="true"></ion-input>
+      <ion-input type="text" formControlName="cpf" [(ngModel)]="usuario.cpf" [readonly]="true" [maskito]="cpfMask" [maskitoElement]="maskPredicate"></ion-input>
     </ion-item>
 
     <ion-item>
@@ -32,7 +32,7 @@
 
     <ion-item>
       <ion-label position="stacked">Telefone</ion-label>
-      <ion-input type="text" formControlName="telefone" [(ngModel)]="usuario.telefone"></ion-input>
+      <ion-input type="text" formControlName="telefone" [(ngModel)]="usuario.telefone" [maskito]="phoneMask" [maskitoElement]="maskPredicate"></ion-input>
     </ion-item>
 
     <!-- <ion-text class="ion-text-center">

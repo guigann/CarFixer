@@ -36,10 +36,17 @@ export class VeiculoPage implements OnInit {
       this.veiculos = <Veiculo[]>(json);
     });
 
+    this.veiculos.forEach((veiculo) => {
+      veiculo.placa = veiculo.placa.slice(0, 3) + '-' + veiculo.placa.slice(3);
+    })
 
-    this.usuarioService.get().then((json) => {
+    await this.usuarioService.get().then((json) => {
       this.usuarios = (<Usuario[]>json)
     });
+
+    this.usuarios.forEach((usuario) => {
+      usuario.cpf = usuario.cpf.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})$/, '$1.$2.$3-$4');
+    })
 
 
     this.closeLoader();

@@ -43,12 +43,16 @@ export class AgendaPage implements OnInit {
       this.agendas = <Agenda[]>(json);
     });
 
-    this.horarioService.get().then((json) => {
+    await this.horarioService.get().then((json) => {
       this.horarios = <Horario[]>(json);
     });
 
-    this.veiculoService.get().then((json) => {
+    await this.veiculoService.get().then((json) => {
       this.veiculos = <Veiculo[]>(json);
+    });
+
+    this.veiculos.forEach((veiculo) => {
+      veiculo.placa = veiculo.placa.slice(0, 3) + '-' + veiculo.placa.slice(3);
     });
 
     this.closeLoader();

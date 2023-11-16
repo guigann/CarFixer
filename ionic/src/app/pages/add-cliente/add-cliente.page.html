@@ -25,12 +25,12 @@
 
     <ion-item>
       <ion-label position="stacked">CPF</ion-label>
-      <ion-input type="text" formControlName="cpf"></ion-input>
+      <ion-input type="text" formControlName="cpf" [maskito]="cpfMask" [maskitoElement]="maskPredicate"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label position="stacked">Telefone</ion-label>
-      <ion-input type="text" formControlName="telefone"></ion-input>
+      <ion-input type="text" formControlName="telefone" [maskito]="phoneMask" [maskitoElement]="maskPredicate"></ion-input>
     </ion-item>
 
     <div id="buttons">

@@ -20,7 +20,7 @@ export class ClientePage implements OnInit {
     if (UsuarioService.protect()) {
       this.navController.navigateBack('/login');
     }
-   }
+  }
 
   async ionViewWillEnter() {
     this.carregarLista();
@@ -31,6 +31,11 @@ export class ClientePage implements OnInit {
     await this.usuarioService.get().then((json) => {
       this.usuarios = <Usuario[]>(json);
       this.usuarios = this.usuarios.filter(user => user.permission === "Cliente")
+    });
+
+    this.usuarios.forEach((usuario) => {
+      usuario.cpf = usuario.cpf.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})$/, '$1.$2.$3-$4');
+      usuario.telefone = usuario.telefone.replace(/^(\d{2})(\d{1})(\d{4})(\d{4})$/, '($1) $2 $3-$4');
     });
     this.closeLoader();
   }

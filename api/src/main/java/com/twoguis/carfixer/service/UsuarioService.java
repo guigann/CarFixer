@@ -51,7 +51,9 @@ public class UsuarioService {
     public Usuario getByEmail(String email) {
         Usuario usuario = usuarioDao.getByEmail(email);
 
-        usuario = getVeiculos(usuario);
+        if (usuario != null) {
+            usuario = getVeiculos(usuario);
+        }
 
         return usuario;
     }

@@ -6,6 +6,7 @@ import { NavController, ToastController } from '@ionic/angular';
 import { Usuario } from 'src/app/model/usuario';
 import { Veiculo } from '../veiculo/veiculo.page';
 import { VeiculoService } from 'src/app/services/veiculo.service';
+import { MaskitoElementPredicateAsync, MaskitoOptions } from '@maskito/core';
 
 @Component({
   selector: 'app-add-cliente',
@@ -30,7 +31,8 @@ export class AddClientePage implements OnInit {
         Validators.required
       ])],
       'email': [this.cliente?.email, Validators.compose([
-        Validators.required
+        Validators.required,
+        Validators.email
       ])],
       'telefone': [this.cliente?.telefone, Validators.compose([
         Validators.required
@@ -43,12 +45,12 @@ export class AddClientePage implements OnInit {
 
     if (id != null) {
       this.titlePage = "Cliente";
-      this.usuarioService.getById(id).then((json:any) => {
+      this.usuarioService.getById(id).then((json: any) => {
         this.cliente = <Usuario>(json);
         this.formGroup.get('nome')?.setValue(this.cliente.nome);
         this.formGroup.get('email')?.setValue(this.cliente.email);
-        this.formGroup.get('cpf')?.setValue(this.cliente.cpf);
-        this.formGroup.get('telefone')?.setValue(this.cliente.telefone);
+        this.formGroup.get('cpf')?.setValue(this.cliente.cpf.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})$/, '$1.$2.$3-$4'));
+        this.formGroup.get('telefone')?.setValue(this.cliente.telefone.replace(/^(\d{2})(\d{1})(\d{4})(\d{4})$/, '($1) $2 $3-$4'));
       });
     } else {
       this.titlePage = "Cadastro de Cliente"
@@ -58,7 +60,7 @@ export class AddClientePage implements OnInit {
     // veiculoService.getByUser(this.cliente.id).then((json:any) =>{
     //   this.veiculos = <Veiculo[]>(json) || [];
     // })
-    
+
     // if (id > 0) {
     //   this.clienteService.getById(id).then((json) => {
     //     this.cliente = <cliente>(json);
@@ -82,12 +84,12 @@ export class AddClientePage implements OnInit {
   bt_save() {
     this.cliente.nome = this.formGroup.value.nome;
     this.cliente.email = this.formGroup.value.email;
-    this.cliente.cpf = this.formGroup.value.cpf;
-    this.cliente.telefone = this.formGroup.value.telefone;
+    this.cliente.cpf = this.formGroup.value.cpf.replace(/[.-]/g, '');
+    this.cliente.telefone = this.formGroup.value.telefone.replace(/[\s()-]/g, '');
     this.cliente.senha = "0";
     this.cliente.permission = 'Cliente';
 
-    this.usuarioService.checkEmail(this.cliente.email).then((json:any) => {
+    this.usuarioService.checkEmail(this.cliente.email).then((json: any) => {
       let result = <number>(json);
       if (result === 404) {
 
@@ -120,4 +122,15 @@ export class AddClientePage implements OnInit {
     });
     toast.present();
   }
+
+  readonly cpfMask: MaskitoOptions = {
+    mask: [/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/],
+  };
+
+  readonly phoneMask: MaskitoOptions = {
+    mask: ['(', /\d/, /\d/, ')', ' ', /\d/, ' ', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
+  };
+
+  readonly maskPredicate: MaskitoElementPredicateAsync = async (el) => (el as HTMLIonInputElement).getInputElement();
+
 }

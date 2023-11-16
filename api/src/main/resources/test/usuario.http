@@ -4,7 +4,7 @@ Content-Type: application/json
 ###
 
 #GET
-GET http://localhost:8087/api/v1/usuario/email/gui@gui
+GET http://localhost:8087/api/v1/usuario/email/sasa/exists
 Content-Type: application/json
 ###
 
@@ -13,12 +13,12 @@ POST http://localhost:8087/api/v1/usuario
 Content-Type: application/json
 
 {
-    "nome":"Gui",
-    "cpf":"111.111.111-32",
-    "email":"legitzerasoulegitmsm@gmail.com",
+    "nome":"Yuri",
+    "cpf":"111.111.111-33",
+    "email":"y@y",
     "telefone":"2222222222",
-    "senha":"",
-    "permission":"Cliente"
+    "senha":"123",
+    "permission":"Funcionario"
 }
 ###
 
@@ -50,5 +50,5 @@ Content-Type: application/json
 ###
 
 #DELETE
-DELETE http://localhost:8087/api/v1/usuario/7
+DELETE http://localhost:8087/api/v1/usuario/11
 Content-Type: application/json

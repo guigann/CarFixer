@@ -1,9 +1,15 @@
 #bar{
-    background-color: var(--color); 
+    // background-color: #fff !important; 
     width: 2%; 
     height: 100%; 
     margin-right: 2%;
 }
+
+// ion-item::before{
+//     width: 10px;
+//     background-color: red;
+//     height: 10px;
+// }
 
 a{
     text-decoration: none;

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.twoguis.carfixer.model.Usuario;
+import com.twoguis.carfixer.service.EmailService;
 import com.twoguis.carfixer.service.UsuarioService;
 
 @RestController
@@ -21,10 +22,12 @@ import com.twoguis.carfixer.service.UsuarioService;
 @CrossOrigin("*")
 public class UsuarioController {
     private final UsuarioService usuarioService;
+    private final EmailService emailService;
     private final PasswordEncoder encoder;
 
-    public UsuarioController(UsuarioService usuarioService, PasswordEncoder encoder) {
+    public UsuarioController(UsuarioService usuarioService, EmailService emailService, PasswordEncoder encoder) {
         this.usuarioService = usuarioService;
+        this.emailService = emailService;
         this.encoder = encoder;
     }
 
@@ -48,6 +51,12 @@ public class UsuarioController {
 
     @PostMapping({ "", "/" })
     public Usuario insert(@RequestBody Usuario usuario) {
+        if (usuario.getSenha().equals("")) {
+            usuario.setSenha(UsuarioService.genPassword());
+            emailService.sendSimpleMessage(usuario.getEmail(), "Sua senha no CarFixer",
+                    "Sua senha gerada no CarFixer foi: " + usuario.getSenha());
+        }
+
         usuario.setSenha(encoder.encode(usuario.getSenha()));
         Usuario ret = usuarioService.insert(usuario);
         return ret;

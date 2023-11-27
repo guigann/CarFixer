@@ -94,6 +94,3 @@ CREATE TABLE regra_funcionamento (
     hr_termino VARCHAR(5000) NOT NULL,
     PRIMARY KEY (id)
 );
-	
-#INSERTS
-INSERT INTO usuario (nome, cpf, email, telefone, senha, permission) VALUES("Gustavo", "050.189.540-00", "gustavo@gmail.com", "11111111111", "123", "Cliente");

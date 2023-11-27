@@ -45,6 +45,19 @@ export class AgendaPage implements OnInit {
 
     await this.horarioService.get().then((json) => {
       this.horarios = <Horario[]>(json);
+
+      this.agendas.sort((a: Agenda, b: Agenda)=>{  // ordenar agendas
+        let horarioA = this.horarios.find(({id}) => id === a.id_horario);
+        let horarioB = this.horarios.find(({id}) => id === b.id_horario);
+
+        if (horarioA!.data < horarioB!.data) {  // a < b
+          return -1;
+        }
+        if (horarioA!.data > horarioB!.data) {  // a > b
+          return 1;
+        }
+        return 0; // a = b
+      })
     });
 
     await this.veiculoService.get().then((json) => {

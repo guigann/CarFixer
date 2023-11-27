@@ -220,6 +220,11 @@ export class AddAgendaPage implements OnInit {
           this.servicoService.putOnAgenda(agenda.id, servico.id);
         });
         // se servicos não forem salvos, exibir msg de erro
+        
+        this.addedProdutos.forEach((produto) => {
+          this.produtoService.putOnAgenda(agenda.id, produto.id);
+        });
+        
         this.exibirMensagem('Registro salvo com sucesso!!!');
         this.navController.navigateBack('/agenda');
       });

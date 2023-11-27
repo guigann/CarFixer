@@ -6,6 +6,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { AddVeiculoPageRoutingModule } from './add-veiculo-routing.module';
 import { AddVeiculoPage } from './add-veiculo.page';
+import { MaskitoModule } from '@maskito/angular';
 
 @NgModule({
   imports: [
@@ -13,7 +14,8 @@ import { AddVeiculoPage } from './add-veiculo.page';
     FormsModule,
     IonicModule,
     AddVeiculoPageRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MaskitoModule
   ],
   declarations: [AddVeiculoPage]
 })

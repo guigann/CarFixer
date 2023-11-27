@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { AddClientePageRoutingModule } from './add-cliente-routing.module';
 
 import { AddClientePage } from './add-cliente.page';
+import { MaskitoModule } from '@maskito/angular';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { AddClientePage } from './add-cliente.page';
     FormsModule,
     IonicModule,
     ReactiveFormsModule,
-    AddClientePageRoutingModule
+    AddClientePageRoutingModule,
+    MaskitoModule
   ],
   declarations: [AddClientePage]
 })

@@ -54,7 +54,7 @@
 
           <ion-item>
             <ion-label position="stacked">Placa</ion-label>
-            <ion-input type="text" formControlName="placa" [(ngModel)]="veiculo.placa"></ion-input>
+            <ion-input type="text" formControlName="placa" [(ngModel)]="veiculo.placa" [maskito]="placaMask" [maskitoElement]="maskPredicate"></ion-input>
           </ion-item>
 
         </ion-col>

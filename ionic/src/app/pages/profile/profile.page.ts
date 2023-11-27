@@ -4,6 +4,7 @@ import { NavController, ToastController } from '@ionic/angular';
 import { Usuario } from 'src/app/model/usuario';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { ActivatedRoute } from '@angular/router';
+import { MaskitoElementPredicateAsync, MaskitoOptions } from '@maskito/core';
 
 @Component({
   selector: 'app-profile',
@@ -33,15 +34,18 @@ export class ProfilePage implements OnInit {
       ])]
     });
 
-   
-      this.usuarioService.getById(UsuarioService.getLogin().id).then((json:any) => {
-        this.usuario = <Usuario>(json);
-        this.formGroup.get('nome')?.setValue(this.usuario.nome);
-        this.formGroup.get('email')?.setValue(this.usuario.email);
-        this.formGroup.get('cpf')?.setValue(this.usuario.cpf);
-        this.formGroup.get('telefone')?.setValue(this.usuario.telefone);
-      });
-    
+
+    this.usuarioService.getById(UsuarioService.getLogin().id).then((json: any) => {
+      this.usuario = <Usuario>(json);
+      this.usuario.cpf = this.usuario.cpf.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})$/, '$1.$2.$3-$4');
+      this.usuario.telefone = this.usuario.telefone.replace(/^(\d{2})(\d{1})(\d{4})(\d{4})$/, '($1) $2 $3-$4');
+
+      this.formGroup.get('nome')?.setValue(this.usuario.nome);
+      this.formGroup.get('email')?.setValue(this.usuario.email);
+      this.formGroup.get('cpf')?.setValue(this.usuario.cpf);
+      this.formGroup.get('telefone')?.setValue(this.usuario.telefone);
+    });
+
 
     // this.usuario = UsuarioService.getLogin();
   }
@@ -56,8 +60,8 @@ export class ProfilePage implements OnInit {
     console.log(this.usuario.veiculos.length)
     this.usuario.nome = this.formGroup.value.nome;
     this.usuario.email = this.formGroup.value.email;
-    this.usuario.cpf = this.formGroup.value.cpf;
-    this.usuario.telefone = this.formGroup.value.telefone;
+    this.usuario.cpf = this.formGroup.value.cpf.replace(/[.-]/g, '');
+    this.usuario.telefone = this.formGroup.value.telefone.replace(/[\s()-]/g, '');
 
     this.usuarioService.save(this.usuario)
       .then((json: any) => {
@@ -82,5 +86,15 @@ export class ProfilePage implements OnInit {
     });
     toast.present();
   }
+
+  readonly cpfMask: MaskitoOptions = {
+    mask: [/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/],
+  };
+
+  readonly phoneMask: MaskitoOptions = {
+    mask: ['(', /\d/, /\d/, ')', ' ', /\d/, ' ', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
+  };
+
+  readonly maskPredicate: MaskitoElementPredicateAsync = async (el) => (el as HTMLIonInputElement).getInputElement();
 
 }

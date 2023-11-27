@@ -19,7 +19,8 @@ export class LoginPage implements OnInit {
 
     this.formGroup = this.formBuilder.group({
       'email': [this.usuario.email, Validators.compose([
-        Validators.required
+        Validators.required,
+        Validators.email
       ])],
       'senha': [this.usuario.senha, Validators.compose([
         Validators.required
@@ -28,6 +29,7 @@ export class LoginPage implements OnInit {
   }
 
   ngOnInit() {
+    UsuarioService.logout()
     // if (!UsuarioService.protect()) {
     //   this.navController.navigateBack('/home');
     // }

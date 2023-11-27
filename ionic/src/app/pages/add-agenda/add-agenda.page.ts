@@ -3,7 +3,7 @@ import { Agenda } from '../agenda/agenda.page';
 import { AgendaService } from 'src/app/services/agenda.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { NavController, ToastController } from '@ionic/angular';
+import { LoadingController, NavController, ToastController } from '@ionic/angular';
 import { VeiculoService } from 'src/app/services/veiculo.service';
 import { Veiculo } from 'src/app/model/veiculo';
 import { Servico } from 'src/app/model/servico';
@@ -51,7 +51,8 @@ export class AddAgendaPage implements OnInit {
     private servicoService: ServicoService,
     private produtoService: ProdutoService,
     private usuarioService: UsuarioService,
-    private horarioService: HorarioService
+    private horarioService: HorarioService,
+    private loadingController: LoadingController
   ) {
     //**** */
     // setando de forma implicita definições da tabela independente que ainda não foi implementada:
@@ -73,22 +74,10 @@ export class AddAgendaPage implements OnInit {
 
     this.addedServicos = [];
     this.addedProdutos = [];
-    this.agenda = new Agenda();
-
     this.allServicos = [];
-    this.servicoService.get().then((json) => {
-      this.allServicos = <Servico[]>json;
-    });
-
     this.allProdutos = [];
-    this.produtoService.get().then((json) => {
-      this.allProdutos = <Produto[]>json;
-    });
-
     this.veiculos = [];
-    this.veiculoService.get().then((json: any) => {
-      this.veiculos = <Veiculo[]>json;
-    });
+    this.agenda = new Agenda();
 
     let id = this.activatedRoute.snapshot.params['id'];
 
@@ -136,7 +125,7 @@ export class AddAgendaPage implements OnInit {
         });
         this.produtoService.getByIdAgenda(this.agenda.id).then((json: any) => {
           this.addedProdutos = <Produto[]>json;
-          this.allProdutos = this.filtrarVetorProdutos(this.allProdutos,this.addedProdutos);
+          this.allProdutos = this.filtrarVetorProdutos(this.allProdutos, this.addedProdutos);
         });
 
 
@@ -161,57 +150,80 @@ export class AddAgendaPage implements OnInit {
 
   ngOnInit() { }
 
-  ionViewWillEnter() {
+  async ionViewWillEnter() {
     this.isEditing = false;
+    this.carregarLista();
+  }
+
+  async carregarLista() {
+    this.showLoader();
+
+    await this.servicoService.get().then((json) => {
+      this.allServicos = <Servico[]>json;
+    });
+
+    await this.produtoService.get().then((json) => {
+      this.allProdutos = <Produto[]>json;
+    });
+
+    await this.veiculoService.get().then((json: any) => {
+      this.veiculos = <Veiculo[]>json;
+    });
+
+    this.veiculos.forEach((veiculo) => {
+      veiculo.placa = veiculo.placa.slice(0, 3) + '-' + veiculo.placa.slice(3);
+    });
+
+    this.closeLoader();
   }
 
   salvar() {
-      let dataSelect = new Date(this.formGroup.value.horario);
+    let dataSelect = new Date(this.formGroup.value.horario);
 
-      this.horarioService.save(new Horario(dataSelect)).then((json) => {
-        let horarioSalvo = <Horario>json;
-        console.log('horario pre-salvo no banco: ');
-        console.log(horarioSalvo);
-        console.log(this.formGroup.value.id_veiculo);
+    this.horarioService.save(new Horario(dataSelect)).then((json) => {
+      let horarioSalvo = <Horario>json;
+      console.log('horario pre-salvo no banco: ');
+      console.log(horarioSalvo);
+      console.log(this.formGroup.value.id_veiculo);
 
-        this.agenda.id_horario = horarioSalvo.id;
+      this.agenda.id_horario = horarioSalvo.id;
 
-        this.agenda.status = this.formGroup.value.status;
+      this.agenda.status = this.formGroup.value.status;
 
-        this.agenda.id_veiculo = this.formGroup.value.id_veiculo;
-        this.agenda.dt_previsao = this.formGroup.value.prevTermino;
-        this.agenda.observacao = this.formGroup.value.observacao;
-        this.agenda.produtos = [];
+      this.agenda.id_veiculo = this.formGroup.value.id_veiculo;
+      this.agenda.dt_previsao = this.formGroup.value.prevTermino;
+      this.agenda.observacao = this.formGroup.value.observacao;
+      this.agenda.produtos = [];
 
-        console.log(
-          'id_horario = ' +
-          this.agenda.id_horario +
-          'status = ' +
-          this.agenda.status +
-          'id_veiculo = ' +
-          this.agenda.id_veiculo +
-          'dt_previsao = ' +
-          this.agenda.dt_previsao +
-          'observacao = ' +
-          this.agenda.observacao +
-          'produtos = ' +
-          this.agenda.produtos
-        );
+      console.log(
+        'id_horario = ' +
+        this.agenda.id_horario +
+        'status = ' +
+        this.agenda.status +
+        'id_veiculo = ' +
+        this.agenda.id_veiculo +
+        'dt_previsao = ' +
+        this.agenda.dt_previsao +
+        'observacao = ' +
+        this.agenda.observacao +
+        'produtos = ' +
+        this.agenda.produtos
+      );
 
-        this.agendaService.save(this.agenda).then((json) => {
-          let agenda = <Agenda>json;
+      this.agendaService.save(this.agenda).then((json) => {
+        let agenda = <Agenda>json;
 
-          horarioSalvo.status = 'Ocupado';
-          this.horarioService.save(horarioSalvo);
+        horarioSalvo.status = 'Ocupado';
+        this.horarioService.save(horarioSalvo);
 
-          this.addedServicos.forEach((servico) => {
-            this.servicoService.putOnAgenda(agenda.id, servico.id);
-          });
-          // se servicos não forem salvos, exibir msg de erro
-          this.exibirMensagem('Registro salvo com sucesso!!!');
-          this.navController.navigateBack('/agenda');
+        this.addedServicos.forEach((servico) => {
+          this.servicoService.putOnAgenda(agenda.id, servico.id);
         });
+        // se servicos não forem salvos, exibir msg de erro
+        this.exibirMensagem('Registro salvo com sucesso!!!');
+        this.navController.navigateBack('/agenda');
       });
+    });
     // se agenda nn for salva o horario salvo no banco deverá ser deletado do banco
   }
 
@@ -487,5 +499,22 @@ export class AddAgendaPage implements OnInit {
       return flag;
     });
     return res;
+  }
+
+  showLoader() {
+    this.loadingController.create({
+      message: 'Carregando...'
+    }).then((res) => {
+      res.present();
+    })
+  }
+
+  closeLoader() {
+    setTimeout(() => {
+      this.loadingController.dismiss().then(() => {
+      }).catch((erro) => {
+        console.log('Erro: ', erro)
+      });
+    }, 500);
   }
 }

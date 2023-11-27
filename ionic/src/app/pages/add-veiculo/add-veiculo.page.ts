@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { NavController, ToastController } from '@ionic/angular';
 import { Usuario } from '../cliente/cliente.page';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import { MaskitoElementPredicateAsync, MaskitoOptions } from '@maskito/core';
 
 @Component({
   selector: 'app-add-veiculo',
@@ -24,8 +25,8 @@ export class AddVeiculoPage implements OnInit {
     this.formGroup = this.formBuilder.group({
       'placa': [this.veiculo.placa, Validators.compose([
         Validators.required,
-        Validators.minLength(7),
-        Validators.maxLength(7)
+        Validators.minLength(8),
+        Validators.maxLength(8)
       ])],
       'modelo': [this.veiculo.modelo, Validators.compose([
         Validators.required
@@ -42,7 +43,7 @@ export class AddVeiculoPage implements OnInit {
     if (id != null) {
       this.veiculoService.getById(parseFloat(id)).then((json) => {
         this.veiculo = <Veiculo>(json);
-        this.formGroup.get('placa')?.setValue(this.veiculo.placa);
+        this.formGroup.get('placa')?.setValue(this.veiculo.placa.slice(0, 3) + '-' + this.veiculo.placa.slice(3));
         this.formGroup.get('modelo')?.setValue(this.veiculo.modelo);
         this.formGroup.get('tipo')?.setValue(this.veiculo.tipo);
         this.formGroup.get('id_cliente')?.setValue(this.veiculo.id_cliente);
@@ -53,6 +54,11 @@ export class AddVeiculoPage implements OnInit {
     this.usuarioService.get().then((json: any) => {
       this.clientes = <Usuario[]>(json);
     })
+
+    this.clientes.forEach((cliente) => {
+      cliente.cpf = cliente.cpf.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})$/, '$1.$2.$3-$4');
+      cliente.telefone = cliente.telefone.replace(/^(\d{2})(\d{1})(\d{4})(\d{4})$/, '($1) $2 $3-$4');
+    });
   }
 
   ngOnInit() {
@@ -62,7 +68,7 @@ export class AddVeiculoPage implements OnInit {
   }
 
   salvar() {
-    this.veiculo.placa = this.formGroup.value.placa;
+    this.veiculo.placa = this.formGroup.value.placa.replace(/-/g, '');
     this.veiculo.modelo = this.formGroup.value.modelo;
     this.veiculo.tipo = this.formGroup.value.tipo;
     this.veiculo.id_cliente = this.formGroup.value.id_cliente;
@@ -99,4 +105,13 @@ export class AddVeiculoPage implements OnInit {
     });
     toast.present();
   }
+
+  readonly placaMask: MaskitoOptions = {
+    mask: [/^[a-zA-Z\s]/, /^[a-zA-Z\s]/, /^[a-zA-Z\s]/, '-', /\d/, /\d/, /\d/, /\d/],
+    postprocessors: [
+      ({ value, selection }) => ({ value: value.toUpperCase(), selection }),
+    ],
+  };
+
+  readonly maskPredicate: MaskitoElementPredicateAsync = async (el) => (el as HTMLIonInputElement).getInputElement();
 }

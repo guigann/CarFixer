@@ -11,8 +11,12 @@
   <ion-list>
     <ion-item-sliding *ngFor="let agenda of agendas">
       <ion-item [routerLink]="['/add-agenda/', agenda.id]" detail>
-        <div id="bar" color="(agenda.status === 'Pendente' ? 'primary ': 'secundary')">
-        </div>
+        <div id="bar" *ngIf="agenda.status === 'Pendente'" style="background-color: #FFCE00"> </div>
+        <div id="bar" *ngIf="agenda.status === 'Aprovado'" style="background-color: #10DC60"></div>
+        <div id="bar" *ngIf="agenda.status === 'Reprovado'" style="background-color: #F04141"></div>
+        <div id="bar" *ngIf="agenda.status === 'Em_Andamento'" style="background-color: #0CD1E8"></div>
+        <div id="bar" *ngIf="agenda.status === 'Concluido'" style="background-color: #3880FF"></div>
+        <div id="bar" *ngIf="agenda.status === 'Cancelado'" style="background-color: #989AA2"></div>
         <ion-label>
           <h1>
             <h2>

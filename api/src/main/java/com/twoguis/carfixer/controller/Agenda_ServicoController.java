@@ -15,8 +15,13 @@ import com.twoguis.carfixer.model.Agenda_Servico;
 import com.twoguis.carfixer.model.Servico;
 import com.twoguis.carfixer.service.Agenda_ServicoService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
-@RequestMapping("/api/v1/agenda/{id_agenda}/servico")
+// @RequestMapping("/api/v1/agenda/{id_agenda}/servico")
+@RequestMapping(value = "/api/v1/agenda/{id_agenda}/servico", produces = {"application/json"})
+@Tag(name = "agenda_servico")
 @CrossOrigin("*")
 public class Agenda_ServicoController {
     private final Agenda_ServicoService agenda_servicoService;
@@ -25,12 +30,14 @@ public class Agenda_ServicoController {
         this.agenda_servicoService = agenda_servicoService;
     }
     
+    @Operation(summary = "Consultar todos os serviços por id da agenda", method = "GET")
     @GetMapping({"/", ""})
     public List<Servico> getByServicoAgenda(@PathVariable("id_agenda") int id_agenda){
         List<Servico> servicoList = agenda_servicoService.getByServicoAgenda(id_agenda);
         return servicoList;
     }
     
+    @Operation(summary = "Consultar serviço por id da agenda e id do serviço", method = "GET")
     @GetMapping("/{id_servico}")
     public Servico get(@PathVariable("id_agenda") int id_agenda,
                             @PathVariable("id_servico") int id_servico){
@@ -38,12 +45,14 @@ public class Agenda_ServicoController {
         return servico;
     }
     
+    @Operation(summary = "Inserir serviço na agenda", method = "POST")
     @PostMapping({"", "/"})
     public Servico insert(@RequestBody Agenda_Servico agenda_servico){
         Servico servico = agenda_servicoService.insert(agenda_servico);
         return servico;
     }
     
+    @Operation(summary = "Excluir serviços da agenda", method = "DELETE")
     @DeleteMapping({"", "/"})
     public List<Servico> deleteByServicoAgenda(@PathVariable("id_agenda") int id_agenda){
         List<Servico> servicoList = agenda_servicoService.getByServicoAgenda(id_agenda);
@@ -54,6 +63,7 @@ public class Agenda_ServicoController {
         return servicoList;
     }
     
+    @Operation(summary = "Excluir serviço da agenda por id", method = "DELETE")
     @DeleteMapping("/{id_servico}")
     public Servico delete(
             @PathVariable("id_agenda") int id_agenda, 

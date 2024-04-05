@@ -15,8 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.twoguis.carfixer.model.Sistema;
 import com.twoguis.carfixer.service.SistemaService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
-@RequestMapping("/api/v1/sistema")
+// @RequestMapping("/api/v1/sistema")
+@RequestMapping(value = "/api/v1/sistema", produces = {"application/json"})
+@Tag(name = "sistema")
 @CrossOrigin("*")
 public class SistemaController {
     private final SistemaService sistemaService;
@@ -25,30 +30,35 @@ public class SistemaController {
         this.sistemaService = sistemaService;
     }
 
+    @Operation(summary = "Consultar todos os sistemas", method = "GET")
     @GetMapping({ "/", "" })
     public List<Sistema> get() {
         List<Sistema> sistemaList = sistemaService.get();
         return sistemaList;
     }
 
+    @Operation(summary = "Consultar sistema por id", method = "GET")
     @GetMapping("/{id}")
     public Sistema consultarSistema(@PathVariable("id") int id) {
         Sistema ret = sistemaService.getById(id);
         return ret;
     }
 
+    @Operation(summary = "Inserir sistema", method = "POST")
     @PostMapping({ "", "/" })
     public Sistema insert(@RequestBody Sistema sistema) {
         Sistema ret = sistemaService.insert(sistema);
         return ret;
     }
 
+    @Operation(summary = "Atualizar sistema", method = "PUT")
     @PutMapping({ "", "/" })
     public Sistema update(@RequestBody Sistema sistema) {
         sistemaService.update(sistema);
         return sistema;
     }
 
+    @Operation(summary = "Deletar sistema por id", method = "DELETE")
     @DeleteMapping("/{id}")
     public Sistema delete(@PathVariable("id") int id) {
         Sistema sistema = sistemaService.getById(id);

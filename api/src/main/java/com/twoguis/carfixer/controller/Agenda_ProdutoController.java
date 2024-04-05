@@ -15,8 +15,13 @@ import com.twoguis.carfixer.model.Agenda_Produto;
 import com.twoguis.carfixer.model.Produto;
 import com.twoguis.carfixer.service.Agenda_ProdutoService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
-@RequestMapping("/api/v1/agenda/{id_agenda}/produto")
+// @RequestMapping("/api/v1/agenda/{id_agenda}/produto")
+@RequestMapping(value = "/api/v1/agenda/{id_agenda}/produto", produces = {"application/json"})
+@Tag(name = "agenda_produto")
 @CrossOrigin("*")
 public class Agenda_ProdutoController {
     private final Agenda_ProdutoService agenda_produtoService;
@@ -25,12 +30,14 @@ public class Agenda_ProdutoController {
         this.agenda_produtoService = agenda_produtoService;
     }
     
+    @Operation(summary = "Consultar todos os produtos por id da agenda", method = "GET")
     @GetMapping({"/", ""})
     public List<Produto> getByProdutoAgenda(@PathVariable("id_agenda") int id_agenda){
         List<Produto> produtoList = agenda_produtoService.getByProdutoAgenda(id_agenda);
         return produtoList;
     }
     
+    @Operation(summary = "Consultar produto por id da agenda e id do produto", method = "GET")
     @GetMapping("/{id_produto}")
     public Produto get(@PathVariable("id_agenda") int id_agenda,
                             @PathVariable("id_produto") int id_produto){
@@ -38,12 +45,14 @@ public class Agenda_ProdutoController {
         return produto;
     }
     
+    @Operation(summary = "Inserir produto na agenda", method = "POST")
     @PostMapping({"", "/"})
     public Produto insert(@RequestBody Agenda_Produto agenda_produto){
         Produto produto = agenda_produtoService.insert(agenda_produto);
         return produto;
     }
     
+    @Operation(summary = "Excluir produtos da agenda", method = "DELETE")
     @DeleteMapping({"", "/"})
     public List<Produto> deleteByProdutoAgenda(@PathVariable("id_agenda") int id_agenda){
         List<Produto> produtoList = agenda_produtoService.getByProdutoAgenda(id_agenda);
@@ -54,6 +63,7 @@ public class Agenda_ProdutoController {
         return produtoList;
     }
     
+    @Operation(summary = "Excluir produto da agenda por id", method = "DELETE")
     @DeleteMapping("/{id_produto}")
     public Produto delete(
             @PathVariable("id_agenda") int id_agenda, 

@@ -1,1 +1,1 @@
-[CarFixer API Documentation.pdf](https://github.com/guigann/CarFixer/files/12089691/CarFixer.API.Documentation.pdf)
+CarFixer API Documentation: http://localhost:8087/swagger-ui/index.html#/
